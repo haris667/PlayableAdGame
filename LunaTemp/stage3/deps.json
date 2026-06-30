@@ -1,0 +1,14 @@
+{
+  "ignores": [],
+  "groups": [
+    [
+      "C:/Users/serge/Downloads/playable ads package/pipeline/templates/LunaCompiler/Scripts/Properties/AssemblyInfo.cs"
+    ],
+    [
+      "C:/Users/serge/Downloads/playable ads package/pipeline/templates/LunaCompiler/Scripts/Sources/OtherDummyScript.cs"
+    ],
+    [
+      "C:/Users/serge/Downloads/playable ads package/pipeline/templates/LunaCompiler/Scripts/obj/Debug/.NETFramework,Version=v4.7.AssemblyAttributes.cs"
+    ]
+  ]
+}
