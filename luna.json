@@ -162,7 +162,7 @@
         "forceBase64": false,
         "graphicsConstraint": 24,
         "genericCheck": true,
-        "disableAntiAliasing": true,
+        "disableAntiAliasing": false,
         "forceStableRandomSeed": false,
         "unusedModules": [
             {

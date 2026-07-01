@@ -2,6 +2,9 @@
   "ignores": [],
   "groups": [
     [
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/GradientSlicedImage.cs"
+    ],
+    [
       "C:/Users/serge/Downloads/playable ads package/pipeline/templates/LunaCompiler/Scripts/Properties/AssemblyInfo.cs"
     ],
     [
