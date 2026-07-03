@@ -23,6 +23,11 @@ public class GameTimerUI : MonoBehaviour
     public event Action OnWarningZoneEntered;
     public event Action OnTimerStopped;
 
+    // Доля пройденного времени (0 — старт, 1 — конец) — читают другие UI-элементы, которые должны
+    // визуально идти синхронно с этим таймером (например, полоска-слайдер), не храня свой
+    // собственный elapsed/duration и не рискуя разойтись с реальным игровым таймером.
+    public float Progress01 => duration > 0f ? Mathf.Clamp01(elapsed / duration) : 0f;
+
     public void StartTimer()
     {
         elapsed = 0f;

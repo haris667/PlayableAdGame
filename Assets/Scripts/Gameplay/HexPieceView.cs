@@ -1,14 +1,19 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 // Висит на каждом заспавненном экземпляре OctagonModel — это одна физическая фишка внутри стопки.
 [RequireComponent(typeof(MeshRenderer))]
 public class HexPieceView : MonoBehaviour
 {
-    // Шейдер Game/AlwaysOnTop держит ZTest Always зафиксированным навсегда — "поверх всего"
-    // управляется только через renderQueue: 4000 — обычное состояние, 5000 — во время активного
-    // драга (гарантированно рисуется позже вообще всех объектов на 4000, см. сам шейдер).
+    // "Поверх всего" (ZTest Always + очередь выше 2500, чтобы сортировка шла сзади-наперёд и
+    // порядок отрисовки сам гарантировал верную видимость независимо от реальной глубины — см.
+    // шейдер) включается ТОЛЬКО на время активного драга: очередь выше 2500 полностью исключает
+    // объект из depth-texture, по которой строятся принимаемые тени, так что держать этот режим
+    // постоянно значило бы, что фишки никогда не принимают тени друг от друга. В состоянии покоя —
+    // обычный LEqual и обычная очередь (Geometry), тени работают как на стандартном материале.
+    private static readonly int ZTestPropertyId = Shader.PropertyToID("_ZTest");
     private const int AlwaysOnTopRenderQueue = 5000;
-    private const int NormalRenderQueue = 4000;
+    private const int NormalRenderQueue = (int)RenderQueue.Geometry;
 
     // Личная копия материала нужна только фишкам, которые вообще могут когда-нибудь попасть в
     // SetAlwaysOnTop (стопки лотка, которые реально таскают) — стартовым неподвижным стопкам поля
@@ -48,8 +53,8 @@ public class HexPieceView : MonoBehaviour
     }
 
     // См. StackDragHandler — включается на время активного драга, выключается перед тем, как
-    // стопка встанет на финальную позицию. Меняет renderQueue прямо на личной копии материала
-    // этой фишки (см. SetColor), так что другие фишки того же цвета не задеваются.
+    // стопка встанет на финальную позицию. Меняет renderQueue и _ZTest прямо на личной копии
+    // материала этой фишки (см. SetColor), так что другие фишки того же цвета не задеваются.
     public void SetAlwaysOnTop(bool alwaysOnTop)
     {
         // Нет личной копии материала — либо переключать нечего, либо (что хуже) мы бы задели
@@ -58,6 +63,8 @@ public class HexPieceView : MonoBehaviour
 
         if (meshRenderer == null) meshRenderer = GetComponent<MeshRenderer>();
 
-        meshRenderer.material.renderQueue = alwaysOnTop ? AlwaysOnTopRenderQueue : NormalRenderQueue;
+        var material = meshRenderer.material;
+        material.renderQueue = alwaysOnTop ? AlwaysOnTopRenderQueue : NormalRenderQueue;
+        material.SetInt(ZTestPropertyId, (int)(alwaysOnTop ? CompareFunction.Always : CompareFunction.LessEqual));
     }
 }

@@ -43,20 +43,45 @@ public class BoardManager : MonoBehaviour
 
     [Header("Скорость анимации цепной реакции")]
     [SerializeField] private float baseJumpDuration = 5f;
-    [SerializeField] private float baseClearDuration = 0.25f;
     [Tooltip("Во сколько раз ускоряется перелёт/исчезновение после каждой схлопнувшейся стопки в одной цепочке.")]
     [SerializeField] private float speedMultiplierPerClear = 1.3f;
 
+    [Header("Исчезновение схлопнувшейся стопки")]
+    [Tooltip("Время, за которое три верхние фишки сплющиваются по Y/Z — быстрое и резкое, отдельно " +
+             "от проваливания вниз (см. sinkDuration).")]
+    [SerializeField] private float squashDuration = 0.15f;
+    [Tooltip("Время, за которое стопка проваливается вниз до sinkTargetY — медленное и плавное, " +
+             "не связанное с длительностью сплющивания фишек.")]
+    [SerializeField] private float sinkDuration = 0.6f;
+    [Tooltip("Абсолютная мировая координата Y, до которой проваливается стопка перед уничтожением " +
+             "(не смещение, а именно конечная координата).")]
+    [SerializeField] private float sinkTargetY = -10f;
+    [Tooltip("Целевой масштаб по Y/Z для трёх верхних фишек стопки при исчезновении, по порядку: " +
+             "самая верхняя, вторая сверху, третья сверху (в Hierarchy редактора это последние " +
+             "по счёту дочерние объекты стопки — самые нижние строчки в списке детей).")]
+    [SerializeField] private float[] topPieceSquashScaleYZ = { 0.1f, 0.2f, 0.3f };
+    [Tooltip("Мировой уровень Y, ниже которого шейдер Game/AlwaysOnTop сам обрезает (clip) пиксели " +
+             "фишки — см. AlwaysOnTop.shader/_ClipY. Проваливаясь под доску, фишка уходит ниже этого " +
+             "уровня и перестаёт рисоваться, вместо ручного включения/выключения Renderer.")]
+    [SerializeField] private float pieceClipPlaneY = 0f;
+    [Tooltip("Партикл-эффект, проигрывается на месте стопки, когда она полностью исчезла. Цвет " +
+             "частиц (ParticleSystem.MainModule.startColor) подстраивается под цвет исчезнувшей " +
+             "стопки — берётся из того же material palette.GetMaterial(color), что и у самих фишек.")]
+    [SerializeField] private ParticleSystem destroyStackEffectPrefab;
+    [Tooltip("За сколько секунд ДО конца анимации проваливания (до Destroy стопки) запускать " +
+             "партикл-эффект — например, 1 значит 'за секунду до конца', а не задержка от начала. " +
+             "Подберите так, чтобы совпадало с моментом, когда стопка визуально скрывается под " +
+             "маской доски (_ClipY).")]
+    [SerializeField] private float destroyEffectOffsetBeforeEnd = 1f;
+
     [Header("Дуга перелёта фишки")]
-    [SerializeField] private float jumpArcHeight = 0.25f;
     [SerializeField] private AnimationCurve jumpEasing = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
-    [Tooltip("Общий поворот фишки за весь перелёт, в градусах. 180 = фишка непрерывно переворачивается " +
-             "на обратную сторону (а не встаёт на ребро и падает обратно на ту же сторону): в середине " +
-             "пути (пик дуги) она ровно на ребре (90°), к приземлению — полностью на другой стороне.")]
-    [SerializeField] private float jumpFlipDegrees = 180f;
     [Tooltip("Задержка между стартами перелёта соседних фишек в одном трансфере — они летят не разом, " +
              "а внахлёст друг за другом.")]
     [SerializeField] private float jumpStartStagger = 0.1f;
+    [Tooltip("Короткий довороток сразу после приземления до фактической ориентации стопки-получателя, " +
+             "чтобы не было рывка в момент, когда AppendPiece сбрасывает поворот фишки.")]
+    [SerializeField] private float landingSettleDuration = 0.08f;
 
     private readonly Dictionary<Vector2Int, BoardCell> cellByCoord = new Dictionary<Vector2Int, BoardCell>();
     private bool chainRunning;
@@ -70,8 +95,14 @@ public class BoardManager : MonoBehaviour
     // Например, TutorialHandController использует это, чтобы указать руку на любую свободную ячейку.
     public IReadOnlyList<BoardCell> Cells => cells;
 
+    private static readonly int ClipYShaderId = Shader.PropertyToID("_ClipY");
+
     private void Awake()
     {
+        // Глобальное свойство шейдера — общее сразу для всех материалов Game/AlwaysOnTop,
+        // отдельно настраивать на каждом не нужно (см. AlwaysOnTop.shader).
+        Shader.SetGlobalFloat(ClipYShaderId, pieceClipPlaneY);
+
         if (cellsParent != null && cells.Count == 0)
             cells.AddRange(cellsParent.GetComponentsInChildren<BoardCell>());
 
@@ -175,6 +206,16 @@ public class BoardManager : MonoBehaviour
         // без try/finally — и chainRunning навсегда останется true, что выглядит как "весь драг
         // сломался" даже на ячейках, к цепочке не относящихся. finally гарантирует сброс флага
         // в любом случае, даже если сама реакция отработала некорректно.
+        // Стопки, ставшие однотонными где-то в процессе цепочки, не исчезают сразу на месте —
+        // это могло бы визуально "провалить" стопку раньше, чем ей ещё передадут фишки где-то
+        // дальше по той же волне (например, если она позже снова окажется получателем). Ячейка
+        // логически освобождается (CurrentStack = null) сразу, чтобы BFS корректно считал её
+        // пустой и не пытался мёржить с ней дальше, а сама визуальная анимация исчезновения
+        // копится в этом списке и запускается только один раз — после того, как ВСЯ цепочка
+        // передач полностью завершится (см. конец try). Сначала передаются все доступные
+        // шестиугольники по всей цепочке — потом исчезновение стопок.
+        var pendingDisappear = new List<(HexStack stack, float speedMultiplier, HexColor color)>();
+
         try
         {
             float speedMultiplier = 1f;
@@ -212,43 +253,60 @@ public class BoardManager : MonoBehaviour
 
                     yield return TransferMatchingColor(donorStack, receiverStack, speedMultiplier);
 
+                    // ВАЖНО: однотонность (IsMonochrome) сама по себе — НЕ повод немедленно
+                    // финализировать стопку прямо здесь. У неё (или у cell) могут быть ЕЩЁ не
+                    // проверенные в этом проходе соседи того же цвета, с которыми она должна
+                    // сначала успеть провзаимодействовать (отдать/принять ещё) — иначе стопка
+                    // "исчезает" раньше, чем должна была получить фишки от другого соседа.
+                    // Единственный повод финализировать прямо сейчас — стопка ОПУСТЕЛА (ей больше
+                    // некого/нечего проверять). Однотонный, но не пустой донор/получатель просто
+                    // встаёт в очередь на полный проход по СВОИМ соседям — донор наравне с
+                    // получателем, независимо от того, кто из них сейчас cell, а кто neighbor.
+                    // Реально "схлопнуть" однотонную стопку мы решаем только один раз — после
+                    // того, как у неё проверены ВСЕ соседи (см. ниже, после этого foreach).
                     if (donorStack.IsEmpty)
                     {
                         Destroy(donorStack.gameObject);
                         donorCell.CurrentStack = null;
-                    }
-                    else if (donorStack.IsMonochrome)
-                    {
-                        yield return ClearStack(donorCell, speedMultiplier);
-                        speedMultiplier *= speedMultiplierPerClear;
                     }
                     else if (donorCell != cell && queued.Add(donorCell))
                     {
                         queue.Enqueue(donorCell);
                     }
 
-                    // Получатель — сосед (донором была cell) — мог сам стать однотонным,
-                    // пополнившись; получателя-cell проверяем один раз ниже, после всех соседей.
-                    if (receiverCell != cell)
+                    if (receiverCell != cell && queued.Add(receiverCell))
                     {
-                        if (receiverStack.IsMonochrome)
-                        {
-                            yield return ClearStack(receiverCell, speedMultiplier);
-                            speedMultiplier *= speedMultiplierPerClear;
-                        }
-                        else if (queued.Add(receiverCell))
-                        {
-                            queue.Enqueue(receiverCell);
-                        }
+                        queue.Enqueue(receiverCell);
                     }
                 }
 
+                // Только теперь, проверив ВСЕХ соседей cell в этом проходе, решаем её судьбу:
+                // если стопка однотонна — значит, ей больше не с кем сливаться дальше (иначе
+                // foreach выше уже бы это обработал и, возможно, "разбавил" её обратно), и она
+                // окончательно схлопывается.
                 if (cell.CurrentStack != null && cell.CurrentStack.IsMonochrome)
                 {
-                    yield return ClearStack(cell, speedMultiplier);
+                    var finalStack = cell.CurrentStack;
+                    cell.CurrentStack = null;
+                    pendingDisappear.Add((finalStack, speedMultiplier, finalStack.TopColor));
                     speedMultiplier *= speedMultiplierPerClear;
                 }
             }
+
+            // Разные стопки одной волны могут иметь разный speedMultiplier (он растёт после каждого
+            // схлопнувшегося звена цепочки), а значит и разную длительность собственной анимации
+            // проваливания — "за X секунд до СВОЕГО конца" у каждой получалось бы в разный момент
+            // реального времени. Партиклы синхронизируем по самой долгой анимации во всей пачке —
+            // тогда все, кто исчезает в одной волне, показывают эффект одновременно.
+            float particleSyncDuration = 0f;
+            foreach (var (_, mult, _) in pendingDisappear)
+                particleSyncDuration = Mathf.Max(particleSyncDuration, squashDuration / mult, sinkDuration / mult);
+
+            var disappearFlights = new List<Coroutine>();
+            foreach (var (stack, mult, color) in pendingDisappear)
+                disappearFlights.Add(StartCoroutine(AnimateAndDestroy(stack, mult, color, particleSyncDuration)));
+            foreach (var flight in disappearFlights)
+                yield return flight;
         }
         finally
         {
@@ -295,93 +353,173 @@ public class BoardManager : MonoBehaviour
     private IEnumerator FlyAndLand(HexPieceView piece, Vector3 from, Vector3 to, float duration, HexStack receiverStack)
     {
         yield return MoveHexWithArc(piece.gameObject, from, to, duration);
+
+        // AppendPiece сразу после этого ставит localRotation = identity относительно receiverStack
+        // (т.е. итоговый мировой поворот станет receiverStack.transform.rotation) — расхождение
+        // оказалось не только по X (там оно было заметнее всего), но и по остальным осям тоже,
+        // просто меньше — поэтому довороток теперь по всем осям сразу, одним Slerp.
+        yield return SmoothRotateTo(piece.transform, receiverStack.transform.rotation, landingSettleDuration);
+
         receiverStack.AppendPiece(piece);
     }
 
-    private IEnumerator ClearStack(BoardCell cell, float speedMultiplier)
+    private IEnumerator SmoothRotateTo(Transform target, Quaternion targetRotation, float duration)
     {
-        var stack = cell.CurrentStack;
-        cell.CurrentStack = null;
+        if (target == null) yield break;
+
+        var fromRotation = target.rotation;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            target.rotation = Quaternion.Slerp(fromRotation, targetRotation, Mathf.Clamp01(elapsed / duration));
+            yield return null;
+        }
+
+        target.rotation = targetRotation;
+    }
+
+    private IEnumerator AnimateAndDestroy(HexStack stack, float speedMultiplier, HexColor color, float particleSyncDuration)
+    {
         if (stack == null) yield break;
 
-        float duration = baseClearDuration / speedMultiplier;
-        yield return AnimateDisappear(stack.transform, duration);
+        // Позиция ДО проваливания — стопка в итоге уходит под доску (sinkTargetY), и партикл на
+        // финальной позиции был бы попросту невидим под ней. Эффект должен появиться там, где
+        // стопка реально стояла на поле.
+        var spawnPosition = stack.transform.position;
+
+        var disappearRoutine = StartCoroutine(AnimateDisappear(
+            stack.transform, squashDuration / speedMultiplier, sinkDuration / speedMultiplier));
+
+        // Партикл — за destroyEffectOffsetBeforeEnd секунд до конца САМОЙ ДОЛГОЙ анимации во всей
+        // пачке одновременно исчезающих стопок (particleSyncDuration), а не до конца собственной,
+        // возможно куда более короткой из-за ускорения по speedMultiplier — иначе несколько стопок
+        // одной волны показывали бы партиклы вразнобой, а не одновременно.
+        float delayBeforeSpawn = Mathf.Max(0f, particleSyncDuration - destroyEffectOffsetBeforeEnd);
+        yield return new WaitForSeconds(delayBeforeSpawn);
+        SpawnDestroyEffect(spawnPosition, color);
+
+        yield return disappearRoutine;
         Destroy(stack.gameObject);
     }
 
-    // Прыжок фишки по параболической дуге с переворотом на jumpFlipDegrees — чистая математика,
-    // без Rigidbody/физики. Поворот идёт НЕПРЕРЫВНО от старта на фиксированный угол (по умолчанию
-    // 180° — "монетка", показывающая обратную сторону), независимо от поворота стопки-получателя:
-    // на пике дуги (n=0.5) фишка ровно на ребре, и оттуда она продолжает докручиваться дальше,
-    // а не возвращается назад к той стороне, на которой лежала в старой стопке.
+    // Партикл-эффект окрашивается под цвет исчезнувшей стопки — берём тот же материал, что и у
+    // фишек этого цвета (palette.GetMaterial), и переносим его _Color в startColor системы частиц.
+    private void SpawnDestroyEffect(Vector3 position, HexColor color)
+    {
+        if (destroyStackEffectPrefab == null) return;
+
+        var effect = Instantiate(destroyStackEffectPrefab, position, destroyStackEffectPrefab.transform.rotation);
+
+        var sourceMaterial = palette != null ? palette.GetMaterial(color) : null;
+        if (sourceMaterial != null)
+        {
+            var main = effect.main;
+            main.startColor = new ParticleSystem.MinMaxGradient(sourceMaterial.color);
+        }
+
+        Destroy(effect.gameObject, 2f);
+    }
+
+    // "Переваливание" фишки через ребро между старой и новой ячейкой — позиция и поворот здесь
+    // не два независимых расчёта (как раньше — отдельно дуга по Y, отдельно поворот), а буквально
+    // ОДНО вращение: фишка крутится вокруг горизонтальной оси, проходящей через середину пути
+    // (то самое общее ребро между ячейками), перпендикулярной направлению движения. Поворот на 180°
+    // вокруг точки строго между start и end — это точечное отражение, поэтому он гарантированно
+    // переносит фишку из start ровно в end одним и тем же движением, которым она и переворачивается,
+    // без какого-либо рассинхрона/лишнего кручения в сторону.
     private IEnumerator MoveHexWithArc(GameObject hex, Vector3 startPos, Vector3 endPos, float duration)
     {
         if (hex == null) yield break;
 
         var hexTransform = hex.transform;
         var startRotation = hexTransform.rotation;
-        var flipAxis = GetFlipAxis(startPos, endPos);
-        var endRotation = startRotation * Quaternion.AngleAxis(jumpFlipDegrees, flipAxis);
 
-        // Пик дуги — фиксированная высота (jumpArcHeight) НАД более высокой из двух точек,
-        // а не над серединой прямой между ними (если старт и финиш на разной высоте).
-        float apexY = Mathf.Max(startPos.y, endPos.y) + jumpArcHeight;
+        var pivot = (startPos + endPos) * 0.5f; // середина пути — точка на общем ребре ячеек
+        var startOffset = startPos - pivot;      // радиус-вектор от ребра до старта
+
+        var flatDirection = endPos - startPos;
+        flatDirection.y = 0f;
+        // Знак оси определяет, с какой стороны идёт дуга — сверху или снизу через pivot;
+        // Cross(up, direction), а не Cross(direction, up), даёт проход через верх.
+        var flipAxis = flatDirection.sqrMagnitude > 0.0001f
+            ? Vector3.Cross(Vector3.up, flatDirection.normalized)
+            : Vector3.right;
 
         float elapsed = 0f;
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            // AnimationCurve даёт eased-прогресс n (ускорение в начале, замедление в конце) —
-            // им управляются и XZ, и Y, и поворот, чтобы всё двигалось синхронно.
+            // AnimationCurve даёт eased-прогресс n (ускорение в начале, замедление в конце).
             float n = jumpEasing.Evaluate(Mathf.Clamp01(elapsed / duration));
 
-            var pos = Vector3.Lerp(startPos, endPos, n); // X/Z — линейная интерполяция
-
-            // Y — квадратичная (параболическая) интерполяция Лагранжа через 3 точки:
-            // старт (n=0, startPos.y), пик (n=0.5, apexY), финиш (n=1, endPos.y).
-            // y(n) = y0·(1-n)(1-2n) + 4·y1·n(1-n) + y2·n(2n-1)
-            pos.y = startPos.y * (1f - n) * (1f - 2f * n)
-                  + 4f * apexY * n * (1f - n)
-                  + endPos.y * n * (2f * n - 1f);
-
-            hexTransform.position = pos;
-
-            // Один непрерывный Slerp от startRotation до endRotation (кратчайший путь между ними
-            // равен ровно jumpFlipDegrees вокруг flipAxis, так как endRotation этим же поворотом
-            // и построен) — на пике дуги фишка ровно на ребре, дальше без остановки докручивается.
-            hexTransform.rotation = Quaternion.Slerp(startRotation, endRotation, n);
+            // Одно и то же вращение (delta) одновременно поворачивает саму фишку и её позицию
+            // вокруг ребра — на пике (n=0.5, 90°) она ровно на ребре, к n=1 (180°) она точно
+            // в endPos, потому что 180°-поворот точки вокруг pivot — это точечное отражение.
+            var delta = Quaternion.AngleAxis(n * 180f, flipAxis);
+            hexTransform.position = pivot + delta * startOffset;
+            hexTransform.rotation = delta * startRotation;
 
             yield return null;
         }
 
         hexTransform.position = endPos;
-        hexTransform.rotation = endRotation;
+        hexTransform.rotation = Quaternion.AngleAxis(180f, flipAxis) * startRotation;
     }
 
-    // Горизонтальная ось, перпендикулярная направлению движения — как ось колеса, катящегося к цели.
-    private static Vector3 GetFlipAxis(Vector3 from, Vector3 to)
-    {
-        var flatDirection = to - from;
-        flatDirection.y = 0f;
-        return flatDirection.sqrMagnitude > 0.0001f
-            ? Vector3.Cross(flatDirection.normalized, Vector3.up)
-            : Vector3.right;
-    }
-
-    private IEnumerator AnimateDisappear(Transform stackRoot, float duration)
+    // Стопка не схлопывается в точку, а проваливается вниз до абсолютной координаты sinkTargetY,
+    // будто уходит под доску. Сплющивание трёх верхних фишек (последние по счёту дочерние объекты
+    // стопки — см. HexStack.SpawnPieceAtTop: каждая следующая фишка добавляется последней и в
+    // списке, и в Hierarchy) идёт на СВОЕЙ отдельной длительности squashDur — обычно короткой и
+    // резкой, тогда как проваливание (sinkDur) — медленное и плавное; оба стартуют одновременно
+    // (t=0), но у каждого свой прогресс, и более короткая анимация просто держит финальное
+    // значение, пока не закончится более длинная.
+    private IEnumerator AnimateDisappear(Transform stackRoot, float squashDur, float sinkDur)
     {
         if (stackRoot == null) yield break;
 
-        var startScale = stackRoot.localScale;
-        float t = 0f;
-        while (t < duration)
+        var startPos = stackRoot.position;
+        var endPos = new Vector3(startPos.x, sinkTargetY, startPos.z);
+
+        int squashCount = Mathf.Min(topPieceSquashScaleYZ.Length, stackRoot.childCount);
+        var topPieces = new Transform[squashCount];
+        var topStartScales = new Vector3[squashCount];
+        for (int i = 0; i < squashCount; i++)
         {
-            t += Time.deltaTime;
-            stackRoot.localScale = Vector3.Lerp(startScale, Vector3.zero, Mathf.Clamp01(t / duration));
+            topPieces[i] = stackRoot.GetChild(stackRoot.childCount - 1 - i);
+            topStartScales[i] = topPieces[i].localScale;
+        }
+
+        float duration = Mathf.Max(squashDur, sinkDur);
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+
+            float sinkN = sinkDur > 0f ? Mathf.Clamp01(elapsed / sinkDur) : 1f;
+            stackRoot.position = Vector3.Lerp(startPos, endPos, sinkN);
+
+            float squashN = squashDur > 0f ? Mathf.Clamp01(elapsed / squashDur) : 1f;
+            for (int i = 0; i < squashCount; i++)
+            {
+                var scale = topStartScales[i];
+                float targetYZ = topPieceSquashScaleYZ[i];
+                scale.y = Mathf.Lerp(topStartScales[i].y, targetYZ, squashN);
+                scale.z = Mathf.Lerp(topStartScales[i].z, targetYZ, squashN);
+                topPieces[i].localScale = scale;
+            }
+
             yield return null;
         }
 
-        stackRoot.localScale = Vector3.zero;
+        stackRoot.position = endPos;
+        for (int i = 0; i < squashCount; i++)
+        {
+            var scale = topPieces[i].localScale;
+            scale.y = topPieceSquashScaleYZ[i];
+            scale.z = topPieceSquashScaleYZ[i];
+            topPieces[i].localScale = scale;
+        }
     }
 
     private bool IsBoardFullyCleared()

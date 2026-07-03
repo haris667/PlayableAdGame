@@ -61,7 +61,12 @@ public class StackDragHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (board == null || board.IsChainRunning) return;
+        // Раньше здесь ещё была проверка board.IsChainRunning, полностью блокировавшая любой
+        // драг, пока где-то на поле идёт цепная реакция — игрок не мог взять и переставить
+        // ДРУГУЮ свою стопку, пока предыдущая ещё анимируется. Реакции идут независимо друг от
+        // друга по разным ячейкам (см. BoardManager.ProcessChainReaction), так что блокировать
+        // весь драг ради одной текущей реакции не нужно.
+        if (board == null) return;
 
         // Стопка стоит на ячейке, с которой её нельзя забирать (BoardCell.IsClickable == false,
         // например — стартовая стопка поля) — драг вообще не начинаем.
