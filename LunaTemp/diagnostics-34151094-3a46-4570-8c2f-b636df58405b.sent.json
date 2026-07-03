@@ -1,0 +1,177 @@
+{
+    "BuildID": "34151094-3a46-4570-8c2f-b636df58405b",
+    "Command": "project:build",
+    "ProjectID": "ad403f79cfcc0934eb35c8a941402c62",
+    "ProjectStateHash": "83ea777664f4e07f3aeee3e78fa0905e82ee76947815351e56fa739fdcc867ea",
+    "StageCompletedAt": 3,
+    "EarliestFatalError": 0,
+    "StartTime": 1783020627444,
+    "EndTime": 1783020722313,
+    "PlaygroundUserID": 37930,
+    "OperatingSystem": "win32",
+    "UnityPackageID": null,
+    "TargetPlatform": "develop",
+    "UnityVersion": "2022.3.62f1",
+    "LunaVersion": "7.2.0",
+    "LogCount": 6,
+    "Logs": [
+        {
+            "LogID": "43d43f33-a6b0-4dec-b192-3dd82d2e38e2",
+            "Order": 5,
+            "Timestamp": 1783020723201,
+            "Stage": 3,
+            "ErrorType": 3,
+            "ErrorCode": "LP3007",
+            "Description": "You are not using any custom events",
+            "Details": [
+                "You are not using any custom events. It is recommended to use custom events to have a better understanding of the playable."
+            ],
+            "DescriptionValues": [
+                ""
+            ],
+            "DetailsValues": [
+                ""
+            ],
+            "LogCount": 1,
+            "LinePosition": null,
+            "FilePath": "",
+            "ClassName": "",
+            "MemberName": "",
+            "Severity": 0
+        },
+        {
+            "LogID": "e175a40f-9271-4fdd-b82c-71ce9dc831a5",
+            "Order": 5,
+            "Timestamp": 1783020723205,
+            "Stage": 3,
+            "ErrorType": 3,
+            "ErrorCode": "LP3011",
+            "Description": "You are not using any LunaPlaygroundFields attributes.",
+            "Details": [
+                "You are not using any LunaPlaygroundFields attributes, it allows you to configure your playable to different concepts to find the best variation, which can drastically improve playable performance on all ad networks."
+            ],
+            "DescriptionValues": null,
+            "DetailsValues": null,
+            "LogCount": 1,
+            "LinePosition": null,
+            "FilePath": "",
+            "ClassName": "",
+            "MemberName": "",
+            "Severity": 0
+        },
+        {
+            "LogID": "704a792a-e9e2-4fc2-b45b-3650fa5218cd",
+            "Order": 0,
+            "Timestamp": 1783020639175,
+            "Stage": 1,
+            "ErrorType": 2,
+            "ErrorCode": "LP1014",
+            "Description": "We recommend running Runtime Analysis to find and remove all unused code",
+            "Details": [
+                "Navigate to the Runtime Analysis → Code tab to enable code stripping. Before uploading the playable, please make sure to have played all scenario’s of the playable in a development build to make Runtime Analysis work properly."
+            ],
+            "DescriptionValues": [],
+            "DetailsValues": [],
+            "LogCount": 1,
+            "LinePosition": 0,
+            "FilePath": "",
+            "ClassName": "",
+            "MemberName": "",
+            "Severity": 0
+        },
+        {
+            "LogID": "8147c663-9885-4f09-847c-d66190bc6827",
+            "Order": 1,
+            "Timestamp": 1783020639190,
+            "Stage": 1,
+            "ErrorType": 0,
+            "ErrorCode": "LP1032",
+            "Description": "Package(s) is not supported in Luna",
+            "Details": [
+                "Currently package(s) com.unity.timeline are not supported in Luna. We recommend you to remove it and workaround it's functionality."
+            ],
+            "DescriptionValues": [
+                "com.unity.timeline (1.7.7)"
+            ],
+            "DetailsValues": [
+                "com.unity.timeline"
+            ],
+            "LogCount": 1,
+            "LinePosition": 0,
+            "FilePath": "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/Packages\\manifest.json",
+            "ClassName": "",
+            "MemberName": "",
+            "Severity": 0
+        },
+        {
+            "LogID": "9d05cd03-4c56-40bd-9a83-aed0af58baf1",
+            "Order": 2,
+            "Timestamp": 1783020639191,
+            "Stage": 1,
+            "ErrorType": 3,
+            "ErrorCode": "LP1002",
+            "Description": "Repeat wrap mode used on a texture with non power-of-two dimensions, this might not be rendered correctly.",
+            "Details": [
+                "Repeat wrap mode used on 'LiberationSans SDF Atlas' texture at 'Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset' with non power-of-two dimensions, this might not be rendered correctly."
+            ],
+            "DescriptionValues": [],
+            "DetailsValues": [
+                "LiberationSans SDF Atlas",
+                "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset"
+            ],
+            "LogCount": 1,
+            "LinePosition": 0,
+            "FilePath": "Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset",
+            "ClassName": "",
+            "MemberName": "",
+            "Severity": 0
+        },
+        {
+            "LogID": "f7d3aa6c-0e77-4fe9-9f64-a481f30e3ede",
+            "Order": 3,
+            "Timestamp": 1783020639191,
+            "Stage": 1,
+            "ErrorType": 2,
+            "ErrorCode": "LP1010",
+            "Description": "Looks like a collider was scaled, this might affect performance.",
+            "Details": [
+                "SnowBG3D",
+                "Plane",
+                "Plane",
+                "Plane (1)",
+                "Plane (2)",
+                "Plane (3)",
+                "Plane (5)",
+                "Plane (6)",
+                "Plane (4)",
+                "OctagonModel",
+                "OctagonModel (12)",
+                "OctagonModel (13)",
+                "OctagonModel (14)",
+                "OctagonModel (1)",
+                "OctagonModel (3)",
+                "OctagonModel (4)",
+                "OctagonModel (2)",
+                "OctagonModel (7)",
+                "OctagonModel (15)",
+                "OctagonModel (16)",
+                "OctagonModel (17)",
+                "OctagonModel (18)",
+                "OctagonModel (8)",
+                "OctagonModel (9)",
+                "OctagonModel (10)",
+                "OctagonModel (11)",
+                "OctagonModel (5)",
+                "OctagonModel (6)"
+            ],
+            "DescriptionValues": [],
+            "DetailsValues": [],
+            "LogCount": 28,
+            "LinePosition": 0,
+            "FilePath": "",
+            "ClassName": "",
+            "MemberName": "",
+            "Severity": 0
+        }
+    ]
+}

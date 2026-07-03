@@ -2,7 +2,25 @@
   "ignores": [],
   "groups": [
     [
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Core/GameFlowController.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/UI/TutorialHandController.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Gameplay/StackDragHandler.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Gameplay/BoardManager.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Gameplay/BoardCell.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Gameplay/HexStack.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Gameplay/HexPieceView.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Gameplay/HexColor.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Gameplay/HexColorPalette.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/Gameplay/HexJumpAnimator.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/UI/GameTimerUI.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/UI/TimerWarningEffects.cs",
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/UI/PackshotController.cs"
+    ],
+    [
       "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/GradientSlicedImage.cs"
+    ],
+    [
+      "C:/Job/Tests/Mirra/BeNiceGames/PlayableAdGame/LunaTemp/stage3/processed-scripts/Assets/Scripts/ScaleToScreenOrthographic.cs"
     ],
     [
       "C:/Users/serge/Downloads/playable ads package/pipeline/templates/LunaCompiler/Scripts/Properties/AssemblyInfo.cs"

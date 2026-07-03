@@ -20,10 +20,18 @@ public class HexStack : MonoBehaviour
     [SerializeField] private List<HexColor> initialColors = new List<HexColor>();
 
     private readonly List<HexPieceView> pieces = new List<HexPieceView>();
+    private BoxCollider hitCollider;
+
+    // true только для стопок, заданных прямо в сцене через initialColors (стопки лотка,
+    // существующие с самого старта, см. Awake) — только им реально может понадобиться личная
+    // копия материала (SetAlwaysOnTop во время драга). Стопки, которые BoardManager создаёт
+    // процедурно на старте игры через Initialize (стартовые стопки поля), не двигаются никогда,
+    // поэтому копия материала им не нужна — остаётся false.
+    private bool piecesNeedAlwaysOnTopMaterial;
 
     public int Count => pieces.Count;
     public bool IsEmpty => pieces.Count == 0;
-    public HexColor TopColor => pieces[pieces.Count - 1].Color;
+    public HexColor TopColor => pieces[GetTopPieceIndex()].Color;
 
     public bool IsMonochrome
     {
@@ -43,8 +51,13 @@ public class HexStack : MonoBehaviour
 
     private void Awake()
     {
+        hitCollider = GetComponent<BoxCollider>();
+
         if (pieces.Count == 0 && initialColors.Count > 0 && piecePrefab != null && palette != null)
+        {
+            piecesNeedAlwaysOnTopMaterial = true;
             BuildFromColors(initialColors);
+        }
     }
 
     // Используется BoardManager-ом для процедурного создания стопок (например, стартовых на поле).
@@ -54,6 +67,7 @@ public class HexStack : MonoBehaviour
     {
         piecePrefab = prefab;
         palette = colorPalette;
+        piecesNeedAlwaysOnTopMaterial = false;
 
         for (int i = 0; i < pieces.Count; i++)
             if (pieces[i] != null) Destroy(pieces[i].gameObject);
@@ -71,30 +85,67 @@ public class HexStack : MonoBehaviour
     private void SpawnPieceAtTop(HexColor color)
     {
         var piece = Instantiate(piecePrefab, transform);
-        piece.transform.localPosition = perPieceOffset * pieces.Count;
+        piece.transform.localPosition = GetLocalPositionForIndex(pieces.Count);
         piece.transform.localRotation = Quaternion.identity;
+        piece.SetNeedsAlwaysOnTopMaterial(piecesNeedAlwaysOnTopMaterial);
         piece.SetColor(color, palette);
         pieces.Add(piece);
+        UpdateHitCollider();
+    }
+
+    // Локальная позиция фишки с данным индексом в стопке (снизу вверх, от 0).
+    // Даже первая фишка (index 0) уже смещена на один шаг perPieceOffset от позиции самой
+    // ячейки/корня стопки — а не стоит вплотную к нулю — каждая следующая смещается ещё на
+    // perPieceOffset дальше, так и получается "лесенка" со ступенькой -0.05 по X.
+    private Vector3 GetLocalPositionForIndex(int index)
+    {
+        return perPieceOffset * (index + 1);
     }
 
     // Мировая позиция следующего свободного слота сверху стопки — куда должна прилететь новая фишка.
-    public Vector3 GetNextSlotWorldPosition()
+    // reserved — сколько слотов уже "забронировано" под фишки, которые летят сюда прямо сейчас,
+    // но ещё не приземлились (pieces.Count растёт только при реальном AppendPiece при посадке) —
+    // без этого несколько фишек, запущенных внахлёст, целились бы в один и тот же слот.
+    public Vector3 GetNextSlotWorldPosition(int reserved = 0)
     {
-        return transform.TransformPoint(perPieceOffset * pieces.Count);
+        return transform.TransformPoint(GetLocalPositionForIndex(pieces.Count + reserved));
     }
 
     public Vector3 GetTopWorldPosition()
     {
-        return pieces.Count == 0 ? transform.position : pieces[pieces.Count - 1].transform.position;
+        return pieces.Count == 0 ? transform.position : pieces[GetTopPieceIndex()].transform.position;
+    }
+
+    // Индекс физически самой высокой (по мировой Y) фишки в стопке. "Верх" определяем по реальной
+    // высоте, а не по фиксированному индексу (0 или Count-1) — разные стопки (лоток vs стартовые
+    // на поле, и вообще любые с разным поворотом) растут "лесенкой" в разные стороны в мировом
+    // пространстве, так что ни один фиксированный конец списка не может быть верным всегда.
+    private int GetTopPieceIndex()
+    {
+        int topIndex = 0;
+        for (int i = 1; i < pieces.Count; i++)
+            if (pieces[i].transform.position.y > pieces[topIndex].transform.position.y)
+                topIndex = i;
+        return topIndex;
+    }
+
+    // Включает/выключает "поверх всего" сразу на всех фишках стопки — см. HexPieceView.SetAlwaysOnTop
+    // и StackDragHandler (включается на время активного драга).
+    public void SetAlwaysOnTop(bool alwaysOnTop)
+    {
+        foreach (var piece in pieces)
+            piece.SetAlwaysOnTop(alwaysOnTop);
     }
 
     // Снимает верхнюю фишку для перелёта в другую стопку. Сам GameObject не уничтожается —
-    // им управляет HexJumpAnimator, пока летит дугой к месту назначения.
+    // им управляет BoardManager.AnimatePieceTransfer, пока летит дугой к месту назначения.
     public HexPieceView PopTopPiece()
     {
         if (pieces.Count == 0) return null;
-        var piece = pieces[pieces.Count - 1];
-        pieces.RemoveAt(pieces.Count - 1);
+        int topIndex = GetTopPieceIndex();
+        var piece = pieces[topIndex];
+        pieces.RemoveAt(topIndex);
+        UpdateHitCollider();
         return piece;
     }
 
@@ -102,8 +153,37 @@ public class HexStack : MonoBehaviour
     public void AppendPiece(HexPieceView piece)
     {
         piece.transform.SetParent(transform, true);
-        piece.transform.localPosition = perPieceOffset * pieces.Count;
+        piece.transform.localPosition = GetLocalPositionForIndex(pieces.Count);
         piece.transform.localRotation = Quaternion.identity;
         pieces.Add(piece);
+        UpdateHitCollider();
+    }
+
+    // Подгоняет BoxCollider (используется OnMouseDown/OnMouseDrag в StackDragHandler) точно под
+    // текущий набор фишек, а не под дефолтный куб 1x1x1 — иначе клик рядом со стопкой, но мимо
+    // видимых фишек, всё равно засчитывался бы как клик по стопке.
+    private void UpdateHitCollider()
+    {
+        if (hitCollider == null) return;
+
+        if (pieces.Count == 0)
+        {
+            hitCollider.size = Vector3.zero;
+            return;
+        }
+
+        Vector3 min = Vector3.positiveInfinity;
+        Vector3 max = Vector3.negativeInfinity;
+
+        foreach (var piece in pieces)
+        {
+            var halfExtent = piece.transform.localScale * 0.5f;
+            var pos = piece.transform.localPosition;
+            min = Vector3.Min(min, pos - halfExtent);
+            max = Vector3.Max(max, pos + halfExtent);
+        }
+
+        hitCollider.center = (min + max) * 0.5f;
+        hitCollider.size = max - min;
     }
 }
