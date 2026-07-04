@@ -519,15 +519,14 @@ public class BoardManager : MonoBehaviour
                 particlesSpawned = true;
                 for (int s = 0; s < n; s++)
                     SpawnDestroyEffect(startPositions[s], colors[s]);
+
+                for (int s = 0; s < n; s++)
+                {
+                    if (roots[s] != null) Destroy(roots[s].gameObject);
+                }
             }
 
             yield return null;
-        }
-
-        // 4. Финальное уничтожение
-        for (int s = 0; s < n; s++)
-        {
-            if (roots[s] != null) Destroy(roots[s].gameObject);
         }
     }
 
@@ -566,7 +565,7 @@ public class BoardManager : MonoBehaviour
         var pivot = (startPos + endPos) * 0.5f; // середина пути — точка на общем ребре ячеек
         var startOffset = startPos - pivot;      // радиус-вектор от ребра до старта
 
-        startOffset *= 0.8f;
+        startOffset *= 0.9f;
 
         var flatDirection = endPos - startPos;
         flatDirection.y = 0f;
