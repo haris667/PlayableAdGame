@@ -500,7 +500,16 @@ public class BoardManager : MonoBehaviour
 
             for (int s = 0; s < n; s++)
             {
-                // roots[s] не может быть null, так как мы фильтровали activeStacks
+                if (roots[s] == null) continue;
+                if (elapsed >= particleDelay) 
+                {
+                    for (int t = 0; t < n; t++)
+                    {
+                        if (roots[t] != null) Destroy(roots[t].gameObject);
+                    }
+                    break;
+                }
+
                 roots[s].position = Vector3.Lerp(startPositions[s], endPositions[s], sinkN);
 
                 var pieces = squashPieces[s];
@@ -522,12 +531,6 @@ public class BoardManager : MonoBehaviour
             }
 
             yield return null;
-        }
-
-        // 4. Финальное уничтожение
-        for (int s = 0; s < n; s++)
-        {
-            if (roots[s] != null) Destroy(roots[s].gameObject);
         }
     }
 
@@ -565,6 +568,8 @@ public class BoardManager : MonoBehaviour
 
         var pivot = (startPos + endPos) * 0.5f; // середина пути — точка на общем ребре ячеек
         var startOffset = startPos - pivot;      // радиус-вектор от ребра до старта
+
+        startOffset *= 0.9f;
 
         var flatDirection = endPos - startPos;
         flatDirection.y = 0f;

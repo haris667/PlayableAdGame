@@ -1,6 +1,6 @@
 if ( TRACE ) { TRACE( JSON.parse( '["BoardCell#init","BoardCell#AutoComputeAxialFromPosition#get","BoardCell#AxialCoord#get","BoardCell#InitialStackColors#get","BoardCell#IsClickable#get","BoardCell#IsEmpty#get","BoardCell#SnapPosition#get","BoardCell#init","BoardCell#SetAxialCoord","BoardCell#Awake","BoardCell#EnsureInitialized","BoardCell#SetHighlightConfig","BoardCell#SetHighlighted","BoardCell#AnimateHighlight","BoardCell#SetTutorialHighlighted","BoardCell#SetLayer","BoardCell#ApplyColor","BoardCell#ApplyScaleAndPosition","BoardManager#init","BoardManager#MarkInReaction","BoardManager#IsChainRunning#get","BoardManager#Cells#get","BoardManager#StackPrefab#get","BoardManager#PiecePrefab#get","BoardManager#Palette#get","BoardManager#init","BoardManager#Awake","BoardManager#ComputeNeighbors","BoardManager#Start","BoardManager#PlaceStack","BoardManager#GetNeighbors","BoardManager#ProcessChainReaction","BoardManager#TryDestroyMonochromeStacks","BoardManager#RunChainReactionBfs","BoardManager#TransferMatchingColor","BoardManager#FlyAndLand","BoardManager#SmoothRotateTo","BoardManager#AnimateAndDestroyAll","BoardManager#SpawnDestroyEffect","BoardManager#MoveHexWithArc","BoardManager#IsBoardFullyCleared","CellHighlightConfig#NormalColor#get","CellHighlightConfig#HighlightColor#get","CellHighlightConfig#HighlightScaleX#get","CellHighlightConfig#HighlightPositionY#get","CellHighlightConfig#TransitionDuration#get","CellHighlightConfig#init","GameFlowController#init","GameFlowController#OnEnable","GameFlowController#OnDisable","GameFlowController#HandleTutorialFinished","GameFlowController#HandleTimerExpired","GameFlowController#HandleBoardCleared","GameFlowController#GoToPackshot","GameTimerUI#Progress01#get","GameTimerUI#RemainingSeconds#get","GameTimerUI#init","GameTimerUI#StartTimer","GameTimerUI#StopTimer","GameTimerUI#Update","GradientSlicedImage#OnPopulateMesh","HexColorPalette#GetMaterial","HexColorPalette.Entry#getDefaultValue","HexColorPalette.Entry#ctor","HexColorPalette.Entry#getHashCode","HexColorPalette.Entry#equals","HexColorPalette.Entry#$clone","HexPieceView#init","HexPieceView#init","HexPieceView#SetNeedsAlwaysOnTopMaterial","HexPieceView#SetColor","HexPieceView#SetAlwaysOnTop","HexPieceView#SetGlow","HexStack#Count#get","HexStack#IsEmpty#get","HexStack#TopColor#get","HexStack#IsMonochrome#get","HexStack#init","HexStack#Awake","HexStack#Initialize","HexStack#BuildFromColors","HexStack#SpawnPieceAtTop","HexStack#GetLocalPositionForIndex","HexStack#GetNextSlotWorldPosition","HexStack#GetTopWorldPosition","HexStack#GetTopPieceIndex","HexStack#SetAlwaysOnTop","HexStack#SetGlow","HexStack#SetLayer","HexStack#PopTopPiece","HexStack#AppendPiece","HexStack#UpdateHitCollider","PackshotController#init","PackshotController#Awake","PackshotController#Show","PackshotController#GoToStore","ScreenScaler#Start","ScreenScaler#LateUpdate","ScreenScaler#Resize","StackDragHandler#IsInTray#get","StackDragHandler#init","StackDragHandler#Awake","StackDragHandler#SetBoard","StackDragHandler#OnDisable","StackDragHandler#OnMouseDown","StackDragHandler#OnMouseDrag","StackDragHandler#OnMouseUp","StackDragHandler#UpdateHighlightedCell","StackDragHandler#SetHighlightedCell","StackDragHandler#RaycastCellUnderPointer","StackDragHandler#ReturnToOrigin","TimerSliderUI#init","TimerSliderUI#init","TimerSliderUI#Awake","TimerSliderUI#OnEnable","TimerSliderUI#OnDisable","TimerSliderUI#HandleWarningZoneEntered","TimerSliderUI#HandleTimerStopped","TimerSliderUI#PlayAlarmThenShowPopup","TimerSliderUI#ShowPopup","TimerSliderUI#LateUpdate","TimerWarningEffects#init","TimerWarningEffects#init","TimerWarningEffects#Awake","TimerWarningEffects#OnEnable","TimerWarningEffects#OnDisable","TimerWarningEffects#HandleWarningZoneEntered","TimerWarningEffects#HandleTimerStopped","TimerWarningEffects#ResetVisuals","TimerWarningEffects#LateUpdate","TrayRefillManager#init","TrayRefillManager#Awake","TrayRefillManager#OnEnable","TrayRefillManager#OnDisable","TrayRefillManager#CaptureTraySlots","TrayRefillManager#HandleTimerStopped","TrayRefillManager#HandleStackPlaced","TrayRefillManager#AllSlotsUsed","TrayRefillManager#RefillTray","TrayRefillManager#GenerateRandomColors","TrayRefillManager#AnimateSpawn","TutorialHandController#init","TutorialHandController#OnEnable","TutorialHandController#OnDisable","TutorialHandController#Start","TutorialHandController#ShowHand","TutorialHandController#HideHand","TutorialHandController#HandleGrabbed","TutorialHandController#HandleMoved","TutorialHandController#HandleReleased","TutorialHandController#ReshowAfterDelay","TutorialHandController#LoopHandAnimation","TutorialHandController#MoveHand","TutorialHandController#SetFinger","TutorialHandController#ApplySpotlight","TutorialHandController#ClearSpotlight","TutorialHandController#FindAvailableTrayStack","TutorialHandController#FindNearestEmptyCell","TutorialHandController#WorldToCanvasPoint","TutorialSpotlightOverlay#init","TutorialSpotlightOverlay#Awake","TutorialSpotlightOverlay#SetupRevealCamera","TutorialSpotlightOverlay#Show","TutorialSpotlightOverlay#Hide","TutorialSpotlightOverlay#HideImmediate","TutorialSpotlightOverlay#FadeTo","TutorialSpotlightOverlay#DisableOverlay"]' ) ); }
 /**
- * @version 1.0.9682.7137
+ * @version 1.0.9682.10330
  * @copyright anton
  * @compiler Bridge.NET 17.9.42-luna
  */
@@ -1242,7 +1242,18 @@ if ( TRACE ) { TRACE( "BoardManager#AnimateAndDestroyAll", this ); }
                                         squashN = this.squashDuration > 0.0 ? Math.max(0, Math.min(1, elapsed / this.squashDuration)) : 1.0;
 
                                         for (var s2 = 0; s2 < n; s2 = (s2 + 1) | 0) {
-                                            // roots[s] не может быть null, так как мы фильтровали activeStacks
+                                            if (UnityEngine.Component.op_Equality(roots[s2], null)) {
+                                                continue;
+                                            }
+                                            if (elapsed >= particleDelay) {
+                                                for (var t = 0; t < n; t = (t + 1) | 0) {
+                                                    if (UnityEngine.Component.op_Inequality(roots[t], null)) {
+                                                        UnityEngine.MonoBehaviour.Destroy(roots[t].gameObject);
+                                                    }
+                                                }
+                                                break;
+                                            }
+
                                             roots[s2].position = new pc.Vec3().lerp( startPositions[s2], endPositions[s2], sinkN );
 
                                             pieces1 = squashPieces[s2];
@@ -1272,12 +1283,6 @@ if ( TRACE ) { TRACE( "BoardManager#AnimateAndDestroyAll", this ); }
                                         continue;
                                 }
                                 case 6: {
-                                    // 4. Финальное уничтожение
-                                        for (var s4 = 0; s4 < n; s4 = (s4 + 1) | 0) {
-                                            if (UnityEngine.Component.op_Inequality(roots[s4], null)) {
-                                                UnityEngine.MonoBehaviour.Destroy(roots[s4].gameObject);
-                                            }
-                                        }
 
                                 }
                                 default: {
@@ -1353,6 +1358,8 @@ if ( TRACE ) { TRACE( "BoardManager#MoveHexWithArc", this ); }
 
                                         pivot = (startPos.$clone().add( endPos )).clone().scale( 0.5 ); // середина пути — точка на общем ребре ячеек
                                         startOffset = startPos.$clone().sub( pivot ); // радиус-вектор от ребра до старта
+
+                                        startOffset = startOffset.$clone().clone().scale( 0.9 );
 
                                         flatDirection = endPos.$clone().sub( startPos );
                                         flatDirection.y = 0.0;

@@ -2762,7 +2762,7 @@ Deserializers.productName = "PlayableAdGame";
 
 Deserializers.lunaInitializationTime = "06/30/2026 14:26:56";
 
-Deserializers.lunaDaysRunning = "4.3";
+Deserializers.lunaDaysRunning = "4.4";
 
 Deserializers.lunaVersion = "7.2.0";
 
@@ -2816,7 +2816,7 @@ Deserializers.graphicsConstraint = 24;
 
 Deserializers.linearColorSpace = true;
 
-Deserializers.buildID = "558b0626-c480-4d9c-bbf7-61cbfcc75c6f";
+Deserializers.buildID = "1ad0c539-e021-4ec6-92d8-7e90a9f84a94";
 
 Deserializers.runtimeInitializeOnLoadInfos = [[["UnityEngine","Experimental","Rendering","ScriptableRuntimeReflectionSystemSettings","ScriptingDirtyReflectionSystemInstance"]],[["Unity","VisualScripting","RuntimeVSUsageUtility","RuntimeInitializeOnLoadBeforeSceneLoad"]],[["$BurstDirectCallInitializer","Initialize"],["$BurstDirectCallInitializer","Initialize"],["$BurstDirectCallInitializer","Initialize"],["$BurstDirectCallInitializer","Initialize"]],[],[]];
 

@@ -500,7 +500,16 @@ public class BoardManager : MonoBehaviour
 
             for (int s = 0; s < n; s++)
             {
-                // roots[s] не может быть null, так как мы фильтровали activeStacks
+                if (roots[s] == null) continue;
+                if (elapsed >= particleDelay) 
+                {
+                    for (int t = 0; t < n; t++)
+                    {
+                        if (roots[t] != null) Destroy(roots[t].gameObject);
+                    }
+                    break;
+                }
+
                 roots[s].position = Vector3.Lerp(startPositions[s], endPositions[s], sinkN);
 
                 var pieces = squashPieces[s];
@@ -519,11 +528,6 @@ public class BoardManager : MonoBehaviour
                 particlesSpawned = true;
                 for (int s = 0; s < n; s++)
                     SpawnDestroyEffect(startPositions[s], colors[s]);
-
-                for (int s = 0; s < n; s++)
-                {
-                    if (roots[s] != null) Destroy(roots[s].gameObject);
-                }
             }
 
             yield return null;

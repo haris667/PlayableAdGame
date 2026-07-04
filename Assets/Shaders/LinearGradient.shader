@@ -1,136 +1,127 @@
-Shader "Custom/LinearGradient"
+// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
+// Modified to add gradient color by Brian MacIntosh
+
+Shader "UI/Gradient"
 {
-    Properties
-    {
-        // Required by Unity UI — holds the sprite texture
-        [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
+	Properties
+	{
+		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
+		_TopLeftColor("Gradient Top Left", Color) = (1,1,1,1)
+		_TopRightColor("Gradient Top Right", Color) = (1,1,1,1)
+		_BottomLeftColor("Gradient Bottom Left", Color) = (1,1,1,1)
+		_BottomRightColor("Gradient Bottom Right", Color) = (1,1,1,1)
 
-        _ColorA    ("Color A (Start)",      Color)        = (1, 0, 0, 1)
-        _ColorB    ("Color B (End)",        Color)        = (0, 0, 1, 1)
-        _Angle     ("Angle (degrees)",      Range(0, 360)) = 0
-        _Midpoint  ("Midpoint",             Range(0.01, 0.99)) = 0.5
-        _Hardness  ("Hardness",             Range(0, 1)) = 0
+		_StencilComp("Stencil Comparison", Float) = 8
+		_Stencil("Stencil ID", Float) = 0
+		_StencilOp("Stencil Operation", Float) = 0
+		_StencilWriteMask("Stencil Write Mask", Float) = 255
+		_StencilReadMask("Stencil Read Mask", Float) = 255
 
-        // Required for UI Mask / Scroll Rect support
-        _StencilComp      ("Stencil Comparison", Float) = 8
-        _Stencil          ("Stencil ID",         Float) = 0
-        _StencilOp        ("Stencil Operation",  Float) = 0
-        _StencilWriteMask ("Stencil Write Mask", Float) = 255
-        _StencilReadMask  ("Stencil Read Mask",  Float) = 255
-        _ColorMask        ("Color Mask",         Float) = 15
-    }
+		_ColorMask("Color Mask", Float) = 15
 
-    SubShader
-    {
-        Tags
-        {
-            "Queue"             = "Transparent"
-            "IgnoreProjector"   = "True"
-            "RenderType"        = "Transparent"
-            "PreviewType"       = "Plane"
-            "CanUseSpriteAtlas" = "True"
-        }
+		[Toggle(UNITY_UI_ALPHACLIP)] _UseUIAlphaClip("Use Alpha Clip", Float) = 0
+	}
 
-        Stencil
-        {
-            Ref       [_Stencil]
-            Comp      [_StencilComp]
-            Pass      [_StencilOp]
-            ReadMask  [_StencilReadMask]
-            WriteMask [_StencilWriteMask]
-        }
+	SubShader
+	{
+		Tags
+		{
+			"Queue" = "Transparent"
+			"IgnoreProjector" = "True"
+			"RenderType" = "Transparent"
+			"PreviewType" = "Plane"
+			"CanUseSpriteAtlas" = "True"
+		}
 
-        Cull      Off
-        Lighting  Off
-        ZWrite    Off
-        ZTest     [unity_GUIZTestMode]
-        Blend     SrcAlpha OneMinusSrcAlpha
-        ColorMask [_ColorMask]
+		Stencil
+		{
+			Ref[_Stencil]
+			Comp[_StencilComp]
+			Pass[_StencilOp]
+			ReadMask[_StencilReadMask]
+			WriteMask[_StencilWriteMask]
+		}
 
-        Pass
-        {
-            CGPROGRAM
-            #pragma vertex   vert
-            #pragma fragment frag
-            #pragma target 2.0
+		Cull Off
+		Lighting Off
+		ZWrite Off
+		ZTest[unity_GUIZTestMode]
+		Blend SrcAlpha OneMinusSrcAlpha
+		ColorMask[_ColorMask]
 
-            #include "UnityCG.cginc"
-            #include "UnityUI.cginc"
+		Pass
+		{
+			Name "Default"
+		CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#pragma target 2.0
 
-            sampler2D _MainTex;
-            fixed4    _ColorA;
-            fixed4    _ColorB;
-            float     _Angle;
-            float     _Midpoint;
-            float     _Hardness;
-            float4    _ClipRect;
+			#include "UnityCG.cginc"
+			#include "UnityUI.cginc"
 
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float4 color  : COLOR;
-                float2 uv0    : TEXCOORD0;
-                // uv1 is filled by GradientSlicedImage with full-rect 0-1 position
-                float2 uv1    : TEXCOORD1;
-            };
+			#pragma multi_compile __ UNITY_UI_CLIP_RECT
+			#pragma multi_compile __ UNITY_UI_ALPHACLIP
 
-            struct v2f
-            {
-                float4 pos      : SV_POSITION;
-                fixed4 color    : COLOR;
-                float2 uv0      : TEXCOORD0;
-                float2 uv1      : TEXCOORD1;
-                float4 worldPos : TEXCOORD2;
-            };
+			struct appdata_t
+			{
+				float4 vertex   : POSITION;
+				float4 color    : COLOR;
+				float2 texcoord : TEXCOORD0;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
 
-            v2f vert(appdata v)
-            {
-                v2f o;
-                o.pos      = UnityObjectToClipPos(v.vertex);
-                o.worldPos = mul(unity_ObjectToWorld, v.vertex);
-                o.color    = v.color;
-                o.uv0      = v.uv0;
-                o.uv1      = v.uv1;
-                return o;
-            }
+			struct v2f
+			{
+				float4 vertex   : SV_POSITION;
+				fixed4 color : COLOR;
+				float2 texcoord  : TEXCOORD0;
+				float4 worldPosition : TEXCOORD1;
+				UNITY_VERTEX_OUTPUT_STEREO
+			};
 
-            fixed4 frag(v2f i) : SV_Target
-            {
-                // Sprite alpha — preserves sliced corners/borders shape
-                fixed4 sprite = tex2D(_MainTex, i.uv0);
+			sampler2D _MainTex;
+			fixed4 _TopLeftColor;
+			fixed4 _TopRightColor;
+			fixed4 _BottomLeftColor;
+			fixed4 _BottomRightColor;
+			fixed4 _TextureSampleAdd;
+			float4 _ClipRect;
+			float4 _MainTex_ST;
 
-                // Gradient computed over the FULL image rect via uv1
-                float  rad      = _Angle * (3.14159265 / 180.0);
-                float2 dir      = float2(cos(rad), sin(rad));
-                float2 centered = i.uv1 - 0.5;
-                float  proj     = dot(centered, dir);
-                float  range    = abs(dir.x) * 0.5 + abs(dir.y) * 0.5;
-                float  t        = saturate(proj / (2.0 * range) + 0.5);
+			v2f vert(appdata_t v)
+			{
+				v2f OUT;
+				UNITY_SETUP_INSTANCE_ID(v);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
+				OUT.worldPosition = v.vertex;
+				OUT.vertex = UnityObjectToClipPos(OUT.worldPosition);
 
-                // Remap t through midpoint: piecewise-linear so the 50% blend
-                // point sits at _Midpoint instead of always at 0.5.
-                float tLo  = t / _Midpoint * 0.5;
-                float tHi  = 0.5 + (t - _Midpoint) / (1.0 - _Midpoint) * 0.5;
-                float tMid = t < _Midpoint ? tLo : tHi;
+				OUT.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 
-                // Hardness: сжимает зону перехода вокруг midpoint.
-                // 0 = плавный на всю длину, 1 = мгновенный перепад.
-                float halfWidth = (1.0 - _Hardness) * 0.5;
-                float tFinal    = saturate((tMid - (0.5 - halfWidth)) / max(2.0 * halfWidth, 0.0001));
+				OUT.color = v.color;
+				return OUT;
+			}
 
-                fixed4 grad = lerp(_ColorA, _ColorB, tFinal);
+			fixed4 frag(v2f IN) : SV_Target
+			{
+				half4 color = (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
 
-                // Sprite alpha cuts out the shape; vertex color carries Image.color tint
-                fixed4 col  = fixed4(grad.rgb, grad.a * sprite.a) * i.color;
+				fixed4 topColor = _TopRightColor * IN.texcoord.x + _TopLeftColor * (1 - IN.texcoord.x);
+				fixed4 bottomColor = _BottomRightColor * IN.texcoord.x + _BottomLeftColor * (1 - IN.texcoord.x);
+				color = color * (topColor * IN.texcoord.y + bottomColor * (1 - IN.texcoord.y));
 
-                // Respect UI clipping (Mask, ScrollRect, etc.)
-                col.a *= UnityGet2DClipping(i.worldPos.xy, _ClipRect);
+				#ifdef UNITY_UI_CLIP_RECT
+				color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
+				#endif
 
-                return col;
-            }
-            ENDCG
-        }
-    }
+				#ifdef UNITY_UI_ALPHACLIP
+				clip(color.a - 0.001);
+				#endif
 
-    FallBack "UI/Default"
+				return color;
+			}
+		ENDCG
+		}
+	}
 }
