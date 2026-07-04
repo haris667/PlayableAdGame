@@ -22,9 +22,16 @@ public class HexStack : MonoBehaviour
     private readonly List<HexPieceView> pieces = new List<HexPieceView>();
     private BoxCollider hitCollider;
 
+    // true только для стопок, заданных прямо в сцене через initialColors (стопки лотка,
+    // существующие с самого старта, см. Awake) — только им реально может понадобиться личная
+    // копия материала (SetAlwaysOnTop во время драга). Стопки, которые BoardManager создаёт
+    // процедурно на старте игры через Initialize (стартовые стопки поля), не двигаются никогда,
+    // поэтому копия материала им не нужна — остаётся false.
+    private bool piecesNeedAlwaysOnTopMaterial;
+
     public int Count => pieces.Count;
     public bool IsEmpty => pieces.Count == 0;
-    public HexColor TopColor => pieces[pieces.Count - 1].Color;
+    public HexColor TopColor => pieces[GetTopPieceIndex()].Color;
 
     public bool IsMonochrome
     {
@@ -42,21 +49,34 @@ public class HexStack : MonoBehaviour
     // Ячейка поля, на которой сейчас стоит стопка. Null, пока стопка в лотке.
     public BoardCell CurrentCell { get; set; }
 
+    // Помечена как участник ТЕКУЩЕЙ цепной реакции (донор или получатель любой передачи, либо
+    // стартовая стопка). Прямое поле на самой стопке — надёжно в билде Luna, в отличие от наборов
+    // по ссылке (HashSet/List.Contains) и по внешнему индексу (bool[]), которые там теряли элементы.
+    // По окончании реакции BoardManager проверяет все помеченные стопки и уничтожает ставшие
+    // одноцветными, тут же снимая флаг.
+    [System.NonSerialized] public bool InReaction;
+
     private void Awake()
     {
         hitCollider = GetComponent<BoxCollider>();
 
         if (pieces.Count == 0 && initialColors.Count > 0 && piecePrefab != null && palette != null)
+        {
+            piecesNeedAlwaysOnTopMaterial = true;
             BuildFromColors(initialColors);
+        }
     }
 
     // Используется BoardManager-ом для процедурного создания стопок (например, стартовых на поле).
     // Если на объекте уже что-то заспавнено (например, Awake() успел собрать initialColors) —
-    // сначала чистим, чтобы не задвоить фишки.
-    public void Initialize(IReadOnlyList<HexColor> colors, HexPieceView prefab, HexColorPalette colorPalette)
+    // сначала чистим, чтобы не задвоить фишки. needsAlwaysOnTopMaterial по умолчанию false
+    // (стартовые стопки поля неподвижны, копия материала им не нужна) — TrayRefillManager явно
+    // передаёт true для новых стопок лотка, которые реально можно таскать.
+    public void Initialize(IReadOnlyList<HexColor> colors, HexPieceView prefab, HexColorPalette colorPalette, bool needsAlwaysOnTopMaterial = false)
     {
         piecePrefab = prefab;
         palette = colorPalette;
+        piecesNeedAlwaysOnTopMaterial = needsAlwaysOnTopMaterial;
 
         for (int i = 0; i < pieces.Count; i++)
             if (pieces[i] != null) Destroy(pieces[i].gameObject);
@@ -76,6 +96,7 @@ public class HexStack : MonoBehaviour
         var piece = Instantiate(piecePrefab, transform);
         piece.transform.localPosition = GetLocalPositionForIndex(pieces.Count);
         piece.transform.localRotation = Quaternion.identity;
+        piece.SetNeedsAlwaysOnTopMaterial(piecesNeedAlwaysOnTopMaterial);
         piece.SetColor(color, palette);
         pieces.Add(piece);
         UpdateHitCollider();
@@ -91,23 +112,74 @@ public class HexStack : MonoBehaviour
     }
 
     // Мировая позиция следующего свободного слота сверху стопки — куда должна прилететь новая фишка.
-    public Vector3 GetNextSlotWorldPosition()
+    // reserved — сколько слотов уже "забронировано" под фишки, которые летят сюда прямо сейчас,
+    // но ещё не приземлились (pieces.Count растёт только при реальном AppendPiece при посадке) —
+    // без этого несколько фишек, запущенных внахлёст, целились бы в один и тот же слот.
+    public Vector3 GetNextSlotWorldPosition(int reserved = 0)
     {
-        return transform.TransformPoint(GetLocalPositionForIndex(pieces.Count));
+        return transform.TransformPoint(GetLocalPositionForIndex(pieces.Count + reserved));
     }
 
     public Vector3 GetTopWorldPosition()
     {
-        return pieces.Count == 0 ? transform.position : pieces[pieces.Count - 1].transform.position;
+        return pieces.Count == 0 ? transform.position : pieces[GetTopPieceIndex()].transform.position;
+    }
+
+    // Индекс "верхней" фишки стопки (от неё зависят TopColor и то, какие фишки переносить).
+    // "Верх" — это конец лесенки с наибольшей мировой Y. Определяем его по НАПРАВЛЕНИЮ роста стопки
+    // (perPieceOffset, повёрнутый на текущий поворот стопки), а НЕ сравнением почти равных
+    // world.position.y у каждой фишки. Причина: когда стопка растёт горизонтально (y-компонента
+    // шага ≈ 0), у всех фишок почти одинаковая высота, и пофишковое сравнение float в билде Luna
+    // (IL2CPP/WebGL) и редакторе (Mono) округлялось ПО-РАЗНОМУ — в билде TopColor "колебался",
+    // из-за чего слияние переносило НЕ ТУ фишку и стопка после слияния оставалась НЕ монохромной
+    // в данных (хотя визуально выглядела одноцветной) → её не удаляло. Симптом был строго
+    // позиционным и только в билде. Знак y-компоненты шага детерминирован и одинаков везде:
+    //   растёт вверх  → верх = последняя добавленная (Count-1);
+    //   растёт вниз   → верх = первая (0);
+    //   почти плоская → детерминированно последняя добавленная (логический верх стопки).
+    private int GetTopPieceIndex()
+    {
+        if (pieces.Count == 0) return 0;
+
+        Vector3 worldStep = transform.rotation * perPieceOffset;
+        const float flatThreshold = 1e-3f;
+        if (worldStep.y < -flatThreshold) return 0;
+        return pieces.Count - 1;
+    }
+
+    // Включает/выключает "поверх всего" сразу на всех фишках стопки — см. HexPieceView.SetAlwaysOnTop
+    // и StackDragHandler (включается на время активного драга).
+    public void SetAlwaysOnTop(bool alwaysOnTop)
+    {
+        foreach (var piece in pieces)
+            piece.SetAlwaysOnTop(alwaysOnTop);
+    }
+
+    // См. HexPieceView.SetGlow — применяется сразу ко всем фишкам стопки.
+    public void SetGlow(float multiplier)
+    {
+        foreach (var piece in pieces)
+            piece.SetGlow(multiplier);
+    }
+
+    // Переносит саму стопку и все её фишки на другой слой (Layer) — используется тутором
+    // (TutorialSpotlightOverlay/TutorialHandController) для "прожектора": камера-подсветка видит
+    // только объекты на специальном слое, остальное перекрывается затемняющей панелью.
+    public void SetLayer(int layer)
+    {
+        gameObject.layer = layer;
+        foreach (var piece in pieces)
+            piece.gameObject.layer = layer;
     }
 
     // Снимает верхнюю фишку для перелёта в другую стопку. Сам GameObject не уничтожается —
-    // им управляет HexJumpAnimator, пока летит дугой к месту назначения.
+    // им управляет BoardManager.AnimatePieceTransfer, пока летит дугой к месту назначения.
     public HexPieceView PopTopPiece()
     {
         if (pieces.Count == 0) return null;
-        var piece = pieces[pieces.Count - 1];
-        pieces.RemoveAt(pieces.Count - 1);
+        int topIndex = GetTopPieceIndex();
+        var piece = pieces[topIndex];
+        pieces.RemoveAt(topIndex);
         UpdateHitCollider();
         return piece;
     }

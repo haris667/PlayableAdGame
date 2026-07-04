@@ -8,13 +8,6 @@ using UnityEngine;
 // при установке новой стопки игроком (см. PlaceStack).
 public class BoardManager : MonoBehaviour
 {
-    // Шесть стандартных смещений соседей для плоской (flat-top) гекс-сетки в осевых координатах.
-    private static readonly Vector2Int[] AxialDirections =
-    {
-        new Vector2Int(1, 0), new Vector2Int(1, -1), new Vector2Int(0, -1),
-        new Vector2Int(-1, 0), new Vector2Int(-1, 1), new Vector2Int(0, 1)
-    };
-
     [Header("Ячейки поля")]
     [Tooltip("Необязательно: если задано, все BoardCell в детях этого трансформа соберутся сюда автоматически.")]
     [SerializeField] private Transform cellsParent;
@@ -23,14 +16,16 @@ public class BoardManager : MonoBehaviour
              "сразу, назначать в каждую BoardCell вручную не нужно (см. Awake).")]
     [SerializeField] private CellHighlightConfig cellHighlightConfig;
 
-    [Header("Авто-расчёт Axial Coord из позиции")]
-    [Tooltip("Трансформ, который считается центром сетки (q=0, r=0). Можно назначить сюда " +
-             "трансформ одной из самих BoardCell — например, центральной ячейки поля.")]
-    [SerializeField] private Transform gridOrigin;
-    [Tooltip("Шаг сетки по мировой оси X между соседними колонками ячеек.")]
-    [SerializeField] private float columnSpacing = 0.31f;
-    [Tooltip("Шаг сетки по мировой оси Z между соседними рядами ячеек в одной колонке.")]
-    [SerializeField] private float rowSpacing = 0.348f;
+    [Header("Определение соседей")]
+    [Tooltip("Максимальное мировое расстояние (по XZ), в пределах которого две ячейки считаются " +
+             "соседями. Должно быть ЧУТЬ больше реального шага гекс-сетки (расстояния до ближайшей " +
+             "ячейки), но заметно меньше расстояния до ЯЧЕЙКИ ЧЕРЕЗ ОДНУ — тогда каждая ячейка " +
+             "находит ровно свои 6 соседей. По умолчанию ~0.45 при шаге сетки ~0.35. Соседей ищем " +
+             "напрямую по расстоянию, а не через осевые координаты с округлением: округление на " +
+             "своей границе даёт в билде (IL2CPP) и редакторе (Mono) РАЗНЫЙ результат, из-за чего " +
+             "у крайних ячеек сосед мог не находиться и последний переход цепочки не срабатывал; " +
+             "порог по расстоянию к этому нечувствителен — сосед либо явно внутри, либо явно снаружи.")]
+    [SerializeField] private float neighborMaxDistance = 0.45f;
 
     [Header("Шаблоны для стартовых стопок на поле")]
     [SerializeField] private HexStack stackPrefab;
@@ -83,19 +78,38 @@ public class BoardManager : MonoBehaviour
              "чтобы не было рывка в момент, когда AppendPiece сбрасывает поворот фишки.")]
     [SerializeField] private float landingSettleDuration = 0.08f;
 
-    private readonly Dictionary<Vector2Int, BoardCell> cellByCoord = new Dictionary<Vector2Int, BoardCell>();
     private bool chainRunning;
+
+    // Монотонный счётчик волн цепной реакции. Каждый запуск ProcessChainReaction берёт новый id и
+    // штампует им очередь своего BFS (BoardCell.QueuedWave) — дедуп очереди без сброса между волнами
+    // и изоляция параллельных волн (у каждой свой id). См. BoardCell.QueuedWave.
+    private int reactionWaveCounter;
 
     // Срабатывает, когда после цепной реакции на поле не осталось ни одной стопки —
     // GameFlowController может досрочно перейти к пэкшоту, не дожидаясь таймера.
     public event Action OnBoardCleared;
+
+    // Стреляет сразу после того, как стопка встала на ячейку, но СТРОГО ДО запуска цепной реакции
+    // (см. PlaceStack) — в отличие от StackDragHandler.OnAnyStackReleased, который срабатывает уже
+    // ПОСЛЕ StartCoroutine(ProcessChainReaction). Если реакция целиком успевает пройти синхронно
+    // (например, ни один переход не требует yield) и уничтожает саму эту стопку, то к моменту
+    // OnAnyStackReleased её GameObject уже мог не существовать — TrayRefillManager подписывается
+    // именно на это событие, чтобы гарантированно не пропустить момент постановки.
+    public event Action<HexStack> OnStackPlaced;
 
     public bool IsChainRunning => chainRunning;
 
     // Например, TutorialHandController использует это, чтобы указать руку на любую свободную ячейку.
     public IReadOnlyList<BoardCell> Cells => cells;
 
+    // Те же шаблоны, что и для стартовых стопок поля — переиспользуются, например,
+    // TrayRefillManager-ом при спавне новых случайных стопок лотка взамен израсходованных.
+    public HexStack StackPrefab => stackPrefab;
+    public HexPieceView PiecePrefab => piecePrefab;
+    public HexColorPalette Palette => palette;
+
     private static readonly int ClipYShaderId = Shader.PropertyToID("_ClipY");
+    private int _flightsRemaining = 0;
 
     private void Awake()
     {
@@ -106,48 +120,37 @@ public class BoardManager : MonoBehaviour
         if (cellsParent != null && cells.Count == 0)
             cells.AddRange(cellsParent.GetComponentsInChildren<BoardCell>());
 
-        ComputeAxialCoordinates();
+        ComputeNeighbors();
 
         foreach (var cell in cells)
-        {
-            if (cellByCoord.ContainsKey(cell.AxialCoord))
-                Debug.LogWarning($"BoardManager: две ячейки получили одинаковые Axial Coord {cell.AxialCoord} " +
-                                  $"({cellByCoord[cell.AxialCoord].name} и {cell.name}) — проверьте gridOrigin/columnSpacing/rowSpacing.", cell);
-            cellByCoord[cell.AxialCoord] = cell;
-
             cell.SetHighlightConfig(cellHighlightConfig);
-        }
     }
 
-    // Вычисляет (q, r) каждой ячейки из её мировой позиции относительно gridOrigin, чтобы не
-    // проставлять координаты руками. Формула обратна той, по которой сама сетка была построена:
-    // world.x = origin.x + columnSpacing * q
-    // world.z = origin.z + rowSpacing * (r + q / 2)
-    private void ComputeAxialCoordinates()
+    // Для каждой ячейки собирает список ячеек, находящихся в пределах neighborMaxDistance по XZ,
+    // и складывает его ПРЯМО в cell.Neighbors (не в Dictionary — см. BoardCell.Neighbors про то,
+    // почему BoardCell как ключ хеш-коллекции ненадёжен в билде). Считается один раз при старте —
+    // ячейки поля неподвижны. Никаких осевых координат/округления: сосед определяется чистым
+    // сравнением расстояния, одинаковым в билде и редакторе (см. тултип neighborMaxDistance).
+    private void ComputeNeighbors()
     {
-        var origin = gridOrigin;
-        if (origin == null)
-        {
-            // Без точки отсчёта координаты не считаются вообще — все ячейки молча остаются
-            // на (0,0), GetNeighbors ни для кого не находит соседей, и цепная реакция никогда
-            // не запускается между соседними стопками. Формула ниже зависит только от РАЗНИЦЫ
-            // позиций, так что любая фиксированная точка подходит как временная замена —
-            // берём позицию первой ячейки, лишь бы не оставлять всех без координат вообще.
-            if (cells.Count == 0) return;
-            origin = cells[0].transform;
-            Debug.LogWarning($"BoardManager: Grid Origin не назначен в инспекторе — временно использую позицию " +
-                              $"ячейки '{cells[0].name}' как точку отсчёта для Axial Coord. Назначьте Grid Origin " +
-                              $"явно, чтобы не полагаться на это резервное поведение.", this);
-        }
+        float maxSqr = neighborMaxDistance * neighborMaxDistance;
 
         foreach (var cell in cells)
         {
-            if (!cell.AutoComputeAxialFromPosition) continue;
+            if (cell == null) continue;
 
-            var delta = cell.transform.position - origin.position;
-            int q = Mathf.RoundToInt(delta.x / columnSpacing);
-            int r = Mathf.RoundToInt(delta.z / rowSpacing - q * 0.5f);
-            cell.SetAxialCoord(new Vector2Int(q, r));
+            cell.Neighbors.Clear();
+            var cellPos = cell.transform.position;
+
+            foreach (var other in cells)
+            {
+                if (other == null || other == cell) continue;
+
+                var delta = other.transform.position - cellPos;
+                delta.y = 0f; // сетка плоская — как и раньше, высота роли не играет
+                if (delta.sqrMagnitude <= maxSqr)
+                    cell.Neighbors.Add(other);
+            }
         }
     }
 
@@ -175,146 +178,174 @@ public class BoardManager : MonoBehaviour
         stack.transform.position = cell.SnapPosition;
         stack.CurrentCell = cell;
         cell.CurrentStack = stack;
+        OnStackPlaced?.Invoke(stack);
         StartCoroutine(ProcessChainReaction(cell));
     }
 
     private List<BoardCell> GetNeighbors(BoardCell cell)
     {
-        var result = new List<BoardCell>(6);
-        foreach (var dir in AxialDirections)
-        {
-            if (cellByCoord.TryGetValue(cell.AxialCoord + dir, out var neighbor))
-                result.Add(neighbor);
-        }
-
-        return result;
+        return cell.Neighbors;
     }
 
-    // Волна цепной реакции от только что поставленной ячейки: если верхний цвет двух соседних
-    // стопок совпадает, БОЛЕЕ ВЫСОКАЯ (по числу фишек) стопка отдаёт своё совпадающего цвета
-    // фишки БОЛЕЕ МАЛЕНЬКОЙ — независимо от того, какая из двух сейчас "активная" ячейка волны,
-    // а не только сосед → в только что поставленную. Стопка, ставшая однотонной, исчезает;
-    // если после этого у неё (или у получателя) снова совпал верх с другим соседом — реакция
-    // продолжается дальше, образуя цепочку. Скорость анимаций множится на speedMultiplierPerClear
-    // за каждую схлопнувшуюся в этой волне стопку.
+    // Волна цепной реакции от только что поставленной ячейки. Модель проста и явна:
+    // 1) BFS (RunChainReactionBfs) обходит реакцию: у активной стопки смотрим соседей, при
+    //    совпадении верхнего цвета более ВЫСОКАЯ стопка отдаёт свои фишки этого цвета более
+    //    маленькой; затем продолжаем от получившихся стопок, пока передачи не затухнут. КАЖДАЯ
+    //    стопка, вошедшая в реакцию (донор ИЛИ получатель любой передачи, плюс стартовая),
+    //    помечается флагом HexStack.InReaction и собирается в список reactionStacks.
+    // 2) По окончании реакции уничтожаем из этого списка все стопки, ставшие ПОЛНОСТЬЮ одноцветными.
+    //
+    // Помечаем и храним сами СТОПКИ прямым флагом на объекте (а не ячейки/наборы по ссылке/индексу):
+    // это надёжно в билде Luna, где HashSet/List.Contains/bool[]-по-индексу теряли элементы, и точно
+    // ограничивает удаление участниками именно этой реакции — ничего лишнего на поле не трогаем.
     private IEnumerator ProcessChainReaction(BoardCell startCell)
     {
         chainRunning = true;
+        int waveId = ++reactionWaveCounter;
+        var reactionStacks = new List<HexStack>();
 
-        // chainRunning блокирует OnMouseDown у всех стопок лотка (см. StackDragHandler), пока идёт
-        // реакция. Если где-то внутри цепочки вылетит необработанное исключение, корутина оборвётся
-        // без try/finally — и chainRunning навсегда останется true, что выглядит как "весь драг
-        // сломался" даже на ячейках, к цепочке не относящихся. finally гарантирует сброс флага
-        // в любом случае, даже если сама реакция отработала некорректно.
-        // Стопки, ставшие однотонными где-то в процессе цепочки, не исчезают сразу на месте —
-        // это могло бы визуально "провалить" стопку раньше, чем ей ещё передадут фишки где-то
-        // дальше по той же волне (например, если она позже снова окажется получателем). Ячейка
-        // логически освобождается (CurrentStack = null) сразу, чтобы BFS корректно считал её
-        // пустой и не пытался мёржить с ней дальше, а сама визуальная анимация исчезновения
-        // копится в этом списке и запускается только один раз — после того, как ВСЯ цепочка
-        // передач полностью завершится (см. конец try). Сначала передаются все доступные
-        // шестиугольники по всей цепочке — потом исчезновение стопок.
-        var pendingDisappear = new List<(HexStack stack, float speedMultiplier, HexColor color)>();
+        Debug.Log($"[Chain] START: Reaction initiated at cell {startCell.name}. WaveID: {waveId}");
 
-        try
+        // Запуск BFS
+        yield return StartCoroutine(RunChainReactionBfs(startCell, waveId, reactionStacks));
+        
+        Debug.Log($"[Chain] BFS FINISHED. Collected {reactionStacks.Count} stacks in reaction.");
+
+        //DestroyMonochromeStacks(reactionStacks);
+    }
+
+    private IEnumerator TryDestroyMonochromeStacks(List<HexStack> reactionStacks)
+    {
+        // Сбор стопок на уничтожение
+        var toDestroy = new List<HexStack>();
+        foreach (var stack in reactionStacks)
         {
-            float speedMultiplier = 1f;
-
-            var queue = new Queue<BoardCell>();
-            var queued = new HashSet<BoardCell>();
-            queue.Enqueue(startCell);
-            queued.Add(startCell);
-
-            while (queue.Count > 0)
+            if (stack == null) continue;
+            
+            stack.InReaction = false;
+            
+            bool isMonochrome = stack.IsMonochrome;
+            bool isEmpty = stack.IsEmpty;
+            
+            if (!isEmpty && isMonochrome)
             {
-                var cell = queue.Dequeue();
-                queued.Remove(cell);
+                toDestroy.Add(stack);
+                Debug.Log($"[Chain] STACK MARKED FOR DESTROY: {stack.name}. Color: {stack.TopColor}");
+            }
+        }
 
-                if (cell.CurrentStack == null || cell.CurrentStack.IsEmpty) continue;
+        Debug.Log($"[Chain] TOTAL STACKS TO DESTROY: {toDestroy.Count}");
 
-                foreach (var neighbor in GetNeighbors(cell))
+        // Уничтожение
+        if (toDestroy.Count > 0)
+        {
+            Debug.Log("[Chain] Starting AnimateAndDestroyAll...");
+            yield return StartCoroutine(AnimateAndDestroyAll(toDestroy));
+            Debug.Log("[Chain] AnimateAndDestroyAll completed successfully.");
+        }
+        else
+        {
+            Debug.Log("[Chain] No stacks found to destroy, ending chain.");
+        }
+
+        chainRunning = false;
+        Debug.Log("[Chain] END: Reaction fully finished.");
+
+        if (IsBoardFullyCleared())
+        {
+            Debug.Log("[Chain] Board is fully cleared! Triggering OnBoardCleared.");
+            OnBoardCleared?.Invoke();
+        }
+    }
+
+    // Помечает стопку как участника текущей реакции и добавляет в список ровно один раз. Дедуп — через
+    // прямой флаг HexStack.InReaction, а НЕ List.Contains/HashSet (те в билде Luna ненадёжны).
+    private static void MarkInReaction(HexStack stack, List<HexStack> reactionStacks)
+    {
+        if (stack == null || stack.InReaction) return;
+        stack.InReaction = true;
+        reactionStacks.Add(stack);
+    }
+
+    // Собственно волновой обход: у активной стопки смотрим соседей, при совпадении верхнего цвета —
+    // передача (более высокая → более маленькой), потом продолжаем от получившихся стопок, пока
+    // передачи не затухнут. Только переносит фишки и ПОМЕЧАЕТ участников (MarkInReaction) — само
+    // уничтожение решает ProcessChainReaction после.
+    //
+    // Дедупликация очереди — прямым полем cell.QueuedWave == waveId (чистое сравнение int, без
+    // bool[]/HashSet/List по ячейке: любой такой набор в билде Luna терял ячейки).
+    private IEnumerator RunChainReactionBfs(BoardCell startCell, int waveId, List<HexStack> reactionStacks)
+    {
+        Debug.Log($"[Chain] BFS: Starting BFS from cell {startCell.name}...");
+        float speedMultiplier = 1f;
+
+        var queue = new Queue<BoardCell>();
+
+        queue.Enqueue(startCell);
+        startCell.QueuedWave = waveId;
+        MarkInReaction(startCell.CurrentStack, reactionStacks);
+
+        while (queue.Count > 0)
+        {
+            var cell = queue.Dequeue();
+            Debug.Log($"[Chain] PROCESS {cell.name}, queue after dequeue={queue.Count}");
+            
+            var neighbors = new List<BoardCell>(GetNeighbors(cell));
+            var visited = new HashSet<BoardCell>();
+            
+            Debug.Log($"[neighbors.count={neighbors.Count}] BFS: Processing cell {cell.name} with top stack color {cell.CurrentStack?.TopColor.ToString() ?? "null"}.");
+            foreach (var neighbor in neighbors)
+            {
+                var activeStack = cell.CurrentStack;
+                var neighborStack = neighbor.CurrentStack;
+
+                if (activeStack == null || activeStack.IsEmpty) break;
+                if (neighborStack == null || neighborStack.IsEmpty) continue;
+                if (neighborStack.TopColor != activeStack.TopColor) continue;
+
+                bool activeIsDonor = activeStack.Count >= neighborStack.Count;
+                var donorStack = activeIsDonor ? activeStack : neighborStack;
+                var receiverStack = activeIsDonor ? neighborStack : activeStack;
+                var donorCell = activeIsDonor ? cell : neighbor;
+                var receiverCell = activeIsDonor ? neighbor : cell;
+
+                MarkInReaction(donorStack, reactionStacks);
+                MarkInReaction(receiverStack, reactionStacks);
+
+                Debug.Log($"[Chain] TRANSFER START {cell.name} -> {neighbor.name}. active={activeStack.Count} neighbor={neighborStack.Count}");
+                yield return TransferMatchingColor(donorStack, receiverStack, speedMultiplier);
+                Debug.Log($"[Chain] TRANSFER END {cell.name} -> {neighbor.name}. donorEmpty={donorStack.IsEmpty} activeTop={(cell.CurrentStack!=null && !cell.CurrentStack.IsEmpty ? cell.CurrentStack.TopColor.ToString() : "null")}");
+                
+                speedMultiplier *= speedMultiplierPerClear;
+
+                if (donorStack.IsEmpty)
                 {
-                    // Перечитываем каждый раз: activeStack мог опустеть и уничтожиться на
-                    // предыдущей итерации этого же foreach, если он оказался донором.
-                    var activeStack = cell.CurrentStack;
-                    if (activeStack == null || activeStack.IsEmpty) break;
-
-                    var neighborStack = neighbor.CurrentStack;
-                    if (neighborStack == null || neighborStack.IsEmpty) continue;
-                    if (neighborStack.TopColor != activeStack.TopColor) continue;
-
-                    // Более высокая стопка — донор, более маленькая — получатель, независимо
-                    // от того, кто из них сейчас cell (активная ячейка волны), а кто neighbor.
-                    bool activeIsDonor = activeStack.Count >= neighborStack.Count;
-                    var donorStack = activeIsDonor ? activeStack : neighborStack;
-                    var receiverStack = activeIsDonor ? neighborStack : activeStack;
-                    var donorCell = activeIsDonor ? cell : neighbor;
-                    var receiverCell = activeIsDonor ? neighbor : cell;
-
-                    yield return TransferMatchingColor(donorStack, receiverStack, speedMultiplier);
-
-                    // ВАЖНО: однотонность (IsMonochrome) сама по себе — НЕ повод немедленно
-                    // финализировать стопку прямо здесь. У неё (или у cell) могут быть ЕЩЁ не
-                    // проверенные в этом проходе соседи того же цвета, с которыми она должна
-                    // сначала успеть провзаимодействовать (отдать/принять ещё) — иначе стопка
-                    // "исчезает" раньше, чем должна была получить фишки от другого соседа.
-                    // Единственный повод финализировать прямо сейчас — стопка ОПУСТЕЛА (ей больше
-                    // некого/нечего проверять). Однотонный, но не пустой донор/получатель просто
-                    // встаёт в очередь на полный проход по СВОИМ соседям — донор наравне с
-                    // получателем, независимо от того, кто из них сейчас cell, а кто neighbor.
-                    // Реально "схлопнуть" однотонную стопку мы решаем только один раз — после
-                    // того, как у неё проверены ВСЕ соседи (см. ниже, после этого foreach).
-                    if (donorStack.IsEmpty)
-                    {
-                        Destroy(donorStack.gameObject);
-                        donorCell.CurrentStack = null;
-                    }
-                    else if (donorCell != cell && queued.Add(donorCell))
-                    {
-                        queue.Enqueue(donorCell);
-                    }
-
-                    if (receiverCell != cell && queued.Add(receiverCell))
-                    {
-                        queue.Enqueue(receiverCell);
-                    }
+                    Destroy(donorStack.gameObject);
+                    donorCell.CurrentStack = null;
                 }
 
-                // Только теперь, проверив ВСЕХ соседей cell в этом проходе, решаем её судьбу:
-                // если стопка однотонна — значит, ей больше не с кем сливаться дальше (иначе
-                // foreach выше уже бы это обработал и, возможно, "разбавил" её обратно), и она
-                // окончательно схлопывается.
-                if (cell.CurrentStack != null && cell.CurrentStack.IsMonochrome)
+                else if (!activeIsDonor && donorCell.QueuedWave != waveId)
                 {
-                    var finalStack = cell.CurrentStack;
-                    cell.CurrentStack = null;
-                    pendingDisappear.Add((finalStack, speedMultiplier, finalStack.TopColor));
-                    speedMultiplier *= speedMultiplierPerClear;
+                    donorCell.QueuedWave = waveId;
+                    Debug.Log($"[Chain] BFS: Enqueuing donor cell {donorCell.name} for further processing. [donorCell.QueuedWave={donorCell.QueuedWave}, waveId={waveId}]");
+                    queue.Enqueue(donorCell);
+                }
+
+                if (activeIsDonor && receiverCell.QueuedWave != waveId)
+                {
+                    receiverCell.QueuedWave = waveId;
+                    Debug.Log($"[Chain] BFS: Enqueuing neighbor cell {receiverCell.name} for further processing. [receiverCell.QueuedWave={receiverCell.QueuedWave}, waveId={waveId}]");
+                    queue.Enqueue(receiverCell);
                 }
             }
 
-            // Разные стопки одной волны могут иметь разный speedMultiplier (он растёт после каждого
-            // схлопнувшегося звена цепочки), а значит и разную длительность собственной анимации
-            // проваливания — "за X секунд до СВОЕГО конца" у каждой получалось бы в разный момент
-            // реального времени. Партиклы синхронизируем по самой долгой анимации во всей пачке —
-            // тогда все, кто исчезает в одной волне, показывают эффект одновременно.
-            float particleSyncDuration = 0f;
-            foreach (var (_, mult, _) in pendingDisappear)
-                particleSyncDuration = Mathf.Max(particleSyncDuration, squashDuration / mult, sinkDuration / mult);
-
-            var disappearFlights = new List<Coroutine>();
-            foreach (var (stack, mult, color) in pendingDisappear)
-                disappearFlights.Add(StartCoroutine(AnimateAndDestroy(stack, mult, color, particleSyncDuration)));
-            foreach (var flight in disappearFlights)
-                yield return flight;
-        }
-        finally
-        {
-            chainRunning = false;
+            Debug.Log($"[Chain] FOREACH END {cell.name}, queue={queue.Count}");
+            yield return null;
+            Debug.Log($"[queue.Count={queue.Count}, speedMultiplier={speedMultiplier}]");
         }
 
-        if (IsBoardFullyCleared())
-            OnBoardCleared?.Invoke();
+        Debug.Log("[Chain] BFS: Queue empty, triggering destruction.");
+        yield return StartCoroutine(TryDestroyMonochromeStacks(reactionStacks));
     }
 
     // Перекидывает по одной все фишки совпадающего верхнего цвета из донора в получателя. Фишки
@@ -340,27 +371,51 @@ public class BoardManager : MonoBehaviour
 
             // На время перелёта фишка не привязана ни к донору, ни к получателю —
             // так масштаб/поворот стопок её не задевает, пока она летит и переворачивается.
+            _flightsRemaining++;
             piece.transform.SetParent(null, true);
-            flights.Add(StartCoroutine(FlyAndLand(piece, from, to, duration, receiverStack)));
+            StartCoroutine(FlyAndLand(piece, from, to, duration, receiverStack));
 
-            yield return new WaitForSeconds(stagger);
+            // Пауза-нахлёст между стартами фишек — вручную через Time.deltaTime, БЕЗ WaitForSeconds:
+            // в билде Luna код ПОСЛЕ `yield return WaitForSeconds` не исполняется (транспайлер
+            // превращает его в return), и цикл раздачи прерывался бы после первой же фишки
+            // (см. доки Luna common-issues / комментарий в ProcessChainReaction).
+            float staggerElapsed = 0f;
+            while (staggerElapsed < stagger)
+            {
+                staggerElapsed += Time.deltaTime;
+                yield return null;
+            }
         }
 
-        foreach (var flight in flights)
-            yield return flight;
+        while (_flightsRemaining > 0)
+        {
+            Debug.Log("WAIT FLIGHT");
+
+            yield return null;
+
+            Debug.Log("FLIGHT DONE");
+        }
     }
 
     private IEnumerator FlyAndLand(HexPieceView piece, Vector3 from, Vector3 to, float duration, HexStack receiverStack)
     {
-        yield return MoveHexWithArc(piece.gameObject, from, to, duration);
-
+        // StartCoroutine, а не «сырой» yield return <IEnumerator>: иначе в билде Luna FlyAndLand не
+        // проснётся после перелёта — фишка визуально долетит, но AppendPiece ниже не выполнится, а
+        // ожидающий этот перелёт TransferMatchingColor/BFS/ProcessChainReaction навсегда зависнут,
+        // так и не дойдя до удаления монохромных стопок (см. подробный комментарий в ProcessChainReaction).
+        Debug.Log("MOVE START");
+        yield return StartCoroutine(MoveHexWithArc(piece.gameObject, from, to, duration));
+        Debug.Log("MOVE END");
         // AppendPiece сразу после этого ставит localRotation = identity относительно receiverStack
         // (т.е. итоговый мировой поворот станет receiverStack.transform.rotation) — расхождение
         // оказалось не только по X (там оно было заметнее всего), но и по остальным осям тоже,
         // просто меньше — поэтому довороток теперь по всем осям сразу, одним Slerp.
-        yield return SmoothRotateTo(piece.transform, receiverStack.transform.rotation, landingSettleDuration);
+        yield return StartCoroutine(SmoothRotateTo(piece.transform, receiverStack.transform.rotation, landingSettleDuration));
+        Debug.Log("ROTATE END");
 
         receiverStack.AppendPiece(piece);
+        _flightsRemaining--;
+        Debug.Log("APPEND END");
     }
 
     private IEnumerator SmoothRotateTo(Transform target, Quaternion targetRotation, float duration)
@@ -379,28 +434,101 @@ public class BoardManager : MonoBehaviour
         target.rotation = targetRotation;
     }
 
-    private IEnumerator AnimateAndDestroy(HexStack stack, float speedMultiplier, HexColor color, float particleSyncDuration)
+    // Все монохромные стопки волны исчезают в ОДНОЙ плоской корутине: одновременно проваливаются
+    // вниз до sinkTargetY и сплющивают верхние фишки, а в конце все разом уничтожаются. Никаких
+    // вложенных под-корутин и НИ ОДНОГО WaitForSeconds — в билде Luna код после WaitForSeconds не
+    // исполнялся, из-за чего Destroy стопки не срабатывал. Единственный yield здесь — `yield return
+    // null`. Все стопки идут в одном темпе (без per-stack ускорения) — визуально они и так исчезают
+    // вместе, зато логика проще и надёжнее.
+    
+    private IEnumerator AnimateAndDestroyAll(List<HexStack> stacks)
     {
-        if (stack == null) yield break;
+        // 1. Очищаем список от null-ссылок сразу, чтобы не проверять их в цикле
+        var activeStacks = new List<HexStack>();
+        if (stacks != null)
+        {
+            foreach (var s in stacks)
+            {
+                if (s != null) activeStacks.Add(s);
+            }
+        }
+        
+        int n = activeStacks.Count;
+        if (n == 0) yield break;
 
-        // Позиция ДО проваливания — стопка в итоге уходит под доску (sinkTargetY), и партикл на
-        // финальной позиции был бы попросту невидим под ней. Эффект должен появиться там, где
-        // стопка реально стояла на поле.
-        var spawnPosition = stack.transform.position;
+        // 2. Предварительно кэшируем все данные
+        var roots = new Transform[n];
+        var startPositions = new Vector3[n];
+        var endPositions = new Vector3[n];
+        var colors = new HexColor[n];
+        var squashPieces = new Transform[n][];
+        var squashStartScales = new Vector3[n][];
 
-        var disappearRoutine = StartCoroutine(AnimateDisappear(
-            stack.transform, squashDuration / speedMultiplier, sinkDuration / speedMultiplier));
+        for (int s = 0; s < n; s++)
+        {
+            var stack = activeStacks[s];
+            var root = stack.transform;
+            roots[s] = root;
+            startPositions[s] = root.position;
+            endPositions[s] = new Vector3(root.position.x, sinkTargetY, root.position.z);
+            colors[s] = stack.TopColor;
 
-        // Партикл — за destroyEffectOffsetBeforeEnd секунд до конца САМОЙ ДОЛГОЙ анимации во всей
-        // пачке одновременно исчезающих стопок (particleSyncDuration), а не до конца собственной,
-        // возможно куда более короткой из-за ускорения по speedMultiplier — иначе несколько стопок
-        // одной волны показывали бы партиклы вразнобой, а не одновременно.
-        float delayBeforeSpawn = Mathf.Max(0f, particleSyncDuration - destroyEffectOffsetBeforeEnd);
-        yield return new WaitForSeconds(delayBeforeSpawn);
-        SpawnDestroyEffect(spawnPosition, color);
+            int squashCount = Mathf.Min(topPieceSquashScaleYZ.Length, root.childCount);
+            var pieces = new Transform[squashCount];
+            var scales = new Vector3[squashCount];
+            for (int i = 0; i < squashCount; i++)
+            {
+                pieces[i] = root.GetChild(root.childCount - 1 - i);
+                scales[i] = pieces[i].localScale;
+            }
+            squashPieces[s] = pieces;
+            squashStartScales[s] = scales;
+        }
 
-        yield return disappearRoutine;
-        Destroy(stack.gameObject);
+        float duration = Mathf.Max(squashDuration, sinkDuration);
+        float particleDelay = Mathf.Max(0f, duration - destroyEffectOffsetBeforeEnd);
+        bool particlesSpawned = false;
+
+        float elapsed = 0f;
+        // 3. Используем простой while с yield return null
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+
+            float sinkN = sinkDuration > 0f ? Mathf.Clamp01(elapsed / sinkDuration) : 1f;
+            float squashN = squashDuration > 0f ? Mathf.Clamp01(elapsed / squashDuration) : 1f;
+
+            for (int s = 0; s < n; s++)
+            {
+                // roots[s] не может быть null, так как мы фильтровали activeStacks
+                roots[s].position = Vector3.Lerp(startPositions[s], endPositions[s], sinkN);
+
+                var pieces = squashPieces[s];
+                var scales = squashStartScales[s];
+                for (int i = 0; i < pieces.Length; i++)
+                {
+                    var sc = pieces[i].localScale;
+                    sc.y = Mathf.Lerp(scales[i].y, topPieceSquashScaleYZ[i], squashN);
+                    sc.z = Mathf.Lerp(scales[i].z, topPieceSquashScaleYZ[i], squashN);
+                    pieces[i].localScale = sc;
+                }
+            }
+
+            if (!particlesSpawned && elapsed >= particleDelay)
+            {
+                particlesSpawned = true;
+                for (int s = 0; s < n; s++)
+                    SpawnDestroyEffect(startPositions[s], colors[s]);
+            }
+
+            yield return null;
+        }
+
+        // 4. Финальное уничтожение
+        for (int s = 0; s < n; s++)
+        {
+            if (roots[s] != null) Destroy(roots[s].gameObject);
+        }
     }
 
     // Партикл-эффект окрашивается под цвет исчезнувшей стопки — берём тот же материал, что и у
@@ -438,6 +566,8 @@ public class BoardManager : MonoBehaviour
         var pivot = (startPos + endPos) * 0.5f; // середина пути — точка на общем ребре ячеек
         var startOffset = startPos - pivot;      // радиус-вектор от ребра до старта
 
+        startOffset *= 0.8f;
+
         var flatDirection = endPos - startPos;
         flatDirection.y = 0f;
         // Знак оси определяет, с какой стороны идёт дуга — сверху или снизу через pivot;
@@ -462,65 +592,11 @@ public class BoardManager : MonoBehaviour
 
             yield return null;
         }
-
+        Debug.Log("ARC FINISHED");
         hexTransform.position = endPos;
         hexTransform.rotation = Quaternion.AngleAxis(180f, flipAxis) * startRotation;
     }
 
-    // Стопка не схлопывается в точку, а проваливается вниз до абсолютной координаты sinkTargetY,
-    // будто уходит под доску. Сплющивание трёх верхних фишек (последние по счёту дочерние объекты
-    // стопки — см. HexStack.SpawnPieceAtTop: каждая следующая фишка добавляется последней и в
-    // списке, и в Hierarchy) идёт на СВОЕЙ отдельной длительности squashDur — обычно короткой и
-    // резкой, тогда как проваливание (sinkDur) — медленное и плавное; оба стартуют одновременно
-    // (t=0), но у каждого свой прогресс, и более короткая анимация просто держит финальное
-    // значение, пока не закончится более длинная.
-    private IEnumerator AnimateDisappear(Transform stackRoot, float squashDur, float sinkDur)
-    {
-        if (stackRoot == null) yield break;
-
-        var startPos = stackRoot.position;
-        var endPos = new Vector3(startPos.x, sinkTargetY, startPos.z);
-
-        int squashCount = Mathf.Min(topPieceSquashScaleYZ.Length, stackRoot.childCount);
-        var topPieces = new Transform[squashCount];
-        var topStartScales = new Vector3[squashCount];
-        for (int i = 0; i < squashCount; i++)
-        {
-            topPieces[i] = stackRoot.GetChild(stackRoot.childCount - 1 - i);
-            topStartScales[i] = topPieces[i].localScale;
-        }
-
-        float duration = Mathf.Max(squashDur, sinkDur);
-        float elapsed = 0f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-
-            float sinkN = sinkDur > 0f ? Mathf.Clamp01(elapsed / sinkDur) : 1f;
-            stackRoot.position = Vector3.Lerp(startPos, endPos, sinkN);
-
-            float squashN = squashDur > 0f ? Mathf.Clamp01(elapsed / squashDur) : 1f;
-            for (int i = 0; i < squashCount; i++)
-            {
-                var scale = topStartScales[i];
-                float targetYZ = topPieceSquashScaleYZ[i];
-                scale.y = Mathf.Lerp(topStartScales[i].y, targetYZ, squashN);
-                scale.z = Mathf.Lerp(topStartScales[i].z, targetYZ, squashN);
-                topPieces[i].localScale = scale;
-            }
-
-            yield return null;
-        }
-
-        stackRoot.position = endPos;
-        for (int i = 0; i < squashCount; i++)
-        {
-            var scale = topPieces[i].localScale;
-            scale.y = topPieceSquashScaleYZ[i];
-            scale.z = topPieceSquashScaleYZ[i];
-            topPieces[i].localScale = scale;
-        }
-    }
 
     private bool IsBoardFullyCleared()
     {

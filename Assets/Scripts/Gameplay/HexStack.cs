@@ -49,6 +49,13 @@ public class HexStack : MonoBehaviour
     // Ячейка поля, на которой сейчас стоит стопка. Null, пока стопка в лотке.
     public BoardCell CurrentCell { get; set; }
 
+    // Помечена как участник ТЕКУЩЕЙ цепной реакции (донор или получатель любой передачи, либо
+    // стартовая стопка). Прямое поле на самой стопке — надёжно в билде Luna, в отличие от наборов
+    // по ссылке (HashSet/List.Contains) и по внешнему индексу (bool[]), которые там теряли элементы.
+    // По окончании реакции BoardManager проверяет все помеченные стопки и уничтожает ставшие
+    // одноцветными, тут же снимая флаг.
+    [System.NonSerialized] public bool InReaction;
+
     private void Awake()
     {
         hitCollider = GetComponent<BoxCollider>();
@@ -62,12 +69,14 @@ public class HexStack : MonoBehaviour
 
     // Используется BoardManager-ом для процедурного создания стопок (например, стартовых на поле).
     // Если на объекте уже что-то заспавнено (например, Awake() успел собрать initialColors) —
-    // сначала чистим, чтобы не задвоить фишки.
-    public void Initialize(IReadOnlyList<HexColor> colors, HexPieceView prefab, HexColorPalette colorPalette)
+    // сначала чистим, чтобы не задвоить фишки. needsAlwaysOnTopMaterial по умолчанию false
+    // (стартовые стопки поля неподвижны, копия материала им не нужна) — TrayRefillManager явно
+    // передаёт true для новых стопок лотка, которые реально можно таскать.
+    public void Initialize(IReadOnlyList<HexColor> colors, HexPieceView prefab, HexColorPalette colorPalette, bool needsAlwaysOnTopMaterial = false)
     {
         piecePrefab = prefab;
         palette = colorPalette;
-        piecesNeedAlwaysOnTopMaterial = false;
+        piecesNeedAlwaysOnTopMaterial = needsAlwaysOnTopMaterial;
 
         for (int i = 0; i < pieces.Count; i++)
             if (pieces[i] != null) Destroy(pieces[i].gameObject);
@@ -116,17 +125,26 @@ public class HexStack : MonoBehaviour
         return pieces.Count == 0 ? transform.position : pieces[GetTopPieceIndex()].transform.position;
     }
 
-    // Индекс физически самой высокой (по мировой Y) фишки в стопке. "Верх" определяем по реальной
-    // высоте, а не по фиксированному индексу (0 или Count-1) — разные стопки (лоток vs стартовые
-    // на поле, и вообще любые с разным поворотом) растут "лесенкой" в разные стороны в мировом
-    // пространстве, так что ни один фиксированный конец списка не может быть верным всегда.
+    // Индекс "верхней" фишки стопки (от неё зависят TopColor и то, какие фишки переносить).
+    // "Верх" — это конец лесенки с наибольшей мировой Y. Определяем его по НАПРАВЛЕНИЮ роста стопки
+    // (perPieceOffset, повёрнутый на текущий поворот стопки), а НЕ сравнением почти равных
+    // world.position.y у каждой фишки. Причина: когда стопка растёт горизонтально (y-компонента
+    // шага ≈ 0), у всех фишок почти одинаковая высота, и пофишковое сравнение float в билде Luna
+    // (IL2CPP/WebGL) и редакторе (Mono) округлялось ПО-РАЗНОМУ — в билде TopColor "колебался",
+    // из-за чего слияние переносило НЕ ТУ фишку и стопка после слияния оставалась НЕ монохромной
+    // в данных (хотя визуально выглядела одноцветной) → её не удаляло. Симптом был строго
+    // позиционным и только в билде. Знак y-компоненты шага детерминирован и одинаков везде:
+    //   растёт вверх  → верх = последняя добавленная (Count-1);
+    //   растёт вниз   → верх = первая (0);
+    //   почти плоская → детерминированно последняя добавленная (логический верх стопки).
     private int GetTopPieceIndex()
     {
-        int topIndex = 0;
-        for (int i = 1; i < pieces.Count; i++)
-            if (pieces[i].transform.position.y > pieces[topIndex].transform.position.y)
-                topIndex = i;
-        return topIndex;
+        if (pieces.Count == 0) return 0;
+
+        Vector3 worldStep = transform.rotation * perPieceOffset;
+        const float flatThreshold = 1e-3f;
+        if (worldStep.y < -flatThreshold) return 0;
+        return pieces.Count - 1;
     }
 
     // Включает/выключает "поверх всего" сразу на всех фишках стопки — см. HexPieceView.SetAlwaysOnTop
@@ -135,6 +153,23 @@ public class HexStack : MonoBehaviour
     {
         foreach (var piece in pieces)
             piece.SetAlwaysOnTop(alwaysOnTop);
+    }
+
+    // См. HexPieceView.SetGlow — применяется сразу ко всем фишкам стопки.
+    public void SetGlow(float multiplier)
+    {
+        foreach (var piece in pieces)
+            piece.SetGlow(multiplier);
+    }
+
+    // Переносит саму стопку и все её фишки на другой слой (Layer) — используется тутором
+    // (TutorialSpotlightOverlay/TutorialHandController) для "прожектора": камера-подсветка видит
+    // только объекты на специальном слое, остальное перекрывается затемняющей панелью.
+    public void SetLayer(int layer)
+    {
+        gameObject.layer = layer;
+        foreach (var piece in pieces)
+            piece.gameObject.layer = layer;
     }
 
     // Снимает верхнюю фишку для перелёта в другую стопку. Сам GameObject не уничтожается —

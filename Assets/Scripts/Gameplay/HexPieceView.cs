@@ -21,7 +21,11 @@ public class HexPieceView : MonoBehaviour
     // лотка выставляют true сами при спавне своих фишек, см. HexStack.piecesNeedAlwaysOnTopMaterial.
     [SerializeField] private bool needsAlwaysOnTopMaterial = false;
 
+    private static readonly int ColorPropertyId = Shader.PropertyToID("_Color");
+
     private MeshRenderer meshRenderer;
+    private MaterialPropertyBlock propertyBlock;
+    private Color baseColor = UnityEngine.Color.white;
 
     public HexColor Color { get; private set; }
 
@@ -36,6 +40,10 @@ public class HexPieceView : MonoBehaviour
 
         var sourceMaterial = palette.GetMaterial(color);
         if (sourceMaterial == null) return;
+
+        // Запоминаем "родной" цвет — от него считается свечение в SetGlow (см. ниже), через
+        // MaterialPropertyBlock, не трогая сам материал/ассет.
+        baseColor = sourceMaterial.color;
 
         if (!needsAlwaysOnTopMaterial)
         {
@@ -66,5 +74,18 @@ public class HexPieceView : MonoBehaviour
         var material = meshRenderer.material;
         material.renderQueue = alwaysOnTop ? AlwaysOnTopRenderQueue : NormalRenderQueue;
         material.SetInt(ZTestPropertyId, (int)(alwaysOnTop ? CompareFunction.Always : CompareFunction.LessEqual));
+    }
+
+    // Множитель яркости относительно "родного" цвета фишки (1 — без изменений, >1 — лёгкое
+    // свечение) — используется тутором, чтобы подсвеченная стопка в Spotlight слегка светилась.
+    // Через MaterialPropertyBlock — общий материал/ассет не трогается.
+    public void SetGlow(float multiplier)
+    {
+        if (meshRenderer == null) meshRenderer = GetComponent<MeshRenderer>();
+        if (propertyBlock == null) propertyBlock = new MaterialPropertyBlock();
+
+        meshRenderer.GetPropertyBlock(propertyBlock);
+        propertyBlock.SetColor(ColorPropertyId, baseColor * multiplier);
+        meshRenderer.SetPropertyBlock(propertyBlock);
     }
 }

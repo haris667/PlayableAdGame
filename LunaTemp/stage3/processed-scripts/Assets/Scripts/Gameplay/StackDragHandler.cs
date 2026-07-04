@@ -40,6 +40,7 @@ public class StackDragHandler : MonoBehaviour
     private Plane dragPlane;
     private bool dragging;
     private bool hasMoved;
+    private BoardCell highlightedCell;
 
     private void Awake()
     {
@@ -51,9 +52,21 @@ public class StackDragHandler : MonoBehaviour
 
     public void SetBoard(BoardManager boardManager) => board = boardManager;
 
+    private void OnDisable()
+    {
+        if (dragging) stack.SetAlwaysOnTop(false);
+        dragging = false;
+        SetHighlightedCell(null);
+    }
+
     private void OnMouseDown()
     {
-        if (board == null || board.IsChainRunning) return;
+        // Раньше здесь ещё была проверка board.IsChainRunning, полностью блокировавшая любой
+        // драг, пока где-то на поле идёт цепная реакция — игрок не мог взять и переставить
+        // ДРУГУЮ свою стопку, пока предыдущая ещё анимируется. Реакции идут независимо друг от
+        // друга по разным ячейкам (см. BoardManager.ProcessChainReaction), так что блокировать
+        // весь драг ради одной текущей реакции не нужно.
+        if (board == null) return;
 
         // Стопка стоит на ячейке, с которой её нельзя забирать (BoardCell.IsClickable == false,
         // например — стартовая стопка поля) — драг вообще не начинаем.
@@ -64,6 +77,7 @@ public class StackDragHandler : MonoBehaviour
         originalPosition = transform.position;
         dragStartPosition = transform.position;
         dragPlane = new Plane(Vector3.up, transform.position);
+        stack.SetAlwaysOnTop(true);
 
         // Смещение между точкой, где палец/курсор коснулся плоскости, и текущей позицией стопки —
         // сохраняем его на весь драг, чтобы стопка не прыгала центром под курсор, а двигалась
@@ -101,12 +115,20 @@ public class StackDragHandler : MonoBehaviour
             hasMoved = true;
             OnAnyStackMoved?.Invoke();
         }
+
+        UpdateHighlightedCell();
     }
 
     private void OnMouseUp()
     {
         if (!dragging) return;
         dragging = false;
+        SetHighlightedCell(null);
+
+        // Выключаем "поверх всего" ДО того, как стопка встанет на финальную позицию (см.
+        // PlaceStack/ReturnToOrigin ниже) — иначе, пока она уже опустилась на место, но ещё
+        // рисуется поверх всего, могла бы на мгновение "просвечивать" сквозь соседей.
+        stack.SetAlwaysOnTop(false);
 
         var cell = RaycastCellUnderPointer();
         if (cell != null && cell.IsEmpty)
@@ -125,6 +147,24 @@ public class StackDragHandler : MonoBehaviour
 
         StartCoroutine(ReturnToOrigin());
         OnAnyStackReleased?.Invoke(false);
+    }
+
+    // Пока стопка висит над полем, подсвечиваем ту ячейку, куда её сейчас поставит рейкаст —
+    // ту же самую, что использует OnMouseUp, чтобы подсветка всегда совпадала с реальным дропом.
+    // Подсвечиваем только реально доступные для дропа ячейки (пустые), а не любую под лучом.
+    private void UpdateHighlightedCell()
+    {
+        var cell = RaycastCellUnderPointer();
+        SetHighlightedCell(cell != null && cell.IsEmpty ? cell : null);
+    }
+
+    private void SetHighlightedCell(BoardCell cell)
+    {
+        if (highlightedCell == cell) return;
+
+        if (highlightedCell != null) highlightedCell.SetHighlighted(false);
+        highlightedCell = cell;
+        if (highlightedCell != null) highlightedCell.SetHighlighted(true);
     }
 
     // Луч от камеры через палец/курсор — первая попавшаяся под него BoardCell и есть цель
