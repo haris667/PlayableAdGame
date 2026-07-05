@@ -4435,7 +4435,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.9563047, z: 0.2923718, w: 0}
   m_LocalPosition: {x: 0, y: -3.9743795, z: -6.6450715}
-  m_LocalScale: {x: 0.18483412, y: 1, z: 0.4}
+  m_LocalScale: {x: 0.18472907, y: 1, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -8536,7 +8536,7 @@ MonoBehaviour:
   moveDuration: 1
   pauseAtEdges: 0.3
   idleDelayBeforeReshow: 4
-  handArcHeight: 60
+  handArcHeight: -600
   overrideSourceStack: {fileID: 2569921}
   overrideTargetCell: {fileID: 1503088453}
   handAnimator: {fileID: 715949419}
