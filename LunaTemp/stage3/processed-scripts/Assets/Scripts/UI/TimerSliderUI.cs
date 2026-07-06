@@ -70,13 +70,6 @@ public class TimerSliderUI : MonoBehaviour
     [SerializeField] private Color popupBackgroundStartColor = Color.white;
     [SerializeField] private Color popupBackgroundEndColor = new Color32(0x71, 0x71, 0x71, 0xFF);
 
-    [Header("Материал блюра под попапом — сила блюра во время появления (синхронно со скейлом)")]
-    [Tooltip("Личный инстанс материала UI/SimpleBackgroundBlur — его свойство _Size анимируется " +
-             "от blurStartSize до blurEndSize за то же popupAnimDuration.")]
-    [SerializeField] private Material blurMaterial;
-    [SerializeField] private float blurStartSize = 0f;
-    [SerializeField] private float blurEndSize = 20f;
-
     private static readonly int BlurSizePropertyId = Shader.PropertyToID("_Size");
 
     private Vector3 clockBaseScale = Vector3.one;
@@ -86,6 +79,11 @@ public class TimerSliderUI : MonoBehaviour
     private Vector3 popupBaseScale = Vector3.one;
     private bool pulseActive;
     private bool alarmTriggered;
+
+    // Стреляет, когда попап "Fail" полностью доиграл анимацию появления (см. ShowPopup) — GameFlowController
+    // ждёт именно это событие, а не сам OnTimerExpired, чтобы пэкшот не выскакивал поверх ещё не
+    // доигравшего попапа, а появлялся строго после него.
+    public event System.Action OnFailPopupShown;
 
     private void Awake()
     {
@@ -166,7 +164,6 @@ public class TimerSliderUI : MonoBehaviour
         popupTransform.localEulerAngles = new Vector3(0f, 0f, popupStartAngleZ);
 
         if (popupBackgroundImage != null) popupBackgroundImage.color = popupBackgroundStartColor;
-        if (blurMaterial != null) blurMaterial.SetFloat(BlurSizePropertyId, blurStartSize);
 
         float t = 0f;
         while (t < popupAnimDuration)
@@ -179,16 +176,14 @@ public class TimerSliderUI : MonoBehaviour
             if (popupBackgroundImage != null)
                 popupBackgroundImage.color = Color.Lerp(popupBackgroundStartColor, popupBackgroundEndColor, n);
 
-            if (blurMaterial != null)
-                blurMaterial.SetFloat(BlurSizePropertyId, Mathf.LerpUnclamped(blurStartSize, blurEndSize, n));
-
             yield return null;
         }
 
         popupTransform.localScale = popupBaseScale;
         popupTransform.localEulerAngles = Vector3.zero;
         if (popupBackgroundImage != null) popupBackgroundImage.color = popupBackgroundEndColor;
-        if (blurMaterial != null) blurMaterial.SetFloat(BlurSizePropertyId, blurEndSize);
+
+        OnFailPopupShown?.Invoke();
     }
 
     // LateUpdate — после GameTimerUI.Update() в этом же кадре, чтобы Progress01 уже учитывал

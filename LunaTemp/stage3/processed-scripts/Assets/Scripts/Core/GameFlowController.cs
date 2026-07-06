@@ -10,6 +10,11 @@ public class GameFlowController : MonoBehaviour
 
     [SerializeField] private TutorialHandController tutorial;
     [SerializeField] private GameTimerUI timer;
+    [Tooltip("Полоска-таймер с попапом \"Fail\" по истечении времени — пэкшот при проигрыше по " +
+             "таймеру показывается ТОЛЬКО после того, как этот попап полностью доиграет появление " +
+             "(см. TimerSliderUI.OnFailPopupShown), а не сразу по OnTimerExpired, иначе пэкшот " +
+             "выскакивал бы поверх ещё не доигравшего попапа.")]
+    [SerializeField] private TimerSliderUI timerSlider;
     [SerializeField] private PackshotController packshot;
     [SerializeField] private BoardManager board;
     [Tooltip("Все три стопки лотка — отключаются при переходе в пэкшот, чтобы их нельзя было тащить.")]
@@ -20,14 +25,14 @@ public class GameFlowController : MonoBehaviour
     private void OnEnable()
     {
         if (tutorial != null) tutorial.OnTutorialFinished += HandleTutorialFinished;
-        if (timer != null) timer.OnTimerExpired += HandleTimerExpired;
+        if (timerSlider != null) timerSlider.OnFailPopupShown += HandleFailPopupShown;
         if (board != null) board.OnBoardCleared += HandleBoardCleared;
     }
 
     private void OnDisable()
     {
         if (tutorial != null) tutorial.OnTutorialFinished -= HandleTutorialFinished;
-        if (timer != null) timer.OnTimerExpired -= HandleTimerExpired;
+        if (timerSlider != null) timerSlider.OnFailPopupShown -= HandleFailPopupShown;
         if (board != null) board.OnBoardCleared -= HandleBoardCleared;
     }
 
@@ -40,7 +45,10 @@ public class GameFlowController : MonoBehaviour
         Luna.Unity.LifeCycle.GameStarted();
     }
 
-    private void HandleTimerExpired() => GoToPackshot();
+    // Таймер истёк — сам переход к пэкшоту откладывается до конца анимации попапа "Fail"
+    // (см. TimerSliderUI.OnFailPopupShown), поэтому здесь никакой прямой реакции на
+    // GameTimerUI.OnTimerExpired не требуется.
+    private void HandleFailPopupShown() => GoToPackshot();
 
     private void HandleBoardCleared()
     {

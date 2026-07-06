@@ -4585,7 +4585,7 @@
             },
             {
                 "name": "UnityEngine.Rendering.ColorWriteMask",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.Rendering.CommandBufferExecutionFlags",
@@ -4797,7 +4797,7 @@
             },
             {
                 "name": "UnityEngine.Rendering.StencilOp",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.Rendering.SynchronisationStage",
@@ -6252,10 +6252,6 @@
                 "excluded": true
             },
             {
-                "name": "UnityEngine.UI.Misc",
-                "excluded": true
-            },
-            {
                 "name": "UnityEngine.UI.RectangularVertexClipper",
                 "excluded": true
             },
@@ -6389,11 +6385,11 @@
             },
             {
                 "name": "UnityEngine.UI.CoroutineTween.ColorTween.ColorTweenCallback",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.UI.CoroutineTween.ColorTween.ColorTweenMode",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.UI.CoroutineTween.FloatTween.FloatTweenCallback",
@@ -6481,7 +6477,7 @@
             },
             {
                 "name": "UnityEngine.UI.Selectable.SelectionState",
-                "excluded": true
+                "excluded": false
             },
             {
                 "name": "UnityEngine.UI.Selectable.Transition",
@@ -14579,7 +14575,7 @@
                     },
                     {
                         "name": "Invoke",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -16387,11 +16383,11 @@
                 "instanceMethods": [
                     {
                         "name": "Invoke",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "AddListener",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RemoveListener",
@@ -16745,7 +16741,7 @@
                     },
                     {
                         "name": "shader#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "shader#set",
@@ -16785,7 +16781,7 @@
                     },
                     {
                         "name": "shaderKeywords#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ctor",
@@ -16837,7 +16833,7 @@
                     },
                     {
                         "name": "SetInt$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetInt",
@@ -17021,11 +17017,11 @@
                     },
                     {
                         "name": "EnableKeyword",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "DisableKeyword",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsKeywordEnabled",
@@ -17161,7 +17157,7 @@
                     },
                     {
                         "name": "localEulerAngles#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "localEulerAngles#set",
@@ -18213,7 +18209,7 @@
                     },
                     {
                         "name": "popMaterialCount#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "hasPopInstruction#get",
@@ -18289,7 +18285,7 @@
                     },
                     {
                         "name": "SetPopMaterial",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -18725,7 +18721,7 @@
                     },
                     {
                         "name": "OnDidApplyAnimationProperties",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -19223,7 +19219,7 @@
                     },
                     {
                         "name": "ExtractInteractable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ExtractBlocksRaycast",
@@ -19513,7 +19509,7 @@
                     },
                     {
                         "name": "normalColor#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "normalColor#set",
@@ -19521,7 +19517,7 @@
                     },
                     {
                         "name": "highlightedColor#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "highlightedColor#set",
@@ -19529,7 +19525,7 @@
                     },
                     {
                         "name": "pressedColor#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "pressedColor#set",
@@ -19537,7 +19533,7 @@
                     },
                     {
                         "name": "selectedColor#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "selectedColor#set",
@@ -19553,7 +19549,7 @@
                     },
                     {
                         "name": "colorMultiplier#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "colorMultiplier#set",
@@ -19561,7 +19557,7 @@
                     },
                     {
                         "name": "fadeDuration#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "fadeDuration#set",
@@ -19659,7 +19655,7 @@
                     },
                     {
                         "name": "NotifyStencilStateChanged",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "FindRootSortOverrideCanvas",
@@ -19701,7 +19697,7 @@
                     },
                     {
                         "name": "mode#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "mode#set",
@@ -19801,7 +19797,7 @@
                     },
                     {
                         "name": "highlightedSprite#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "highlightedSprite#set",
@@ -19809,7 +19805,7 @@
                     },
                     {
                         "name": "pressedSprite#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "pressedSprite#set",
@@ -19817,7 +19813,7 @@
                     },
                     {
                         "name": "selectedSprite#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "selectedSprite#set",
@@ -20049,7 +20045,7 @@
                     },
                     {
                         "name": "startColor#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "targetColor#get",
@@ -20057,7 +20053,7 @@
                     },
                     {
                         "name": "targetColor#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "tweenMode#get",
@@ -20065,39 +20061,39 @@
                     },
                     {
                         "name": "tweenMode#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "duration#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "duration#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ignoreTimeScale#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ignoreTimeScale#set",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "init",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "ctor",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "TweenValue",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "AddOnChangedCallback",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetIgnoreTimescale",
@@ -20109,7 +20105,7 @@
                     },
                     {
                         "name": "ValidTarget",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "getHashCode",
@@ -20121,7 +20117,7 @@
                     },
                     {
                         "name": "$clone",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -20131,7 +20127,7 @@
                 "instanceMethods": [
                     {
                         "name": "Start",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Init",
@@ -20139,11 +20135,11 @@
                     },
                     {
                         "name": "StartTween",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "StopTween",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -20309,11 +20305,11 @@
                     },
                     {
                         "name": "CrossFadeColor",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "CrossFadeColor$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "SetLayoutDirty",
@@ -20449,11 +20445,11 @@
                 "instanceMethods": [
                     {
                         "name": "graphic#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "rectTransform#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "showMaskGraphic#get",
@@ -20465,7 +20461,7 @@
                     },
                     {
                         "name": "init",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "$ctor1",
@@ -20473,35 +20469,35 @@
                     },
                     {
                         "name": "ctor",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "MaskEnabled",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Awake",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnEnable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnDisable",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "UpdateMaskGraphicSettings",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "GetModifiedMaterial",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "IsRaycastLocationValid",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -23613,7 +23609,7 @@
                     },
                     {
                         "name": "RectangleContainsScreenPoint$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "RectangleContainsScreenPoint",
@@ -24081,7 +24077,7 @@
                     },
                     {
                         "name": "Invoke",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Invoke$1",
@@ -24683,7 +24679,7 @@
                     },
                     {
                         "name": "normalTrigger#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "normalTrigger#set",
@@ -24691,7 +24687,7 @@
                     },
                     {
                         "name": "highlightedTrigger#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "highlightedTrigger#set",
@@ -24699,7 +24695,7 @@
                     },
                     {
                         "name": "pressedTrigger#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "pressedTrigger#set",
@@ -24707,7 +24703,7 @@
                     },
                     {
                         "name": "selectedTrigger#get",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "selectedTrigger#set",
@@ -24749,7 +24745,7 @@
                     },
                     {
                         "name": "OnPointerClick",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnSubmit",
@@ -24757,7 +24753,7 @@
                     },
                     {
                         "name": "Press",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "OnFinishSubmit",
@@ -26280,15 +26276,15 @@
                         "excluded": false
                     },
                     {
-                        "name": "HandleTimerExpired",
-                        "excluded": false
-                    },
-                    {
                         "name": "HandleBoardCleared",
                         "excluded": false
                     },
                     {
                         "name": "GoToPackshot",
+                        "excluded": false
+                    },
+                    {
+                        "name": "HandleFailPopupShown",
                         "excluded": false
                     }
                 ]
@@ -26319,16 +26315,6 @@
                     },
                     {
                         "name": "RemainingSeconds#get",
-                        "excluded": false
-                    }
-                ]
-            },
-            {
-                "className": "GradientSlicedImage",
-                "staticMethods": [],
-                "instanceMethods": [
-                    {
-                        "name": "OnPopulateMesh",
                         "excluded": false
                     }
                 ]
@@ -26495,6 +26481,18 @@
                     },
                     {
                         "name": "GoToStore",
+                        "excluded": false
+                    },
+                    {
+                        "name": "AnimateReveal",
+                        "excluded": false
+                    },
+                    {
+                        "name": "GrowMask",
+                        "excluded": false
+                    },
+                    {
+                        "name": "PulseIn",
                         "excluded": false
                     }
                 ]
@@ -27047,11 +27045,11 @@
                     },
                     {
                         "name": "Add$1",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Add$2",
-                        "excluded": true
+                        "excluded": false
                     },
                     {
                         "name": "Remove",
@@ -27069,7 +27067,7 @@
                 "instanceMethods": [
                     {
                         "name": "init",
-                        "excluded": true
+                        "excluded": false
                     }
                 ]
             },
@@ -34432,6 +34430,48 @@
                         "excluded": true
                     }
                 ]
+            },
+            {
+                "className": "CopyRectSize",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "OnEnable",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "UnityEngine.UI.Misc",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "Destroy",
+                        "excluded": true
+                    },
+                    {
+                        "name": "DestroyImmediate",
+                        "excluded": false
+                    }
+                ]
+            },
+            {
+                "className": "FloatingHoverEffect",
+                "staticMethods": [],
+                "instanceMethods": [
+                    {
+                        "name": "init",
+                        "excluded": false
+                    },
+                    {
+                        "name": "Awake",
+                        "excluded": false
+                    },
+                    {
+                        "name": "LateUpdate",
+                        "excluded": false
+                    }
+                ]
             }
         ],
         "stubberDataList": [],
@@ -34454,7 +34494,7 @@
                     "maxWidth": 512,
                     "maxHeight": 512,
                     "format": "png32",
-                    "compression": "quantSize",
+                    "compression": "quantQuality",
                     "quality": 65,
                     "script": "",
                     "ext": ""

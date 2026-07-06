@@ -1,6 +1,6 @@
-if ( TRACE ) { TRACE( JSON.parse( '["BoardCell#init","BoardCell#AutoComputeAxialFromPosition#get","BoardCell#AxialCoord#get","BoardCell#InitialStackColors#get","BoardCell#IsClickable#get","BoardCell#IsEmpty#get","BoardCell#SnapPosition#get","BoardCell#init","BoardCell#SetAxialCoord","BoardCell#Awake","BoardCell#EnsureInitialized","BoardCell#SetHighlightConfig","BoardCell#SetHighlighted","BoardCell#AnimateHighlight","BoardCell#SetTutorialHighlighted","BoardCell#SetLayer","BoardCell#ApplyColor","BoardCell#ApplyScaleAndPosition","BoardManager#init","BoardManager#MarkInReaction","BoardManager#IsChainRunning#get","BoardManager#Cells#get","BoardManager#StackPrefab#get","BoardManager#PiecePrefab#get","BoardManager#Palette#get","BoardManager#init","BoardManager#Awake","BoardManager#ComputeNeighbors","BoardManager#Start","BoardManager#PlaceStack","BoardManager#GetNeighbors","BoardManager#ProcessChainReaction","BoardManager#TryDestroyMonochromeStacks","BoardManager#RunChainReactionBfs","BoardManager#TransferMatchingColor","BoardManager#FlyAndLand","BoardManager#SmoothRotateTo","BoardManager#AnimateAndDestroyAll","BoardManager#SpawnDestroyEffect","BoardManager#MoveHexWithArc","BoardManager#IsBoardFullyCleared","CellHighlightConfig#NormalColor#get","CellHighlightConfig#HighlightColor#get","CellHighlightConfig#HighlightScaleX#get","CellHighlightConfig#HighlightPositionY#get","CellHighlightConfig#TransitionDuration#get","CellHighlightConfig#init","GameFlowController#init","GameFlowController#OnEnable","GameFlowController#OnDisable","GameFlowController#HandleTutorialFinished","GameFlowController#HandleTimerExpired","GameFlowController#HandleBoardCleared","GameFlowController#GoToPackshot","GameTimerUI#Progress01#get","GameTimerUI#RemainingSeconds#get","GameTimerUI#init","GameTimerUI#StartTimer","GameTimerUI#StopTimer","GameTimerUI#Update","GradientSlicedImage#OnPopulateMesh","HexColorPalette#GetMaterial","HexColorPalette.Entry#getDefaultValue","HexColorPalette.Entry#ctor","HexColorPalette.Entry#getHashCode","HexColorPalette.Entry#equals","HexColorPalette.Entry#$clone","HexPieceView#init","HexPieceView#init","HexPieceView#SetNeedsAlwaysOnTopMaterial","HexPieceView#SetColor","HexPieceView#SetAlwaysOnTop","HexPieceView#SetGlow","HexStack#Count#get","HexStack#IsEmpty#get","HexStack#TopColor#get","HexStack#IsMonochrome#get","HexStack#init","HexStack#Awake","HexStack#Initialize","HexStack#BuildFromColors","HexStack#SpawnPieceAtTop","HexStack#GetLocalPositionForIndex","HexStack#GetNextSlotWorldPosition","HexStack#GetTopWorldPosition","HexStack#GetTopPieceIndex","HexStack#SetAlwaysOnTop","HexStack#SetGlow","HexStack#SetLayer","HexStack#PopTopPiece","HexStack#AppendPiece","HexStack#UpdateHitCollider","PackshotController#init","PackshotController#Awake","PackshotController#Show","PackshotController#GoToStore","ScreenScaler#Start","ScreenScaler#LateUpdate","ScreenScaler#Resize","StackDragHandler#IsInTray#get","StackDragHandler#init","StackDragHandler#Awake","StackDragHandler#SetBoard","StackDragHandler#OnDisable","StackDragHandler#OnMouseDown","StackDragHandler#OnMouseDrag","StackDragHandler#OnMouseUp","StackDragHandler#UpdateHighlightedCell","StackDragHandler#SetHighlightedCell","StackDragHandler#RaycastCellUnderPointer","StackDragHandler#ReturnToOrigin","TimerSliderUI#init","TimerSliderUI#init","TimerSliderUI#Awake","TimerSliderUI#OnEnable","TimerSliderUI#OnDisable","TimerSliderUI#HandleWarningZoneEntered","TimerSliderUI#HandleTimerStopped","TimerSliderUI#PlayAlarmThenShowPopup","TimerSliderUI#ShowPopup","TimerSliderUI#LateUpdate","TimerWarningEffects#init","TimerWarningEffects#init","TimerWarningEffects#Awake","TimerWarningEffects#OnEnable","TimerWarningEffects#OnDisable","TimerWarningEffects#HandleWarningZoneEntered","TimerWarningEffects#HandleTimerStopped","TimerWarningEffects#ResetVisuals","TimerWarningEffects#LateUpdate","TrayRefillManager#init","TrayRefillManager#Awake","TrayRefillManager#OnEnable","TrayRefillManager#OnDisable","TrayRefillManager#CaptureTraySlots","TrayRefillManager#HandleTimerStopped","TrayRefillManager#HandleStackPlaced","TrayRefillManager#AllSlotsUsed","TrayRefillManager#RefillTray","TrayRefillManager#GenerateRandomColors","TrayRefillManager#AnimateSpawn","TutorialHandController#init","TutorialHandController#OnEnable","TutorialHandController#OnDisable","TutorialHandController#Start","TutorialHandController#ShowHand","TutorialHandController#HideHand","TutorialHandController#HandleGrabbed","TutorialHandController#HandleMoved","TutorialHandController#HandleReleased","TutorialHandController#ReshowAfterDelay","TutorialHandController#LoopHandAnimation","TutorialHandController#MoveHand","TutorialHandController#SetFinger","TutorialHandController#ApplySpotlight","TutorialHandController#ClearSpotlight","TutorialHandController#FindAvailableTrayStack","TutorialHandController#FindNearestEmptyCell","TutorialHandController#WorldToCanvasPoint","TutorialSpotlightOverlay#init","TutorialSpotlightOverlay#Awake","TutorialSpotlightOverlay#SetupRevealCamera","TutorialSpotlightOverlay#Show","TutorialSpotlightOverlay#Hide","TutorialSpotlightOverlay#HideImmediate","TutorialSpotlightOverlay#FadeTo","TutorialSpotlightOverlay#DisableOverlay"]' ) ); }
+if ( TRACE ) { TRACE( JSON.parse( '["BoardCell#init","BoardCell#AutoComputeAxialFromPosition#get","BoardCell#AxialCoord#get","BoardCell#InitialStackColors#get","BoardCell#IsClickable#get","BoardCell#IsEmpty#get","BoardCell#SnapPosition#get","BoardCell#init","BoardCell#SetAxialCoord","BoardCell#Awake","BoardCell#EnsureInitialized","BoardCell#SetHighlightConfig","BoardCell#SetHighlighted","BoardCell#AnimateHighlight","BoardCell#SetTutorialHighlighted","BoardCell#SetLayer","BoardCell#ApplyColor","BoardCell#ApplyScaleAndPosition","BoardManager#init","BoardManager#MarkInReaction","BoardManager#IsChainRunning#get","BoardManager#Cells#get","BoardManager#StackPrefab#get","BoardManager#PiecePrefab#get","BoardManager#Palette#get","BoardManager#init","BoardManager#Awake","BoardManager#ComputeNeighbors","BoardManager#Start","BoardManager#PlaceStack","BoardManager#GetNeighbors","BoardManager#ProcessChainReaction","BoardManager#TryDestroyMonochromeStacks","BoardManager#RunChainReactionBfs","BoardManager#TransferMatchingColor","BoardManager#FlyAndLand","BoardManager#SmoothRotateTo","BoardManager#AnimateAndDestroyAll","BoardManager#SpawnDestroyEffect","BoardManager#MoveHexWithArc","BoardManager#IsBoardFullyCleared","CellHighlightConfig#NormalColor#get","CellHighlightConfig#HighlightColor#get","CellHighlightConfig#HighlightScaleX#get","CellHighlightConfig#HighlightPositionY#get","CellHighlightConfig#TransitionDuration#get","CellHighlightConfig#init","CopyRectSize#OnEnable","FloatingHoverEffect#init","FloatingHoverEffect#Awake","FloatingHoverEffect#LateUpdate","GameFlowController#init","GameFlowController#OnEnable","GameFlowController#OnDisable","GameFlowController#HandleTutorialFinished","GameFlowController#HandleFailPopupShown","GameFlowController#HandleBoardCleared","GameFlowController#GoToPackshot","GameTimerUI#Progress01#get","GameTimerUI#RemainingSeconds#get","GameTimerUI#init","GameTimerUI#StartTimer","GameTimerUI#StopTimer","GameTimerUI#Update","HexColorPalette#GetMaterial","HexColorPalette.Entry#getDefaultValue","HexColorPalette.Entry#ctor","HexColorPalette.Entry#getHashCode","HexColorPalette.Entry#equals","HexColorPalette.Entry#$clone","HexPieceView#init","HexPieceView#init","HexPieceView#SetNeedsAlwaysOnTopMaterial","HexPieceView#SetColor","HexPieceView#SetAlwaysOnTop","HexPieceView#SetGlow","HexStack#Count#get","HexStack#IsEmpty#get","HexStack#TopColor#get","HexStack#IsMonochrome#get","HexStack#init","HexStack#Awake","HexStack#Initialize","HexStack#BuildFromColors","HexStack#SpawnPieceAtTop","HexStack#GetLocalPositionForIndex","HexStack#GetNextSlotWorldPosition","HexStack#GetTopWorldPosition","HexStack#GetTopPieceIndex","HexStack#SetAlwaysOnTop","HexStack#SetGlow","HexStack#SetLayer","HexStack#PopTopPiece","HexStack#AppendPiece","HexStack#UpdateHitCollider","PackshotController#init","PackshotController#Awake","PackshotController#Show","PackshotController#AnimateReveal","PackshotController#GrowMask","PackshotController#PulseIn","PackshotController#GoToStore","ScreenScaler#Start","ScreenScaler#LateUpdate","ScreenScaler#Resize","StackDragHandler#IsInTray#get","StackDragHandler#init","StackDragHandler#Awake","StackDragHandler#SetBoard","StackDragHandler#OnDisable","StackDragHandler#OnMouseDown","StackDragHandler#OnMouseDrag","StackDragHandler#OnMouseUp","StackDragHandler#UpdateHighlightedCell","StackDragHandler#SetHighlightedCell","StackDragHandler#RaycastCellUnderPointer","StackDragHandler#ReturnToOrigin","TimerSliderUI#init","TimerSliderUI#init","TimerSliderUI#Awake","TimerSliderUI#OnEnable","TimerSliderUI#OnDisable","TimerSliderUI#HandleWarningZoneEntered","TimerSliderUI#HandleTimerStopped","TimerSliderUI#PlayAlarmThenShowPopup","TimerSliderUI#ShowPopup","TimerSliderUI#LateUpdate","TimerWarningEffects#init","TimerWarningEffects#init","TimerWarningEffects#Awake","TimerWarningEffects#OnEnable","TimerWarningEffects#OnDisable","TimerWarningEffects#HandleWarningZoneEntered","TimerWarningEffects#HandleTimerStopped","TimerWarningEffects#ResetVisuals","TimerWarningEffects#LateUpdate","TrayRefillManager#init","TrayRefillManager#Awake","TrayRefillManager#OnEnable","TrayRefillManager#OnDisable","TrayRefillManager#CaptureTraySlots","TrayRefillManager#HandleTimerStopped","TrayRefillManager#HandleStackPlaced","TrayRefillManager#AllSlotsUsed","TrayRefillManager#RefillTray","TrayRefillManager#GenerateRandomColors","TrayRefillManager#AnimateSpawn","TutorialHandController#init","TutorialHandController#OnEnable","TutorialHandController#OnDisable","TutorialHandController#Start","TutorialHandController#ShowHand","TutorialHandController#HideHand","TutorialHandController#HandleGrabbed","TutorialHandController#HandleMoved","TutorialHandController#HandleReleased","TutorialHandController#ReshowAfterDelay","TutorialHandController#LoopHandAnimation","TutorialHandController#MoveHand","TutorialHandController#SetFinger","TutorialHandController#ApplySpotlight","TutorialHandController#ClearSpotlight","TutorialHandController#FindAvailableTrayStack","TutorialHandController#FindNearestEmptyCell","TutorialHandController#WorldToCanvasPoint","TutorialSpotlightOverlay#init","TutorialSpotlightOverlay#Awake","TutorialSpotlightOverlay#SetupRevealCamera","TutorialSpotlightOverlay#Show","TutorialSpotlightOverlay#Hide","TutorialSpotlightOverlay#HideImmediate","TutorialSpotlightOverlay#FadeTo","TutorialSpotlightOverlay#DisableOverlay"]' ) ); }
 /**
- * @version 1.0.9682.10330
+ * @version 1.0.9683.21797
  * @copyright anton
  * @compiler Bridge.NET 17.9.42-luna
  */
@@ -1510,12 +1510,91 @@ if ( TRACE ) { TRACE( "CellHighlightConfig#init", this ); }
     });
     /*CellHighlightConfig end.*/
 
+    /*CopyRectSize start.*/
+    Bridge.define("CopyRectSize", {
+        inherits: [UnityEngine.MonoBehaviour],
+        fields: {
+            sourceBG: null,
+            currentBG: null
+        },
+        methods: {
+            /*CopyRectSize.OnEnable start.*/
+            OnEnable: function () {
+if ( TRACE ) { TRACE( "CopyRectSize#OnEnable", this ); }
+
+                if (UnityEngine.Component.op_Equality(this.sourceBG, null) || UnityEngine.Component.op_Equality(this.currentBG, null)) {
+                    return;
+                }
+                var sourceSize = this.sourceBG.rect.size.$clone();
+                this.currentBG.sizeDelta = sourceSize.$clone();
+            },
+            /*CopyRectSize.OnEnable end.*/
+
+
+        }
+    });
+    /*CopyRectSize end.*/
+
+    /*FloatingHoverEffect start.*/
+    Bridge.define("FloatingHoverEffect", {
+        inherits: [UnityEngine.MonoBehaviour],
+        fields: {
+            target: null,
+            amplitude: 0,
+            frequency: 0,
+            rotationAmplitudeDegrees: 0,
+            basePosition: null,
+            baseRotationZ: 0
+        },
+        ctors: {
+            init: function () {
+if ( TRACE ) { TRACE( "FloatingHoverEffect#init", this ); }
+
+                this.basePosition = new UnityEngine.Vector2();
+                this.amplitude = 20.0;
+                this.frequency = 0.5;
+                this.rotationAmplitudeDegrees = 3.0;
+            }
+        },
+        methods: {
+            /*FloatingHoverEffect.Awake start.*/
+            Awake: function () {
+if ( TRACE ) { TRACE( "FloatingHoverEffect#Awake", this ); }
+
+                if (UnityEngine.Component.op_Equality(this.target, null)) {
+                    this.target = Bridge.as(this.transform, UnityEngine.RectTransform);
+                }
+                this.basePosition = this.target.anchoredPosition.$clone();
+                this.baseRotationZ = this.target.localEulerAngles.z;
+            },
+            /*FloatingHoverEffect.Awake end.*/
+
+            /*FloatingHoverEffect.LateUpdate start.*/
+            LateUpdate: function () {
+if ( TRACE ) { TRACE( "FloatingHoverEffect#LateUpdate", this ); }
+
+                if (UnityEngine.Component.op_Equality(this.target, null)) {
+                    return;
+                }
+
+                var phase = UnityEngine.Time.time * this.frequency * UnityEngine.Mathf.PI * 2.0;
+                this.target.anchoredPosition = this.basePosition.$clone().add( pc.Vec2.UP.clone().scale( (Math.sin(phase) * this.amplitude) ) );
+                this.target.localEulerAngles = new pc.Vec3( 0.0, 0.0, this.baseRotationZ + Math.sin(phase * 0.5) * this.rotationAmplitudeDegrees );
+            },
+            /*FloatingHoverEffect.LateUpdate end.*/
+
+
+        }
+    });
+    /*FloatingHoverEffect end.*/
+
     /*GameFlowController start.*/
     Bridge.define("GameFlowController", {
         inherits: [UnityEngine.MonoBehaviour],
         fields: {
             tutorial: null,
             timer: null,
+            timerSlider: null,
             packshot: null,
             board: null,
             dragHandlers: null,
@@ -1536,8 +1615,8 @@ if ( TRACE ) { TRACE( "GameFlowController#OnEnable", this ); }
                 if (UnityEngine.MonoBehaviour.op_Inequality(this.tutorial, null)) {
                     this.tutorial.addOnTutorialFinished(Bridge.fn.cacheBind(this, this.HandleTutorialFinished));
                 }
-                if (UnityEngine.MonoBehaviour.op_Inequality(this.timer, null)) {
-                    this.timer.addOnTimerExpired(Bridge.fn.cacheBind(this, this.HandleTimerExpired));
+                if (UnityEngine.MonoBehaviour.op_Inequality(this.timerSlider, null)) {
+                    this.timerSlider.addOnFailPopupShown(Bridge.fn.cacheBind(this, this.HandleFailPopupShown));
                 }
                 if (UnityEngine.MonoBehaviour.op_Inequality(this.board, null)) {
                     this.board.addOnBoardCleared(Bridge.fn.cacheBind(this, this.HandleBoardCleared));
@@ -1552,8 +1631,8 @@ if ( TRACE ) { TRACE( "GameFlowController#OnDisable", this ); }
                 if (UnityEngine.MonoBehaviour.op_Inequality(this.tutorial, null)) {
                     this.tutorial.removeOnTutorialFinished(Bridge.fn.cacheBind(this, this.HandleTutorialFinished));
                 }
-                if (UnityEngine.MonoBehaviour.op_Inequality(this.timer, null)) {
-                    this.timer.removeOnTimerExpired(Bridge.fn.cacheBind(this, this.HandleTimerExpired));
+                if (UnityEngine.MonoBehaviour.op_Inequality(this.timerSlider, null)) {
+                    this.timerSlider.removeOnFailPopupShown(Bridge.fn.cacheBind(this, this.HandleFailPopupShown));
                 }
                 if (UnityEngine.MonoBehaviour.op_Inequality(this.board, null)) {
                     this.board.removeOnBoardCleared(Bridge.fn.cacheBind(this, this.HandleBoardCleared));
@@ -1575,13 +1654,13 @@ if ( TRACE ) { TRACE( "GameFlowController#HandleTutorialFinished", this ); }
             },
             /*GameFlowController.HandleTutorialFinished end.*/
 
-            /*GameFlowController.HandleTimerExpired start.*/
-            HandleTimerExpired: function () {
-if ( TRACE ) { TRACE( "GameFlowController#HandleTimerExpired", this ); }
+            /*GameFlowController.HandleFailPopupShown start.*/
+            HandleFailPopupShown: function () {
+if ( TRACE ) { TRACE( "GameFlowController#HandleFailPopupShown", this ); }
 
                 this.GoToPackshot();
             },
-            /*GameFlowController.HandleTimerExpired end.*/
+            /*GameFlowController.HandleFailPopupShown end.*/
 
             /*GameFlowController.HandleBoardCleared start.*/
             HandleBoardCleared: function () {
@@ -1740,39 +1819,6 @@ if ( TRACE ) { TRACE( "GameTimerUI#Update", this ); }
         }
     });
     /*GameTimerUI end.*/
-
-    /*GradientSlicedImage start.*/
-    /**
-     * @public
-     * @class GradientSlicedImage
-     * @augments UnityEngine.UI.Image
-     */
-    Bridge.define("GradientSlicedImage", {
-        inherits: [UnityEngine.UI.Image],
-        methods: {
-            /*GradientSlicedImage.OnPopulateMesh start.*/
-            OnPopulateMesh: function (vh) {
-if ( TRACE ) { TRACE( "GradientSlicedImage#OnPopulateMesh", this ); }
-
-                UnityEngine.UI.Image.prototype.OnPopulateMesh.call(this, vh);
-
-                var rect = this.rectTransform.rect.$clone();
-
-                var v = { v : new UnityEngine.UIVertex() };
-                for (var i = 0; i < vh.currentVertCount; i = (i + 1) | 0) {
-                    vh.PopulateUIVertex(v, i);
-
-                    v.v.uv1 = new pc.Vec2( (v.v.position.x - rect.xMin) / rect.width, (v.v.position.y - rect.yMin) / rect.height );
-
-                    vh.SetUIVertex(v.v.$clone(), i);
-                }
-            },
-            /*GradientSlicedImage.OnPopulateMesh end.*/
-
-
-        }
-    });
-    /*GradientSlicedImage end.*/
 
     /*HexColor start.*/
     Bridge.define("HexColor", {
@@ -2303,13 +2349,26 @@ if ( TRACE ) { TRACE( "HexStack#UpdateHitCollider", this ); }
             playNowButton: null,
             fullscreenTapButton: null,
             transitionAnimator: null,
-            transitionTrigger: null
+            transitionTrigger: null,
+            maskRect: null,
+            maskTargetSize: 0,
+            maskGrowDuration: 0,
+            maskGrowCurve: null,
+            headerRect: null,
+            playButtonRect: null,
+            revealPulseDuration: 0,
+            revealPulseCurve: null
         },
         ctors: {
             init: function () {
 if ( TRACE ) { TRACE( "PackshotController#init", this ); }
 
                 this.transitionTrigger = "Show";
+                this.maskTargetSize = 10000.0;
+                this.maskGrowDuration = 0.5;
+                this.maskGrowCurve = pc.AnimationCurve.createEaseInOut(0.0, 0.0, 1.0, 1.0);
+                this.revealPulseDuration = 0.45;
+                this.revealPulseCurve = new pc.AnimationCurve({keyframes: [ new pc.Keyframe(0.0, 0.0, 0, 0), new pc.Keyframe(0.6, 1.15, 0, 0), new pc.Keyframe(1.0, 1.0, 0, 0) ]});
             }
         },
         methods: {
@@ -2341,8 +2400,185 @@ if ( TRACE ) { TRACE( "PackshotController#Show", this ); }
                 }
 
                 Luna.Unity.LifeCycle.GameEnded();
+
+                this.StartCoroutine$1(this.AnimateReveal());
             },
             /*PackshotController.Show end.*/
+
+            /*PackshotController.AnimateReveal start.*/
+            AnimateReveal: function () {
+if ( TRACE ) { TRACE( "PackshotController#AnimateReveal", this ); }
+
+                var $step = 0,
+                    $jumpFromFinally,
+                    $returnValue,
+                    $async_e;
+
+                var $enumerator = new Bridge.GeneratorEnumerator(Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    if (UnityEngine.Component.op_Inequality(this.maskRect, null)) {
+                                            $step = 1;
+                                            continue;
+                                        } 
+                                        $step = 3;
+                                        continue;
+                                }
+                                case 1: {
+                                    $enumerator.current = this.StartCoroutine$1(this.GrowMask());
+                                        $step = 2;
+                                        return true;
+                                }
+                                case 2: {
+                                    $step = 3;
+                                    continue;
+                                }
+                                case 3: {
+                                    if (UnityEngine.Component.op_Inequality(this.headerRect, null)) {
+                                            this.StartCoroutine$1(this.PulseIn(this.headerRect));
+                                        }
+                                        if (UnityEngine.Component.op_Inequality(this.playButtonRect, null)) {
+                                            this.StartCoroutine$1(this.PulseIn(this.playButtonRect));
+                                        }
+
+                                }
+                                default: {
+                                    return false;
+                                }
+                            }
+                        }
+                    } catch($async_e1) {
+                        $async_e = System.Exception.create($async_e1);
+                        throw $async_e;
+                    }
+                }));
+                return $enumerator;
+            },
+            /*PackshotController.AnimateReveal end.*/
+
+            /*PackshotController.GrowMask start.*/
+            GrowMask: function () {
+if ( TRACE ) { TRACE( "PackshotController#GrowMask", this ); }
+
+                var $step = 0,
+                    $jumpFromFinally,
+                    $returnValue,
+                    t,
+                    n,
+                    $async_e;
+
+                var $enumerator = new Bridge.GeneratorEnumerator(Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    this.maskRect.sizeDelta = pc.Vec2.ZERO.clone();
+
+                                        t = 0.0;
+                                    $step = 1;
+                                    continue;
+                                }
+                                case 1: {
+                                    if ( t < this.maskGrowDuration ) {
+                                            $step = 2;
+                                            continue;
+                                        } 
+                                        $step = 4;
+                                        continue;
+                                }
+                                case 2: {
+                                    t += UnityEngine.Time.deltaTime;
+                                        n = this.maskGrowCurve.value(Math.max(0, Math.min(1, t / this.maskGrowDuration)));
+                                        this.maskRect.sizeDelta = pc.Vec2.ONE.clone().scale( (this.maskTargetSize * n) );
+                                        $enumerator.current = null;
+                                        $step = 3;
+                                        return true;
+                                }
+                                case 3: {
+                                    
+                                        $step = 1;
+                                        continue;
+                                }
+                                case 4: {
+                                    this.maskRect.sizeDelta = pc.Vec2.ONE.clone().scale( this.maskTargetSize );
+
+                                }
+                                default: {
+                                    return false;
+                                }
+                            }
+                        }
+                    } catch($async_e1) {
+                        $async_e = System.Exception.create($async_e1);
+                        throw $async_e;
+                    }
+                }));
+                return $enumerator;
+            },
+            /*PackshotController.GrowMask end.*/
+
+            /*PackshotController.PulseIn start.*/
+            PulseIn: function (rect) {
+if ( TRACE ) { TRACE( "PackshotController#PulseIn", this ); }
+
+                var $step = 0,
+                    $jumpFromFinally,
+                    $returnValue,
+                    t,
+                    n,
+                    $async_e;
+
+                var $enumerator = new Bridge.GeneratorEnumerator(Bridge.fn.bind(this, function () {
+                    try {
+                        for (;;) {
+                            switch ($step) {
+                                case 0: {
+                                    rect.localScale = pc.Vec3.ZERO.clone();
+
+                                        t = 0.0;
+                                    $step = 1;
+                                    continue;
+                                }
+                                case 1: {
+                                    if ( t < this.revealPulseDuration ) {
+                                            $step = 2;
+                                            continue;
+                                        } 
+                                        $step = 4;
+                                        continue;
+                                }
+                                case 2: {
+                                    t += UnityEngine.Time.deltaTime;
+                                        n = this.revealPulseCurve.value(Math.max(0, Math.min(1, t / this.revealPulseDuration)));
+                                        rect.localScale = new pc.Vec3( 1, 1, 1 ).clone().scale( n );
+                                        $enumerator.current = null;
+                                        $step = 3;
+                                        return true;
+                                }
+                                case 3: {
+                                    
+                                        $step = 1;
+                                        continue;
+                                }
+                                case 4: {
+                                    rect.localScale = new pc.Vec3( 1, 1, 1 );
+
+                                }
+                                default: {
+                                    return false;
+                                }
+                            }
+                        }
+                    } catch($async_e1) {
+                        $async_e = System.Exception.create($async_e1);
+                        throw $async_e;
+                    }
+                }));
+                return $enumerator;
+            },
+            /*PackshotController.PulseIn end.*/
 
             /*PackshotController.GoToStore start.*/
             GoToStore: function () {
@@ -2788,9 +3024,6 @@ if ( TRACE ) { TRACE( "TimerSliderUI#init", this ); }
             popupBackgroundImage: null,
             popupBackgroundStartColor: null,
             popupBackgroundEndColor: null,
-            blurMaterial: null,
-            blurStartSize: 0,
-            blurEndSize: 0,
             clockBaseScale: null,
             clockBasePosition: null,
             clockOutlineBaseColor: null,
@@ -2798,6 +3031,9 @@ if ( TRACE ) { TRACE( "TimerSliderUI#init", this ); }
             popupBaseScale: null,
             pulseActive: false,
             alarmTriggered: false
+        },
+        events: {
+            OnFailPopupShown: null
         },
         ctors: {
             init: function () {
@@ -2832,8 +3068,6 @@ if ( TRACE ) { TRACE( "TimerSliderUI#init", this ); }
                 this.popupStartAngleZ = 90.0;
                 this.popupBackgroundStartColor = new pc.Color( 1, 1, 1, 1 );
                 this.popupBackgroundEndColor = UnityEngine.Color32.op_Implicit(new UnityEngine.Color32.$ctor1(113, 113, 113, 255));
-                this.blurStartSize = 0.0;
-                this.blurEndSize = 20.0;
                 this.clockBaseScale = new pc.Vec3( 1, 1, 1 );
                 this.clockBasePosition = pc.Vec3.ZERO.clone();
                 this.clockOutlineBaseColor = new pc.Color( 1, 1, 1, 1 );
@@ -3026,9 +3260,6 @@ if ( TRACE ) { TRACE( "TimerSliderUI#ShowPopup", this ); }
                                         if (UnityEngine.MonoBehaviour.op_Inequality(this.popupBackgroundImage, null)) {
                                             this.popupBackgroundImage.color = this.popupBackgroundStartColor.$clone();
                                         }
-                                        if (this.blurMaterial != null) {
-                                            this.blurMaterial.SetFloat(TimerSliderUI.BlurSizePropertyId, this.blurStartSize);
-                                        }
 
                                         t = 0.0;
                                     $step = 3;
@@ -3052,10 +3283,6 @@ if ( TRACE ) { TRACE( "TimerSliderUI#ShowPopup", this ); }
                                             this.popupBackgroundImage.color = pc.Color.lerp( this.popupBackgroundStartColor, this.popupBackgroundEndColor, n );
                                         }
 
-                                        if (this.blurMaterial != null) {
-                                            this.blurMaterial.SetFloat(TimerSliderUI.BlurSizePropertyId, UnityEngine.Mathf.LerpUnclamped(this.blurStartSize, this.blurEndSize, n));
-                                        }
-
                                         $enumerator.current = null;
                                         $step = 5;
                                         return true;
@@ -3071,9 +3298,8 @@ if ( TRACE ) { TRACE( "TimerSliderUI#ShowPopup", this ); }
                                         if (UnityEngine.MonoBehaviour.op_Inequality(this.popupBackgroundImage, null)) {
                                             this.popupBackgroundImage.color = this.popupBackgroundEndColor.$clone();
                                         }
-                                        if (this.blurMaterial != null) {
-                                            this.blurMaterial.SetFloat(TimerSliderUI.BlurSizePropertyId, this.blurEndSize);
-                                        }
+
+                                        !Bridge.staticEquals(this.OnFailPopupShown, null) ? this.OnFailPopupShown() : null;
 
                                 }
                                 default: {
@@ -4408,7 +4634,7 @@ if ( TRACE ) { TRACE( "TutorialSpotlightOverlay#DisableOverlay", this ); }
         $n = ["System","System.Collections","UnityEngine","System.Collections.Generic","UnityEngine.UI"];
 
     /*GameFlowController start.*/
-    $m("GameFlowController", function () { return {"nested":[GameFlowController.Phase],"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"GoToPackshot","t":8,"sn":"GoToPackshot","rt":$n[0].Void},{"a":1,"n":"HandleBoardCleared","t":8,"sn":"HandleBoardCleared","rt":$n[0].Void},{"a":1,"n":"HandleTimerExpired","t":8,"sn":"HandleTimerExpired","rt":$n[0].Void},{"a":1,"n":"HandleTutorialFinished","t":8,"sn":"HandleTutorialFinished","rt":$n[0].Void},{"a":1,"n":"OnDisable","t":8,"sn":"OnDisable","rt":$n[0].Void},{"a":1,"n":"OnEnable","t":8,"sn":"OnEnable","rt":$n[0].Void},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"board","t":4,"rt":BoardManager,"sn":"board"},{"at":[new UnityEngine.TooltipAttribute("\u0412\u0441\u0435 \u0442\u0440\u0438 \u0441\u0442\u043e\u043f\u043a\u0438 \u043b\u043e\u0442\u043a\u0430 \u2014 \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u044e\u0442\u0441\u044f \u043f\u0440\u0438 \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u0435 \u0432 \u043f\u044d\u043a\u0448\u043e\u0442, \u0447\u0442\u043e\u0431\u044b \u0438\u0445 \u043d\u0435\u043b\u044c\u0437\u044f \u0431\u044b\u043b\u043e \u0442\u0430\u0449\u0438\u0442\u044c."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"dragHandlers","t":4,"rt":System.Array.type(StackDragHandler),"sn":"dragHandlers"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"packshot","t":4,"rt":PackshotController,"sn":"packshot"},{"a":1,"n":"phase","t":4,"rt":GameFlowController.Phase,"sn":"phase","box":function ($v) { return Bridge.box($v, GameFlowController.Phase, System.Enum.toStringFn(GameFlowController.Phase));}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"timer","t":4,"rt":GameTimerUI,"sn":"timer"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"tutorial","t":4,"rt":TutorialHandController,"sn":"tutorial"}]}; }, $n);
+    $m("GameFlowController", function () { return {"nested":[GameFlowController.Phase],"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"GoToPackshot","t":8,"sn":"GoToPackshot","rt":$n[0].Void},{"a":1,"n":"HandleBoardCleared","t":8,"sn":"HandleBoardCleared","rt":$n[0].Void},{"a":1,"n":"HandleFailPopupShown","t":8,"sn":"HandleFailPopupShown","rt":$n[0].Void},{"a":1,"n":"HandleTutorialFinished","t":8,"sn":"HandleTutorialFinished","rt":$n[0].Void},{"a":1,"n":"OnDisable","t":8,"sn":"OnDisable","rt":$n[0].Void},{"a":1,"n":"OnEnable","t":8,"sn":"OnEnable","rt":$n[0].Void},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"board","t":4,"rt":BoardManager,"sn":"board"},{"at":[new UnityEngine.TooltipAttribute("\u0412\u0441\u0435 \u0442\u0440\u0438 \u0441\u0442\u043e\u043f\u043a\u0438 \u043b\u043e\u0442\u043a\u0430 \u2014 \u043e\u0442\u043a\u043b\u044e\u0447\u0430\u044e\u0442\u0441\u044f \u043f\u0440\u0438 \u043f\u0435\u0440\u0435\u0445\u043e\u0434\u0435 \u0432 \u043f\u044d\u043a\u0448\u043e\u0442, \u0447\u0442\u043e\u0431\u044b \u0438\u0445 \u043d\u0435\u043b\u044c\u0437\u044f \u0431\u044b\u043b\u043e \u0442\u0430\u0449\u0438\u0442\u044c."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"dragHandlers","t":4,"rt":System.Array.type(StackDragHandler),"sn":"dragHandlers"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"packshot","t":4,"rt":PackshotController,"sn":"packshot"},{"a":1,"n":"phase","t":4,"rt":GameFlowController.Phase,"sn":"phase","box":function ($v) { return Bridge.box($v, GameFlowController.Phase, System.Enum.toStringFn(GameFlowController.Phase));}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"timer","t":4,"rt":GameTimerUI,"sn":"timer"},{"at":[new UnityEngine.TooltipAttribute("\u041f\u043e\u043b\u043e\u0441\u043a\u0430-\u0442\u0430\u0439\u043c\u0435\u0440 \u0441 \u043f\u043e\u043f\u0430\u043f\u043e\u043c \"Fail\" \u043f\u043e \u0438\u0441\u0442\u0435\u0447\u0435\u043d\u0438\u0438 \u0432\u0440\u0435\u043c\u0435\u043d\u0438 \u2014 \u043f\u044d\u043a\u0448\u043e\u0442 \u043f\u0440\u0438 \u043f\u0440\u043e\u0438\u0433\u0440\u044b\u0448\u0435 \u043f\u043e \u0442\u0430\u0439\u043c\u0435\u0440\u0443 \u043f\u043e\u043a\u0430\u0437\u044b\u0432\u0430\u0435\u0442\u0441\u044f \u0422\u041e\u041b\u042c\u041a\u041e \u043f\u043e\u0441\u043b\u0435 \u0442\u043e\u0433\u043e, \u043a\u0430\u043a \u044d\u0442\u043e\u0442 \u043f\u043e\u043f\u0430\u043f \u043f\u043e\u043b\u043d\u043e\u0441\u0442\u044c\u044e \u0434\u043e\u0438\u0433\u0440\u0430\u0435\u0442 \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u0435 (\u0441\u043c. TimerSliderUI.OnFailPopupShown), \u0430 \u043d\u0435 \u0441\u0440\u0430\u0437\u0443 \u043f\u043e OnTimerExpired, \u0438\u043d\u0430\u0447\u0435 \u043f\u044d\u043a\u0448\u043e\u0442 \u0432\u044b\u0441\u043a\u0430\u043a\u0438\u0432\u0430\u043b \u0431\u044b \u043f\u043e\u0432\u0435\u0440\u0445 \u0435\u0449\u0451 \u043d\u0435 \u0434\u043e\u0438\u0433\u0440\u0430\u0432\u0448\u0435\u0433\u043e \u043f\u043e\u043f\u0430\u043f\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"timerSlider","t":4,"rt":TimerSliderUI,"sn":"timerSlider"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"tutorial","t":4,"rt":TutorialHandController,"sn":"tutorial"}]}; }, $n);
     /*GameFlowController end.*/
 
     /*GameFlowController+Phase start.*/
@@ -4459,24 +4685,28 @@ if ( TRACE ) { TRACE( "TutorialSpotlightOverlay#DisableOverlay", this ); }
     $m("TrayRefillManager", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"AllSlotsUsed","t":8,"sn":"AllSlotsUsed","rt":$n[0].Boolean,"box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":1,"n":"AnimateSpawn","t":8,"pi":[{"n":"stackTransform","pt":$n[2].Transform,"ps":0},{"n":"targetPosition","pt":$n[2].Vector3,"ps":1},{"n":"targetScale","pt":$n[2].Vector3,"ps":2}],"sn":"AnimateSpawn","rt":$n[1].IEnumerator,"p":[$n[2].Transform,$n[2].Vector3,$n[2].Vector3]},{"a":1,"n":"Awake","t":8,"sn":"Awake","rt":$n[0].Void},{"a":1,"n":"CaptureTraySlots","t":8,"sn":"CaptureTraySlots","rt":$n[0].Void},{"a":1,"n":"GenerateRandomColors","t":8,"sn":"GenerateRandomColors","rt":$n[3].List$1(HexColor)},{"a":1,"n":"HandleStackPlaced","t":8,"pi":[{"n":"stack","pt":HexStack,"ps":0}],"sn":"HandleStackPlaced","rt":$n[0].Void,"p":[HexStack]},{"a":1,"n":"HandleTimerStopped","t":8,"sn":"HandleTimerStopped","rt":$n[0].Void},{"a":1,"n":"OnDisable","t":8,"sn":"OnDisable","rt":$n[0].Void},{"a":1,"n":"OnEnable","t":8,"sn":"OnEnable","rt":$n[0].Void},{"a":1,"n":"RefillTray","t":8,"sn":"RefillTray","rt":$n[0].Void},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"board","t":4,"rt":BoardManager,"sn":"board"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"maxPieces","t":4,"rt":$n[0].Int32,"sn":"maxPieces","box":function ($v) { return Bridge.box($v, System.Int32);}},{"at":[new UnityEngine.HeaderAttribute("\u0421\u043b\u0443\u0447\u0430\u0439\u043d\u0430\u044f \u0433\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u044f \u043d\u043e\u0432\u043e\u0439 \u0441\u0442\u043e\u043f\u043a\u0438"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"minPieces","t":4,"rt":$n[0].Int32,"sn":"minPieces","box":function ($v) { return Bridge.box($v, System.Int32);}},{"a":1,"n":"pieceColorValues","t":4,"rt":System.Array.type(HexColor),"sn":"pieceColorValues","ro":true},{"a":1,"n":"slotUsed","t":4,"rt":$n[0].Array.type(System.Boolean),"sn":"slotUsed"},{"at":[new UnityEngine.HeaderAttribute("\u0410\u043d\u0438\u043c\u0430\u0446\u0438\u044f \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f \u2014 \u043f\u043e\u0434\u0441\u043a\u043e\u043a + \u0440\u0430\u0437\u043c\u0435\u0440"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"spawnAnimDuration","t":4,"rt":$n[0].Single,"sn":"spawnAnimDuration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0430\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0432\u044b\u0441\u043e\u043a\u043e \u0441\u0442\u043e\u043f\u043a\u0430 \u043f\u043e\u0434\u043f\u0440\u044b\u0433\u0438\u0432\u0430\u0435\u0442 \u0432\u043e \u0432\u0440\u0435\u043c\u044f \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f (\u043c\u0438\u0440\u043e\u0432\u044b\u0435 \u0435\u0434\u0438\u043d\u0438\u0446\u044b)."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"spawnBounceHeight","t":4,"rt":$n[0].Single,"sn":"spawnBounceHeight","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u041a\u0440\u0438\u0432\u0430\u044f \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0430 0..1 \u0441 \u043d\u0435\u0431\u043e\u043b\u044c\u0448\u0438\u043c \u043f\u0435\u0440\u0435\u043b\u0451\u0442\u043e\u043c (\u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e \u2014 \u0434\u043e ~1.15 \u0438 \u043e\u0431\u0440\u0430\u0442\u043d\u043e \u043a 1) \u0434\u043b\u044f \u044d\u0444\u0444\u0435\u043a\u0442\u0430 \u043b\u0451\u0433\u043a\u043e\u0433\u043e '\u043f\u0440\u0443\u0436\u0438\u043d\u043d\u043e\u0433\u043e' \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"spawnScaleCurve","t":4,"rt":pc.AnimationCurve,"sn":"spawnScaleCurve"},{"at":[new UnityEngine.TooltipAttribute("\u041e\u0441\u0442\u0430\u043d\u0430\u0432\u043b\u0438\u0432\u0430\u0435\u0442 \u0440\u0435\u0444\u0438\u043b\u043b, \u043a\u043e\u0433\u0434\u0430 \u0438\u0433\u0440\u0430 \u0437\u0430\u043a\u0430\u043d\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f (\u043e\u0431\u044b\u0447\u043d\u043e \u2014 \u0442\u043e\u0442 \u0436\u0435 GameTimerUI, \u0447\u0442\u043e \u0438 \u0443 GameFlowController) \u2014 \u0438\u043d\u0430\u0447\u0435 \u0442\u043e\u043b\u044c\u043a\u043e \u0447\u0442\u043e \u0437\u0430\u0441\u043f\u0430\u0432\u043d\u0435\u043d\u043d\u044b\u0435, \u0435\u0449\u0451 \u043d\u0435 \u043f\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u043d\u044b\u0435 \u0441\u0442\u043e\u043f\u043a\u0438 \u043e\u0441\u0442\u0430\u043b\u0438\u0441\u044c \u0431\u044b \u043f\u0435\u0440\u0435\u0442\u0430\u0441\u043a\u0438\u0432\u0430\u0435\u043c\u044b\u043c\u0438 \u043f\u043e\u0432\u0435\u0440\u0445 \u043f\u044d\u043a\u0448\u043e\u0442\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"timer","t":4,"rt":GameTimerUI,"sn":"timer"},{"at":[new UnityEngine.TooltipAttribute("\u0412\u0441\u0435 \u0441\u0442\u043e\u043f\u043a\u0438 \u0442\u0435\u043a\u0443\u0449\u0435\u0433\u043e \u043b\u043e\u0442\u043a\u0430 \u2014 \u043e\u0442\u0441\u043b\u0435\u0436\u0438\u0432\u0430\u044e\u0442\u0441\u044f \u043d\u0430 \u043f\u0440\u0435\u0434\u043c\u0435\u0442 '\u0432\u0441\u0435 \u0438\u0437\u0440\u0430\u0441\u0445\u043e\u0434\u043e\u0432\u0430\u043d\u044b'. \u041f\u043e\u0441\u043b\u0435 \u0440\u0435\u0444\u0438\u043b\u043b\u0430 \u043c\u0430\u0441\u0441\u0438\u0432 \u0441\u0430\u043c \u0437\u0430\u043c\u0435\u043d\u044f\u0435\u0442\u0441\u044f \u043d\u0430 \u043d\u043e\u0432\u044b\u0435 \u0437\u0430\u0441\u043f\u0430\u0432\u043d\u0435\u043d\u043d\u044b\u0435 \u0441\u0442\u043e\u043f\u043a\u0438, \u0442\u0430\u043a \u0447\u0442\u043e \u043c\u0435\u0445\u0430\u043d\u0438\u043a\u0430 \u043f\u0440\u043e\u0434\u043e\u043b\u0436\u0430\u0435\u0442 \u0440\u0430\u0431\u043e\u0442\u0430\u0442\u044c \u0438 \u0434\u043b\u044f \u0441\u043b\u0435\u0434\u0443\u044e\u0449\u0438\u0445 \u043d\u0430\u0431\u043e\u0440\u043e\u0432."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"trayHandlers","t":4,"rt":System.Array.type(StackDragHandler),"sn":"trayHandlers"},{"a":1,"n":"trayPositions","t":4,"rt":System.Array.type(UnityEngine.Vector3),"sn":"trayPositions"},{"a":1,"n":"trayRotations","t":4,"rt":System.Array.type(UnityEngine.Quaternion),"sn":"trayRotations"},{"a":1,"n":"trayScales","t":4,"rt":System.Array.type(UnityEngine.Vector3),"sn":"trayScales"},{"a":1,"n":"trayStacks","t":4,"rt":System.Array.type(HexStack),"sn":"trayStacks"}]}; }, $n);
     /*TrayRefillManager end.*/
 
-    /*GradientSlicedImage start.*/
-    $m("GradientSlicedImage", function () { return {"att":1048577,"a":2,"at":[new UnityEngine.AddComponentMenu.ctor("UI/Gradient Sliced Image")],"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"ov":true,"a":3,"n":"OnPopulateMesh","t":8,"pi":[{"n":"vh","pt":$n[4].VertexHelper,"ps":0}],"sn":"OnPopulateMesh","rt":$n[0].Void,"p":[$n[4].VertexHelper]}]}; }, $n);
-    /*GradientSlicedImage end.*/
-
     /*ScreenScaler start.*/
     $m("ScreenScaler", function () { return {"att":1048577,"a":2,"at":[new UnityEngine.ExecuteInEditModeAttribute()],"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"LateUpdate","t":8,"sn":"LateUpdate","rt":$n[0].Void},{"a":2,"n":"Resize","t":8,"sn":"Resize","rt":$n[0].Void},{"a":1,"n":"Start","t":8,"sn":"Start","rt":$n[0].Void},{"a":1,"n":"mainCamera","t":4,"rt":$n[2].Camera,"sn":"mainCamera"}]}; }, $n);
     /*ScreenScaler end.*/
+
+    /*CopyRectSize start.*/
+    $m("CopyRectSize", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"OnEnable","t":8,"sn":"OnEnable","rt":$n[0].Void},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"currentBG","t":4,"rt":$n[2].RectTransform,"sn":"currentBG"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"sourceBG","t":4,"rt":$n[2].RectTransform,"sn":"sourceBG"}]}; }, $n);
+    /*CopyRectSize end.*/
+
+    /*FloatingHoverEffect start.*/
+    $m("FloatingHoverEffect", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"Awake","t":8,"sn":"Awake","rt":$n[0].Void},{"a":1,"n":"LateUpdate","t":8,"sn":"LateUpdate","rt":$n[0].Void},{"at":[new UnityEngine.TooltipAttribute("\u0410\u043c\u043f\u043b\u0438\u0442\u0443\u0434\u0430 \u043f\u0430\u0440\u0435\u043d\u0438\u044f \u043f\u043e Y, \u0432 \u0435\u0434\u0438\u043d\u0438\u0446\u0430\u0445 RectTransform."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"amplitude","t":4,"rt":$n[0].Single,"sn":"amplitude","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"basePosition","t":4,"rt":$n[2].Vector2,"sn":"basePosition"},{"a":1,"n":"baseRotationZ","t":4,"rt":$n[0].Single,"sn":"baseRotationZ","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0427\u0430\u0441\u0442\u043e\u0442\u0430 \u043f\u0430\u0440\u0435\u043d\u0438\u044f \u2014 \u0441\u043a\u043e\u043b\u044c\u043a\u043e \u043f\u043e\u043b\u043d\u044b\u0445 \u0446\u0438\u043a\u043b\u043e\u0432 \u0432\u0432\u0435\u0440\u0445-\u0432\u043d\u0438\u0437 \u0432 \u0441\u0435\u043a\u0443\u043d\u0434\u0443."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"frequency","t":4,"rt":$n[0].Single,"sn":"frequency","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0410\u043c\u043f\u043b\u0438\u0442\u0443\u0434\u0430 \u043b\u0451\u0433\u043a\u043e\u0433\u043e \u043f\u043e\u043a\u0430\u0447\u0438\u0432\u0430\u043d\u0438\u044f \u043f\u043e Z (\u0432 \u0433\u0440\u0430\u0434\u0443\u0441\u0430\u0445) \u2014 \u0438\u0434\u0451\u0442 \u0432\u0434\u0432\u043e\u0435 \u043c\u0435\u0434\u043b\u0435\u043d\u043d\u0435\u0435 \u0441\u0430\u043c\u043e\u0433\u043e \u043f\u0430\u0440\u0435\u043d\u0438\u044f, \u0447\u0442\u043e\u0431\u044b \u043d\u0435 \u0441\u043e\u0432\u043f\u0430\u0434\u0430\u0442\u044c \u0441 \u043d\u0438\u043c \u0432 \u0442\u0430\u043a\u0442 \u0438 \u0432\u044b\u0433\u043b\u044f\u0434\u0435\u0442\u044c \u0431\u043e\u043b\u0435\u0435 \u043e\u0440\u0433\u0430\u043d\u0438\u0447\u043d\u043e."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"rotationAmplitudeDegrees","t":4,"rt":$n[0].Single,"sn":"rotationAmplitudeDegrees","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0415\u0441\u043b\u0438 \u043d\u0435 \u0437\u0430\u0434\u0430\u043d\u043e \u2014 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442\u0441\u044f RectTransform \u0441\u0430\u043c\u043e\u0433\u043e \u043e\u0431\u044a\u0435\u043a\u0442\u0430, \u043d\u0430 \u043a\u043e\u0442\u043e\u0440\u043e\u043c \u0432\u0438\u0441\u0438\u0442 \u0441\u043a\u0440\u0438\u043f\u0442."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"target","t":4,"rt":$n[2].RectTransform,"sn":"target"}]}; }, $n);
+    /*FloatingHoverEffect end.*/
 
     /*GameTimerUI start.*/
     $m("GameTimerUI", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":2,"n":"StartTimer","t":8,"sn":"StartTimer","rt":$n[0].Void},{"a":2,"n":"StopTimer","t":8,"sn":"StopTimer","rt":$n[0].Void},{"a":1,"n":"Update","t":8,"sn":"Update","rt":$n[0].Void},{"a":2,"n":"Progress01","t":16,"rt":$n[0].Single,"g":{"a":2,"n":"get_Progress01","t":8,"rt":$n[0].Single,"fg":"Progress01","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},"fn":"Progress01"},{"a":2,"n":"RemainingSeconds","t":16,"rt":$n[0].Single,"g":{"a":2,"n":"get_RemainingSeconds","t":8,"rt":$n[0].Single,"fg":"RemainingSeconds","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},"fn":"RemainingSeconds"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"clockHand","t":4,"rt":$n[2].RectTransform,"sn":"clockHand"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"duration","t":4,"rt":$n[0].Single,"sn":"duration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"elapsed","t":4,"rt":$n[0].Single,"sn":"elapsed","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"endAngleZ","t":4,"rt":$n[0].Single,"sn":"endAngleZ","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"running","t":4,"rt":$n[0].Boolean,"sn":"running","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"at":[new UnityEngine.TooltipAttribute("\u0421\u0442\u0440\u0435\u043b\u043a\u0430 \u0432\u0440\u0430\u0449\u0430\u0435\u0442\u0441\u044f \u0432 \u043b\u0435\u0432\u0443\u044e \u0441\u0442\u043e\u0440\u043e\u043d\u0443 (\u0443\u0433\u043e\u043b \u043f\u043e Z \u043f\u0440\u0438\u0431\u0430\u0432\u043b\u044f\u0435\u0442\u0441\u044f) \u043e\u0442 startAngleZ \u0434\u043e endAngleZ."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"startAngleZ","t":4,"rt":$n[0].Single,"sn":"startAngleZ","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0414\u043e\u043b\u044f \u043e\u0441\u0442\u0430\u0432\u0448\u0435\u0433\u043e\u0441\u044f \u0432\u0440\u0435\u043c\u0435\u043d\u0438, \u043f\u043e\u0441\u043b\u0435 \u043a\u043e\u0442\u043e\u0440\u043e\u0439 \u0432\u043a\u043b\u044e\u0447\u0430\u0435\u0442\u0441\u044f \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u043e\u0435 \u043f\u0440\u0435\u0434\u0443\u043f\u0440\u0435\u0436\u0434\u0435\u043d\u0438\u0435 (\u043f\u043e \u0422\u0417 \u2014 \u043f\u043e\u0441\u043b\u0435\u0434\u043d\u044f\u044f \u0442\u0440\u0435\u0442\u044c)."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"warningRemainingFraction","t":4,"rt":$n[0].Single,"sn":"warningRemainingFraction","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"warningTriggered","t":4,"rt":$n[0].Boolean,"sn":"warningTriggered","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"a":2,"n":"OnTimerExpired","t":2,"ad":{"a":2,"n":"add_OnTimerExpired","t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"sn":"addOnTimerExpired","rt":$n[0].Void,"p":[Function]},"r":{"a":2,"n":"remove_OnTimerExpired","t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"sn":"removeOnTimerExpired","rt":$n[0].Void,"p":[Function]}},{"a":2,"n":"OnTimerStopped","t":2,"ad":{"a":2,"n":"add_OnTimerStopped","t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"sn":"addOnTimerStopped","rt":$n[0].Void,"p":[Function]},"r":{"a":2,"n":"remove_OnTimerStopped","t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"sn":"removeOnTimerStopped","rt":$n[0].Void,"p":[Function]}},{"a":2,"n":"OnWarningZoneEntered","t":2,"ad":{"a":2,"n":"add_OnWarningZoneEntered","t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"sn":"addOnWarningZoneEntered","rt":$n[0].Void,"p":[Function]},"r":{"a":2,"n":"remove_OnWarningZoneEntered","t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"sn":"removeOnWarningZoneEntered","rt":$n[0].Void,"p":[Function]}}]}; }, $n);
     /*GameTimerUI end.*/
 
     /*PackshotController start.*/
-    $m("PackshotController", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"Awake","t":8,"sn":"Awake","rt":$n[0].Void},{"a":1,"n":"GoToStore","t":8,"sn":"GoToStore","rt":$n[0].Void},{"a":2,"n":"Show","t":8,"sn":"Show","rt":$n[0].Void},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0435\u0432\u0438\u0434\u0438\u043c\u0430\u044f \u043a\u043d\u043e\u043f\u043a\u0430 \u043d\u0430 \u0432\u0435\u0441\u044c \u044d\u043a\u0440\u0430\u043d \u043f\u044d\u043a\u0448\u043e\u0442\u0430 \u2014 \u043b\u044e\u0431\u043e\u0439 \u0442\u0430\u043f \u0432\u0435\u0434\u0451\u0442 \u0432 \u0441\u0442\u043e\u0440."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"fullscreenTapButton","t":4,"rt":$n[4].Button,"sn":"fullscreenTapButton"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"panelRoot","t":4,"rt":$n[2].GameObject,"sn":"panelRoot"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"playNowButton","t":4,"rt":$n[4].Button,"sn":"playNowButton"},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0435\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e: \u0430\u043d\u0438\u043c\u0430\u0442\u043e\u0440 \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u043e\u0433\u043e \u044d\u0444\u0444\u0435\u043a\u0442\u0430 \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f \u043f\u044d\u043a\u0448\u043e\u0442\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"transitionAnimator","t":4,"rt":$n[2].Animator,"sn":"transitionAnimator"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"transitionTrigger","t":4,"rt":$n[0].String,"sn":"transitionTrigger"}]}; }, $n);
+    $m("PackshotController", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"AnimateReveal","t":8,"sn":"AnimateReveal","rt":$n[1].IEnumerator},{"a":1,"n":"Awake","t":8,"sn":"Awake","rt":$n[0].Void},{"a":1,"n":"GoToStore","t":8,"sn":"GoToStore","rt":$n[0].Void},{"a":1,"n":"GrowMask","t":8,"sn":"GrowMask","rt":$n[1].IEnumerator},{"a":1,"n":"PulseIn","t":8,"pi":[{"n":"rect","pt":$n[2].RectTransform,"ps":0}],"sn":"PulseIn","rt":$n[1].IEnumerator,"p":[$n[2].RectTransform]},{"a":2,"n":"Show","t":8,"sn":"Show","rt":$n[0].Void},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0435\u0432\u0438\u0434\u0438\u043c\u0430\u044f \u043a\u043d\u043e\u043f\u043a\u0430 \u043d\u0430 \u0432\u0435\u0441\u044c \u044d\u043a\u0440\u0430\u043d \u043f\u044d\u043a\u0448\u043e\u0442\u0430 \u2014 \u043b\u044e\u0431\u043e\u0439 \u0442\u0430\u043f \u0432\u0435\u0434\u0451\u0442 \u0432 \u0441\u0442\u043e\u0440."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"fullscreenTapButton","t":4,"rt":$n[4].Button,"sn":"fullscreenTapButton"},{"at":[new UnityEngine.HeaderAttribute("\u041f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u0435 Header \u0438 \u043a\u043d\u043e\u043f\u043a\u0438 Play (\u043f\u043e\u0441\u043b\u0435 \u043c\u0430\u0441\u043a\u0438, \u043f\u0443\u043b\u044c\u0441\u0430\u0446\u0438\u0435\u0439)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"headerRect","t":4,"rt":$n[2].RectTransform,"sn":"headerRect"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"maskGrowCurve","t":4,"rt":pc.AnimationCurve,"sn":"maskGrowCurve"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"maskGrowDuration","t":4,"rt":$n[0].Single,"sn":"maskGrowDuration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.HeaderAttribute("\u0420\u0430\u0441\u043a\u0440\u044b\u0442\u0438\u0435 \u043c\u0430\u0441\u043a\u0438 (\u0441\u043c. GameObject \"Mask\")"),new UnityEngine.TooltipAttribute("\u0420\u0430\u0441\u0442\u0451\u0442 \u043e\u0442 0 \u0434\u043e maskTargetSize \u0441\u0440\u0430\u0437\u0443 \u043f\u0440\u0438 \u043f\u043e\u043a\u0430\u0437\u0435 \u043f\u044d\u043a\u0448\u043e\u0442\u0430 \u2014 \u0438\u043c\u0435\u043d\u043d\u043e Width/Height (RectTransform.sizeDelta), \u0430 \u043d\u0435 localScale, \u0447\u0442\u043e\u0431\u044b \u043c\u0430\u0441\u043a\u0430 \u0440\u0435\u0430\u043b\u044c\u043d\u043e \u0440\u0430\u0441\u043a\u0440\u044b\u0432\u0430\u043b\u0430\u0441\u044c \u043f\u043e \u043f\u0440\u044f\u043c\u043e\u0443\u0433\u043e\u043b\u044c\u043d\u0438\u043a\u0443, \u0430 \u043d\u0435 \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0438\u0440\u043e\u0432\u0430\u043b\u0430 \u0443\u0436\u0435 \u0433\u043e\u0442\u043e\u0432\u044b\u0439 \u0440\u0430\u0437\u043c\u0435\u0440."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"maskRect","t":4,"rt":$n[2].RectTransform,"sn":"maskRect"},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0435\u043b\u0435\u0432\u044b\u0435 Width/Height \u043c\u0430\u0441\u043a\u0438 (sizeDelta) \u0432 \u043a\u043e\u043d\u0446\u0435 \u0440\u0430\u0441\u043a\u0440\u044b\u0442\u0438\u044f \u2014 \u0441 \u0437\u0430\u043f\u0430\u0441\u043e\u043c \u0431\u043e\u043b\u044c\u0448\u0435 \u044d\u043a\u0440\u0430\u043d\u0430, \u0447\u0442\u043e\u0431\u044b \u0433\u0430\u0440\u0430\u043d\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u043d\u043e \u043f\u0435\u0440\u0435\u043a\u0440\u044b\u0442\u044c \u043a\u0440\u0430\u044f \u043d\u0435\u0437\u0430\u0432\u0438\u0441\u0438\u043c\u043e \u043e\u0442 \u0440\u0430\u0437\u0440\u0435\u0448\u0435\u043d\u0438\u044f/\u043f\u0440\u043e\u043f\u043e\u0440\u0446\u0438\u0439 \u0443\u0441\u0442\u0440\u043e\u0439\u0441\u0442\u0432\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"maskTargetSize","t":4,"rt":$n[0].Single,"sn":"maskTargetSize","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"panelRoot","t":4,"rt":$n[2].GameObject,"sn":"panelRoot"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"playButtonRect","t":4,"rt":$n[2].RectTransform,"sn":"playButtonRect"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"playNowButton","t":4,"rt":$n[4].Button,"sn":"playNowButton"},{"at":[new UnityEngine.TooltipAttribute("\u041a\u0440\u0438\u0432\u0430\u044f \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0430 0..1 \u0441 \u043d\u0435\u0431\u043e\u043b\u044c\u0448\u0438\u043c \u043f\u0435\u0440\u0435\u043b\u0451\u0442\u043e\u043c (\u043f\u043e \u0443\u043c\u043e\u043b\u0447\u0430\u043d\u0438\u044e \u2014 \u0434\u043e ~1.15 \u0438 \u043e\u0431\u0440\u0430\u0442\u043d\u043e \u043a 1) \u0434\u043b\u044f \u043f\u0440\u0443\u0436\u0438\u043d\u043d\u043e\u0433\u043e \u044d\u0444\u0444\u0435\u043a\u0442\u0430 \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f \u2014 \u0442\u0430 \u0436\u0435 \u0438\u0434\u0435\u044f, \u0447\u0442\u043e \u0438 \u0432 TrayRefillManager.spawnScaleCurve."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"revealPulseCurve","t":4,"rt":pc.AnimationCurve,"sn":"revealPulseCurve"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"revealPulseDuration","t":4,"rt":$n[0].Single,"sn":"revealPulseDuration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0435\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e: \u0430\u043d\u0438\u043c\u0430\u0442\u043e\u0440 \u0432\u0438\u0437\u0443\u0430\u043b\u044c\u043d\u043e\u0433\u043e \u044d\u0444\u0444\u0435\u043a\u0442\u0430 \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f \u043f\u044d\u043a\u0448\u043e\u0442\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"transitionAnimator","t":4,"rt":$n[2].Animator,"sn":"transitionAnimator"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"transitionTrigger","t":4,"rt":$n[0].String,"sn":"transitionTrigger"}]}; }, $n);
     /*PackshotController end.*/
 
     /*TimerSliderUI start.*/
-    $m("TimerSliderUI", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"Awake","t":8,"sn":"Awake","rt":$n[0].Void},{"a":1,"n":"HandleTimerStopped","t":8,"sn":"HandleTimerStopped","rt":$n[0].Void},{"a":1,"n":"HandleWarningZoneEntered","t":8,"sn":"HandleWarningZoneEntered","rt":$n[0].Void},{"a":1,"n":"LateUpdate","t":8,"sn":"LateUpdate","rt":$n[0].Void},{"a":1,"n":"OnDisable","t":8,"sn":"OnDisable","rt":$n[0].Void},{"a":1,"n":"OnEnable","t":8,"sn":"OnEnable","rt":$n[0].Void},{"a":1,"n":"PlayAlarmThenShowPopup","t":8,"sn":"PlayAlarmThenShowPopup","rt":$n[1].IEnumerator},{"a":1,"n":"ShowPopup","t":8,"sn":"ShowPopup","rt":$n[1].IEnumerator},{"a":1,"n":"BlurSizePropertyId","is":true,"t":4,"rt":$n[0].Int32,"sn":"BlurSizePropertyId","ro":true,"box":function ($v) { return Bridge.box($v, System.Int32);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakeAmplitudeDegrees","t":4,"rt":$n[0].Single,"sn":"alarmShakeAmplitudeDegrees","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0421\u043a\u043e\u043b\u044c\u043a\u043e \u0441\u0435\u043a\u0443\u043d\u0434 \u0447\u0430\u0441\u044b \u0440\u0435\u0437\u043a\u043e \u0442\u0440\u044f\u0441\u0443\u0442\u0441\u044f/\u0432\u0438\u0431\u0440\u0438\u0440\u0443\u044e\u0442, \u043a\u0430\u043a \u0437\u0432\u043e\u043d\u044f\u0449\u0438\u0439 \u0431\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a, \u0434\u043e \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f \u043f\u043e\u043f\u0430\u043f\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakeDuration","t":4,"rt":$n[0].Single,"sn":"alarmShakeDuration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakeFrequency","t":4,"rt":$n[0].Single,"sn":"alarmShakeFrequency","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0410\u043c\u043f\u043b\u0438\u0442\u0443\u0434\u0430 \u0434\u0440\u043e\u0436\u0430\u043d\u0438\u044f \u043f\u043e\u0437\u0438\u0446\u0438\u0438 (\u0432 \u043b\u043e\u043a\u0430\u043b\u044c\u043d\u044b\u0445 \u0435\u0434\u0438\u043d\u0438\u0446\u0430\u0445 RectTransform) \u2014 \u0432\u043c\u0435\u0441\u0442\u0435 \u0441 \u0432\u0440\u0430\u0449\u0435\u043d\u0438\u0435\u043c \u0434\u0430\u0451\u0442 \u044d\u0444\u0444\u0435\u043a\u0442 \u0432\u0438\u0431\u0440\u0430\u0446\u0438\u0438, \u0430 \u043d\u0435 \u043f\u0440\u043e\u0441\u0442\u043e \u043f\u043e\u043a\u0430\u0447\u0438\u0432\u0430\u043d\u0438\u044f \u043d\u0430 \u043c\u0435\u0441\u0442\u0435."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakePositionAmplitude","t":4,"rt":$n[0].Single,"sn":"alarmShakePositionAmplitude","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.HeaderAttribute("\u0411\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a \u043f\u043e \u043e\u043a\u043e\u043d\u0447\u0430\u043d\u0438\u0438 \u0442\u0430\u0439\u043c\u0435\u0440\u0430"),new UnityEngine.TooltipAttribute("\u0417\u0430 \u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0441\u0435\u043a\u0443\u043d\u0434 \u0414\u041e \u0444\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u043a\u043e\u043d\u0446\u0430 \u0442\u0430\u0439\u043c\u0435\u0440\u0430 \u0437\u0430\u043f\u0443\u0441\u043a\u0430\u0442\u044c \u0431\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a (0 \u2014 \u0440\u043e\u0432\u043d\u043e \u0432 \u043a\u043e\u043d\u0446\u0435). \u041f\u043e\u0437\u0432\u043e\u043b\u044f\u0435\u0442 \u0441\u0442\u0430\u0440\u0442\u043e\u0432\u0430\u0442\u044c \u0430\u043d\u0438\u043c\u0430\u0446\u0438\u044e \u0447\u0443\u0442\u044c \u0440\u0430\u043d\u044c\u0448\u0435, \u0430 \u043d\u0435 \u0441\u0442\u0440\u043e\u0433\u043e \u043f\u043e OnTimerExpired."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakeStartOffset","t":4,"rt":$n[0].Single,"sn":"alarmShakeStartOffset","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"alarmTriggered","t":4,"rt":$n[0].Boolean,"sn":"alarmTriggered","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"barImage","t":4,"rt":$n[4].Image,"sn":"barImage"},{"at":[new UnityEngine.HeaderAttribute("\u0426\u0432\u0435\u0442 \u043f\u043e\u043b\u043e\u0441\u043a\u0438 \u2014 \u0442\u0440\u0438 \u043a\u043b\u044e\u0447\u0435\u0432\u044b\u0435 \u0442\u043e\u0447\u043a\u0438"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"barImageOutline","t":4,"rt":$n[4].Image,"sn":"barImageOutline"},{"at":[new UnityEngine.HeaderAttribute("\u041f\u043e\u043b\u043e\u0441\u043a\u0430 (Rect Transform, \u0440\u0430\u0441\u0442\u044f\u043d\u0443\u0442\u044b\u0439 \u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u043e \u2014 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442 \u043f\u043e\u043b\u0435 Right)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"barRect","t":4,"rt":$n[2].RectTransform,"sn":"barRect"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"blurEndSize","t":4,"rt":$n[0].Single,"sn":"blurEndSize","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.HeaderAttribute("\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b \u0431\u043b\u044e\u0440\u0430 \u043f\u043e\u0434 \u043f\u043e\u043f\u0430\u043f\u043e\u043c \u2014 \u0441\u0438\u043b\u0430 \u0431\u043b\u044e\u0440\u0430 \u0432\u043e \u0432\u0440\u0435\u043c\u044f \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f (\u0441\u0438\u043d\u0445\u0440\u043e\u043d\u043d\u043e \u0441\u043e \u0441\u043a\u0435\u0439\u043b\u043e\u043c)"),new UnityEngine.TooltipAttribute("\u041b\u0438\u0447\u043d\u044b\u0439 \u0438\u043d\u0441\u0442\u0430\u043d\u0441 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u0430 UI/SimpleBackgroundBlur \u2014 \u0435\u0433\u043e \u0441\u0432\u043e\u0439\u0441\u0442\u0432\u043e _Size \u0430\u043d\u0438\u043c\u0438\u0440\u0443\u0435\u0442\u0441\u044f \u043e\u0442 blurStartSize \u0434\u043e blurEndSize \u0437\u0430 \u0442\u043e \u0436\u0435 popupAnimDuration."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"blurMaterial","t":4,"rt":$n[2].Material,"sn":"blurMaterial"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"blurStartSize","t":4,"rt":$n[0].Single,"sn":"blurStartSize","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"clockBasePosition","t":4,"rt":$n[2].Vector3,"sn":"clockBasePosition"},{"a":1,"n":"clockBaseScale","t":4,"rt":$n[2].Vector3,"sn":"clockBaseScale"},{"at":[new UnityEngine.HeaderAttribute("\u041f\u0443\u043b\u044c\u0441\u0430\u0446\u0438\u044f \u0438\u043a\u043e\u043d\u043a\u0438 \u0447\u0430\u0441\u043e\u0432 (\u043f\u043e\u0441\u043b\u0435\u0434\u043d\u044f\u044f \u0442\u0440\u0435\u0442\u044c \u0432\u0440\u0435\u043c\u0435\u043d\u0438, \u0441\u043c. GameTimerUI.warningRemainingFraction)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"clockIcon","t":4,"rt":$n[2].Transform,"sn":"clockIcon"},{"a":1,"n":"clockOutlineBaseColor","t":4,"rt":$n[2].Color,"sn":"clockOutlineBaseColor"},{"at":[new UnityEngine.HeaderAttribute("\u0426\u0432\u0435\u0442 \u0432 \u0442\u0430\u043a\u0442 \u043f\u0443\u043b\u044c\u0441\u0430\u0446\u0438\u0438 (\u0442\u0435 \u0436\u0435 \u0443\u0434\u0430\u0440\u044b, \u0447\u0442\u043e \u0438 \u0443 \u0438\u043a\u043e\u043d\u043a\u0438 \u0447\u0430\u0441\u043e\u0432)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"clockOutlineImage","t":4,"rt":$n[4].Image,"sn":"clockOutlineImage"},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0432\u0435\u0442 \u0432 \u043a\u043e\u043d\u0446\u0435 \u043e\u0442\u0441\u0447\u0451\u0442\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"endColor","t":4,"rt":$n[2].Color,"sn":"endColor"},{"a":1,"n":"loaderBackgroundBaseColor","t":4,"rt":$n[2].Color,"sn":"loaderBackgroundBaseColor"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"loaderBackgroundImage","t":4,"rt":$n[4].Image,"sn":"loaderBackgroundImage"},{"at":[new UnityEngine.TooltipAttribute("\u0417\u043d\u0430\u0447\u0435\u043d\u0438\u0435 Right (\u0442\u043e \u0441\u0430\u043c\u043e\u0435 \u043f\u043e\u043b\u0435 \u0432 \u0438\u043d\u0441\u043f\u0435\u043a\u0442\u043e\u0440\u0435 Rect Transform) \u0432 \u043c\u043e\u043c\u0435\u043d\u0442 \u043f\u043e\u043b\u043d\u043e\u0433\u043e \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u0438\u044f \u043e\u0442\u0441\u0447\u0451\u0442\u0430 \u2014 \u043f\u043e\u043b\u043e\u0441\u043a\u0430 \u0441\u0436\u0438\u043c\u0430\u0435\u0442\u0441\u044f \u043e\u0442 0 (\u0441\u0442\u0430\u0440\u0442) \u0434\u043e \u044d\u0442\u043e\u0433\u043e \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f (\u043a\u043e\u043d\u0435\u0446)."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"maxRightOffset","t":4,"rt":$n[0].Single,"sn":"maxRightOffset","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0432\u0435\u0442 \u0440\u043e\u0432\u043d\u043e \u043d\u0430 \u0441\u0435\u0440\u0435\u0434\u0438\u043d\u0435 \u2014 \u043f\u043b\u0430\u0432\u043d\u044b\u0439 \u043f\u0435\u0440\u0435\u0445\u043e\u0434 \u0438\u0434\u0451\u0442 start -> mid (\u043f\u0435\u0440\u0432\u0430\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430) \u0438 mid -> end (\u0432\u0442\u043e\u0440\u0430\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430)."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"midColor","t":4,"rt":$n[2].Color,"sn":"midColor"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupAnimDuration","t":4,"rt":$n[0].Single,"sn":"popupAnimDuration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupBackgroundEndColor","t":4,"rt":$n[2].Color,"sn":"popupBackgroundEndColor"},{"at":[new UnityEngine.HeaderAttribute("\u0424\u043e\u043d \u043f\u043e\u043f\u0430\u043f\u0430 \u2014 \u0446\u0432\u0435\u0442 \u0432\u043e \u0432\u0440\u0435\u043c\u044f \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f (\u0441\u0438\u043d\u0445\u0440\u043e\u043d\u043d\u043e \u0441\u043e \u0441\u043a\u0435\u0439\u043b\u043e\u043c/\u043f\u043e\u0432\u043e\u0440\u043e\u0442\u043e\u043c)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupBackgroundImage","t":4,"rt":$n[4].Image,"sn":"popupBackgroundImage"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupBackgroundStartColor","t":4,"rt":$n[2].Color,"sn":"popupBackgroundStartColor"},{"a":1,"n":"popupBaseScale","t":4,"rt":$n[2].Vector3,"sn":"popupBaseScale"},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0435\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e: \u0447\u0442\u043e \u0438\u043c\u0435\u043d\u043d\u043e \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0438\u0440\u043e\u0432\u0430\u0442\u044c/\u043f\u043e\u0432\u043e\u0440\u0430\u0447\u0438\u0432\u0430\u0442\u044c \u043f\u0440\u0438 \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u0438 \u043f\u043e\u043f\u0430\u043f\u0430. \u0415\u0441\u043b\u0438 \u043d\u0435 \u0437\u0430\u0434\u0430\u043d\u043e \u2014 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442\u0441\u044f transform \u0441\u0430\u043c\u043e\u0433\u043e popupRoot."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupContent","t":4,"rt":$n[2].Transform,"sn":"popupContent"},{"at":[new UnityEngine.HeaderAttribute("\u041f\u043e\u043f\u0430\u043f \u043f\u043e\u0441\u043b\u0435 \u0431\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a\u0430"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupRoot","t":4,"rt":$n[2].GameObject,"sn":"popupRoot"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupScaleCurve","t":4,"rt":pc.AnimationCurve,"sn":"popupScaleCurve"},{"at":[new UnityEngine.TooltipAttribute("\u0423\u0433\u043e\u043b \u043f\u043e Z, \u0441 \u043a\u043e\u0442\u043e\u0440\u043e\u0433\u043e \u043f\u043e\u043f\u0430\u043f \u043d\u0430\u0447\u0438\u043d\u0430\u0435\u0442 \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u0435 \u2014 \u0434\u043e\u0432\u043e\u0440\u0430\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f \u0434\u043e 0 \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u043d\u043e \u0441\u043e \u0441\u043a\u0435\u0439\u043b\u043e\u043c, \u043f\u043e \u0442\u043e\u0439 \u0436\u0435 \u043a\u0440\u0438\u0432\u043e\u0439 popupScaleCurve \u0438 \u0437\u0430 \u0442\u043e \u0436\u0435 popupAnimDuration."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupStartAngleZ","t":4,"rt":$n[0].Single,"sn":"popupStartAngleZ","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"pulseActive","t":4,"rt":$n[0].Boolean,"sn":"pulseActive","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0432\u0435\u0442, \u0432 \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u0430\u0443\u0442\u043b\u0430\u0439\u043d \u0447\u0430\u0441\u043e\u0432 \u0438 \u0431\u044d\u043a\u0433\u0440\u0430\u0443\u043d\u0434 \u0437\u0430\u0433\u0440\u0443\u0437\u0447\u0438\u043a\u0430 \u0443\u0445\u043e\u0434\u044f\u0442 \u043d\u0430 \u043f\u0438\u043a\u0435 \u043a\u0430\u0436\u0434\u043e\u0433\u043e \u0443\u0434\u0430\u0440\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"pulseColor","t":4,"rt":$n[2].Color,"sn":"pulseColor"},{"at":[new UnityEngine.TooltipAttribute("\u0421\u043a\u043e\u043b\u044c\u043a\u043e \u0443\u0434\u0430\u0440\u043e\u0432 \u0432 \u0441\u0435\u043a\u0443\u043d\u0434\u0443 \u2014 0.4 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u043f\u0440\u043e\u043c\u0435\u0436\u0443\u0442\u043a\u0443 2.5 \u0441\u0435\u043a\u0443\u043d\u0434\u044b \u043c\u0435\u0436\u0434\u0443 \u0443\u0434\u0430\u0440\u0430\u043c\u0438."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"pulseFrequency","t":4,"rt":$n[0].Single,"sn":"pulseFrequency","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"pulseScaleMultiplier","t":4,"rt":$n[0].Single,"sn":"pulseScaleMultiplier","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0430\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0440\u0435\u0437\u043a\u0438\u0439 \u0441\u0430\u043c \u0443\u0434\u0430\u0440: 1 \u2014 \u043f\u043b\u0430\u0432\u043d\u0430\u044f \u0441\u0438\u043d\u0443\u0441\u043e\u0438\u0434\u0430; \u0447\u0435\u043c \u0431\u043e\u043b\u044c\u0448\u0435, \u0442\u0435\u043c \u043a\u043e\u0440\u043e\u0447\u0435 \u0438 \u0440\u0435\u0437\u0447\u0435 \u0441\u043a\u0430\u0447\u043e\u043a \u0432\u0432\u0435\u0440\u0445 \u0438 \u0442\u0435\u043c \u0434\u043e\u043b\u044c\u0448\u0435 \u043f\u0430\u0443\u0437\u0430 \u043d\u0430 \u0431\u0430\u0437\u043e\u0432\u043e\u043c \u0440\u0430\u0437\u043c\u0435\u0440\u0435 \u043c\u0435\u0436\u0434\u0443 \u0443\u0434\u0430\u0440\u0430\u043c\u0438. \u0423\u043c\u0435\u043d\u044c\u0448\u0435\u043d\u043e \u043d\u0430 35% \u043e\u0442\u043d\u043e\u0441\u0438\u0442\u0435\u043b\u044c\u043d\u043e \u043f\u0440\u0435\u0436\u043d\u0435\u0433\u043e \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f (6 -> 3.9), \u0447\u0442\u043e\u0431\u044b \u0441\u0430\u043c \u0441\u043a\u0430\u0447\u043e\u043a \u0431\u044b\u043b \u0431\u043e\u043b\u0435\u0435 \u043c\u0435\u0434\u043b\u0435\u043d\u043d\u044b\u043c/\u043f\u043b\u0430\u0432\u043d\u044b\u043c."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"pulseSharpness","t":4,"rt":$n[0].Single,"sn":"pulseSharpness","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0432\u0435\u0442 \u0432 \u043d\u0430\u0447\u0430\u043b\u0435 \u043e\u0442\u0441\u0447\u0451\u0442\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"startColor","t":4,"rt":$n[2].Color,"sn":"startColor"},{"at":[new UnityEngine.HeaderAttribute("\u0418\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u043f\u0440\u043e\u0433\u0440\u0435\u0441\u0441\u0430"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"timer","t":4,"rt":GameTimerUI,"sn":"timer"}]}; }, $n);
+    $m("TimerSliderUI", function () { return {"att":1048577,"a":2,"m":[{"a":2,"isSynthetic":true,"n":".ctor","t":1,"sn":"ctor"},{"a":1,"n":"Awake","t":8,"sn":"Awake","rt":$n[0].Void},{"a":1,"n":"HandleTimerStopped","t":8,"sn":"HandleTimerStopped","rt":$n[0].Void},{"a":1,"n":"HandleWarningZoneEntered","t":8,"sn":"HandleWarningZoneEntered","rt":$n[0].Void},{"a":1,"n":"LateUpdate","t":8,"sn":"LateUpdate","rt":$n[0].Void},{"a":1,"n":"OnDisable","t":8,"sn":"OnDisable","rt":$n[0].Void},{"a":1,"n":"OnEnable","t":8,"sn":"OnEnable","rt":$n[0].Void},{"a":1,"n":"PlayAlarmThenShowPopup","t":8,"sn":"PlayAlarmThenShowPopup","rt":$n[1].IEnumerator},{"a":1,"n":"ShowPopup","t":8,"sn":"ShowPopup","rt":$n[1].IEnumerator},{"a":1,"n":"BlurSizePropertyId","is":true,"t":4,"rt":$n[0].Int32,"sn":"BlurSizePropertyId","ro":true,"box":function ($v) { return Bridge.box($v, System.Int32);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakeAmplitudeDegrees","t":4,"rt":$n[0].Single,"sn":"alarmShakeAmplitudeDegrees","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0421\u043a\u043e\u043b\u044c\u043a\u043e \u0441\u0435\u043a\u0443\u043d\u0434 \u0447\u0430\u0441\u044b \u0440\u0435\u0437\u043a\u043e \u0442\u0440\u044f\u0441\u0443\u0442\u0441\u044f/\u0432\u0438\u0431\u0440\u0438\u0440\u0443\u044e\u0442, \u043a\u0430\u043a \u0437\u0432\u043e\u043d\u044f\u0449\u0438\u0439 \u0431\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a, \u0434\u043e \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f \u043f\u043e\u043f\u0430\u043f\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakeDuration","t":4,"rt":$n[0].Single,"sn":"alarmShakeDuration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakeFrequency","t":4,"rt":$n[0].Single,"sn":"alarmShakeFrequency","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0410\u043c\u043f\u043b\u0438\u0442\u0443\u0434\u0430 \u0434\u0440\u043e\u0436\u0430\u043d\u0438\u044f \u043f\u043e\u0437\u0438\u0446\u0438\u0438 (\u0432 \u043b\u043e\u043a\u0430\u043b\u044c\u043d\u044b\u0445 \u0435\u0434\u0438\u043d\u0438\u0446\u0430\u0445 RectTransform) \u2014 \u0432\u043c\u0435\u0441\u0442\u0435 \u0441 \u0432\u0440\u0430\u0449\u0435\u043d\u0438\u0435\u043c \u0434\u0430\u0451\u0442 \u044d\u0444\u0444\u0435\u043a\u0442 \u0432\u0438\u0431\u0440\u0430\u0446\u0438\u0438, \u0430 \u043d\u0435 \u043f\u0440\u043e\u0441\u0442\u043e \u043f\u043e\u043a\u0430\u0447\u0438\u0432\u0430\u043d\u0438\u044f \u043d\u0430 \u043c\u0435\u0441\u0442\u0435."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakePositionAmplitude","t":4,"rt":$n[0].Single,"sn":"alarmShakePositionAmplitude","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.HeaderAttribute("\u0411\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a \u043f\u043e \u043e\u043a\u043e\u043d\u0447\u0430\u043d\u0438\u0438 \u0442\u0430\u0439\u043c\u0435\u0440\u0430"),new UnityEngine.TooltipAttribute("\u0417\u0430 \u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0441\u0435\u043a\u0443\u043d\u0434 \u0414\u041e \u0444\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0433\u043e \u043a\u043e\u043d\u0446\u0430 \u0442\u0430\u0439\u043c\u0435\u0440\u0430 \u0437\u0430\u043f\u0443\u0441\u043a\u0430\u0442\u044c \u0431\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a (0 \u2014 \u0440\u043e\u0432\u043d\u043e \u0432 \u043a\u043e\u043d\u0446\u0435). \u041f\u043e\u0437\u0432\u043e\u043b\u044f\u0435\u0442 \u0441\u0442\u0430\u0440\u0442\u043e\u0432\u0430\u0442\u044c \u0430\u043d\u0438\u043c\u0430\u0446\u0438\u044e \u0447\u0443\u0442\u044c \u0440\u0430\u043d\u044c\u0448\u0435, \u0430 \u043d\u0435 \u0441\u0442\u0440\u043e\u0433\u043e \u043f\u043e OnTimerExpired."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"alarmShakeStartOffset","t":4,"rt":$n[0].Single,"sn":"alarmShakeStartOffset","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"alarmTriggered","t":4,"rt":$n[0].Boolean,"sn":"alarmTriggered","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"barImage","t":4,"rt":$n[4].Image,"sn":"barImage"},{"at":[new UnityEngine.HeaderAttribute("\u0426\u0432\u0435\u0442 \u043f\u043e\u043b\u043e\u0441\u043a\u0438 \u2014 \u0442\u0440\u0438 \u043a\u043b\u044e\u0447\u0435\u0432\u044b\u0435 \u0442\u043e\u0447\u043a\u0438"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"barImageOutline","t":4,"rt":$n[4].Image,"sn":"barImageOutline"},{"at":[new UnityEngine.HeaderAttribute("\u041f\u043e\u043b\u043e\u0441\u043a\u0430 (Rect Transform, \u0440\u0430\u0441\u0442\u044f\u043d\u0443\u0442\u044b\u0439 \u0433\u043e\u0440\u0438\u0437\u043e\u043d\u0442\u0430\u043b\u044c\u043d\u043e \u2014 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442 \u043f\u043e\u043b\u0435 Right)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"barRect","t":4,"rt":$n[2].RectTransform,"sn":"barRect"},{"a":1,"n":"clockBasePosition","t":4,"rt":$n[2].Vector3,"sn":"clockBasePosition"},{"a":1,"n":"clockBaseScale","t":4,"rt":$n[2].Vector3,"sn":"clockBaseScale"},{"at":[new UnityEngine.HeaderAttribute("\u041f\u0443\u043b\u044c\u0441\u0430\u0446\u0438\u044f \u0438\u043a\u043e\u043d\u043a\u0438 \u0447\u0430\u0441\u043e\u0432 (\u043f\u043e\u0441\u043b\u0435\u0434\u043d\u044f\u044f \u0442\u0440\u0435\u0442\u044c \u0432\u0440\u0435\u043c\u0435\u043d\u0438, \u0441\u043c. GameTimerUI.warningRemainingFraction)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"clockIcon","t":4,"rt":$n[2].Transform,"sn":"clockIcon"},{"a":1,"n":"clockOutlineBaseColor","t":4,"rt":$n[2].Color,"sn":"clockOutlineBaseColor"},{"at":[new UnityEngine.HeaderAttribute("\u0426\u0432\u0435\u0442 \u0432 \u0442\u0430\u043a\u0442 \u043f\u0443\u043b\u044c\u0441\u0430\u0446\u0438\u0438 (\u0442\u0435 \u0436\u0435 \u0443\u0434\u0430\u0440\u044b, \u0447\u0442\u043e \u0438 \u0443 \u0438\u043a\u043e\u043d\u043a\u0438 \u0447\u0430\u0441\u043e\u0432)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"clockOutlineImage","t":4,"rt":$n[4].Image,"sn":"clockOutlineImage"},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0432\u0435\u0442 \u0432 \u043a\u043e\u043d\u0446\u0435 \u043e\u0442\u0441\u0447\u0451\u0442\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"endColor","t":4,"rt":$n[2].Color,"sn":"endColor"},{"a":1,"n":"loaderBackgroundBaseColor","t":4,"rt":$n[2].Color,"sn":"loaderBackgroundBaseColor"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"loaderBackgroundImage","t":4,"rt":$n[4].Image,"sn":"loaderBackgroundImage"},{"at":[new UnityEngine.TooltipAttribute("\u0417\u043d\u0430\u0447\u0435\u043d\u0438\u0435 Right (\u0442\u043e \u0441\u0430\u043c\u043e\u0435 \u043f\u043e\u043b\u0435 \u0432 \u0438\u043d\u0441\u043f\u0435\u043a\u0442\u043e\u0440\u0435 Rect Transform) \u0432 \u043c\u043e\u043c\u0435\u043d\u0442 \u043f\u043e\u043b\u043d\u043e\u0433\u043e \u0437\u0430\u0432\u0435\u0440\u0448\u0435\u043d\u0438\u044f \u043e\u0442\u0441\u0447\u0451\u0442\u0430 \u2014 \u043f\u043e\u043b\u043e\u0441\u043a\u0430 \u0441\u0436\u0438\u043c\u0430\u0435\u0442\u0441\u044f \u043e\u0442 0 (\u0441\u0442\u0430\u0440\u0442) \u0434\u043e \u044d\u0442\u043e\u0433\u043e \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f (\u043a\u043e\u043d\u0435\u0446)."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"maxRightOffset","t":4,"rt":$n[0].Single,"sn":"maxRightOffset","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0432\u0435\u0442 \u0440\u043e\u0432\u043d\u043e \u043d\u0430 \u0441\u0435\u0440\u0435\u0434\u0438\u043d\u0435 \u2014 \u043f\u043b\u0430\u0432\u043d\u044b\u0439 \u043f\u0435\u0440\u0435\u0445\u043e\u0434 \u0438\u0434\u0451\u0442 start -> mid (\u043f\u0435\u0440\u0432\u0430\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430) \u0438 mid -> end (\u0432\u0442\u043e\u0440\u0430\u044f \u043f\u043e\u043b\u043e\u0432\u0438\u043d\u0430)."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"midColor","t":4,"rt":$n[2].Color,"sn":"midColor"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupAnimDuration","t":4,"rt":$n[0].Single,"sn":"popupAnimDuration","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupBackgroundEndColor","t":4,"rt":$n[2].Color,"sn":"popupBackgroundEndColor"},{"at":[new UnityEngine.HeaderAttribute("\u0424\u043e\u043d \u043f\u043e\u043f\u0430\u043f\u0430 \u2014 \u0446\u0432\u0435\u0442 \u0432\u043e \u0432\u0440\u0435\u043c\u044f \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u044f (\u0441\u0438\u043d\u0445\u0440\u043e\u043d\u043d\u043e \u0441\u043e \u0441\u043a\u0435\u0439\u043b\u043e\u043c/\u043f\u043e\u0432\u043e\u0440\u043e\u0442\u043e\u043c)"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupBackgroundImage","t":4,"rt":$n[4].Image,"sn":"popupBackgroundImage"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupBackgroundStartColor","t":4,"rt":$n[2].Color,"sn":"popupBackgroundStartColor"},{"a":1,"n":"popupBaseScale","t":4,"rt":$n[2].Vector3,"sn":"popupBaseScale"},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0435\u043e\u0431\u044f\u0437\u0430\u0442\u0435\u043b\u044c\u043d\u043e: \u0447\u0442\u043e \u0438\u043c\u0435\u043d\u043d\u043e \u043c\u0430\u0441\u0448\u0442\u0430\u0431\u0438\u0440\u043e\u0432\u0430\u0442\u044c/\u043f\u043e\u0432\u043e\u0440\u0430\u0447\u0438\u0432\u0430\u0442\u044c \u043f\u0440\u0438 \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u0438 \u043f\u043e\u043f\u0430\u043f\u0430. \u0415\u0441\u043b\u0438 \u043d\u0435 \u0437\u0430\u0434\u0430\u043d\u043e \u2014 \u0438\u0441\u043f\u043e\u043b\u044c\u0437\u0443\u0435\u0442\u0441\u044f transform \u0441\u0430\u043c\u043e\u0433\u043e popupRoot."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupContent","t":4,"rt":$n[2].Transform,"sn":"popupContent"},{"at":[new UnityEngine.HeaderAttribute("\u041f\u043e\u043f\u0430\u043f \u043f\u043e\u0441\u043b\u0435 \u0431\u0443\u0434\u0438\u043b\u044c\u043d\u0438\u043a\u0430"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupRoot","t":4,"rt":$n[2].GameObject,"sn":"popupRoot"},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupScaleCurve","t":4,"rt":pc.AnimationCurve,"sn":"popupScaleCurve"},{"at":[new UnityEngine.TooltipAttribute("\u0423\u0433\u043e\u043b \u043f\u043e Z, \u0441 \u043a\u043e\u0442\u043e\u0440\u043e\u0433\u043e \u043f\u043e\u043f\u0430\u043f \u043d\u0430\u0447\u0438\u043d\u0430\u0435\u0442 \u043f\u043e\u044f\u0432\u043b\u0435\u043d\u0438\u0435 \u2014 \u0434\u043e\u0432\u043e\u0440\u0430\u0447\u0438\u0432\u0430\u0435\u0442\u0441\u044f \u0434\u043e 0 \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u043d\u043e \u0441\u043e \u0441\u043a\u0435\u0439\u043b\u043e\u043c, \u043f\u043e \u0442\u043e\u0439 \u0436\u0435 \u043a\u0440\u0438\u0432\u043e\u0439 popupScaleCurve \u0438 \u0437\u0430 \u0442\u043e \u0436\u0435 popupAnimDuration."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"popupStartAngleZ","t":4,"rt":$n[0].Single,"sn":"popupStartAngleZ","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"a":1,"n":"pulseActive","t":4,"rt":$n[0].Boolean,"sn":"pulseActive","box":function ($v) { return Bridge.box($v, System.Boolean, System.Boolean.toString);}},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0432\u0435\u0442, \u0432 \u043a\u043e\u0442\u043e\u0440\u044b\u0439 \u0430\u0443\u0442\u043b\u0430\u0439\u043d \u0447\u0430\u0441\u043e\u0432 \u0438 \u0431\u044d\u043a\u0433\u0440\u0430\u0443\u043d\u0434 \u0437\u0430\u0433\u0440\u0443\u0437\u0447\u0438\u043a\u0430 \u0443\u0445\u043e\u0434\u044f\u0442 \u043d\u0430 \u043f\u0438\u043a\u0435 \u043a\u0430\u0436\u0434\u043e\u0433\u043e \u0443\u0434\u0430\u0440\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"pulseColor","t":4,"rt":$n[2].Color,"sn":"pulseColor"},{"at":[new UnityEngine.TooltipAttribute("\u0421\u043a\u043e\u043b\u044c\u043a\u043e \u0443\u0434\u0430\u0440\u043e\u0432 \u0432 \u0441\u0435\u043a\u0443\u043d\u0434\u0443 \u2014 0.4 \u0441\u043e\u043e\u0442\u0432\u0435\u0442\u0441\u0442\u0432\u0443\u0435\u0442 \u043f\u0440\u043e\u043c\u0435\u0436\u0443\u0442\u043a\u0443 2.5 \u0441\u0435\u043a\u0443\u043d\u0434\u044b \u043c\u0435\u0436\u0434\u0443 \u0443\u0434\u0430\u0440\u0430\u043c\u0438."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"pulseFrequency","t":4,"rt":$n[0].Single,"sn":"pulseFrequency","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"pulseScaleMultiplier","t":4,"rt":$n[0].Single,"sn":"pulseScaleMultiplier","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u041d\u0430\u0441\u043a\u043e\u043b\u044c\u043a\u043e \u0440\u0435\u0437\u043a\u0438\u0439 \u0441\u0430\u043c \u0443\u0434\u0430\u0440: 1 \u2014 \u043f\u043b\u0430\u0432\u043d\u0430\u044f \u0441\u0438\u043d\u0443\u0441\u043e\u0438\u0434\u0430; \u0447\u0435\u043c \u0431\u043e\u043b\u044c\u0448\u0435, \u0442\u0435\u043c \u043a\u043e\u0440\u043e\u0447\u0435 \u0438 \u0440\u0435\u0437\u0447\u0435 \u0441\u043a\u0430\u0447\u043e\u043a \u0432\u0432\u0435\u0440\u0445 \u0438 \u0442\u0435\u043c \u0434\u043e\u043b\u044c\u0448\u0435 \u043f\u0430\u0443\u0437\u0430 \u043d\u0430 \u0431\u0430\u0437\u043e\u0432\u043e\u043c \u0440\u0430\u0437\u043c\u0435\u0440\u0435 \u043c\u0435\u0436\u0434\u0443 \u0443\u0434\u0430\u0440\u0430\u043c\u0438. \u0423\u043c\u0435\u043d\u044c\u0448\u0435\u043d\u043e \u043d\u0430 35% \u043e\u0442\u043d\u043e\u0441\u0438\u0442\u0435\u043b\u044c\u043d\u043e \u043f\u0440\u0435\u0436\u043d\u0435\u0433\u043e \u0437\u043d\u0430\u0447\u0435\u043d\u0438\u044f (6 -> 3.9), \u0447\u0442\u043e\u0431\u044b \u0441\u0430\u043c \u0441\u043a\u0430\u0447\u043e\u043a \u0431\u044b\u043b \u0431\u043e\u043b\u0435\u0435 \u043c\u0435\u0434\u043b\u0435\u043d\u043d\u044b\u043c/\u043f\u043b\u0430\u0432\u043d\u044b\u043c."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"pulseSharpness","t":4,"rt":$n[0].Single,"sn":"pulseSharpness","box":function ($v) { return Bridge.box($v, System.Single, System.Single.format, System.Single.getHashCode);}},{"at":[new UnityEngine.TooltipAttribute("\u0426\u0432\u0435\u0442 \u0432 \u043d\u0430\u0447\u0430\u043b\u0435 \u043e\u0442\u0441\u0447\u0451\u0442\u0430."),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"startColor","t":4,"rt":$n[2].Color,"sn":"startColor"},{"at":[new UnityEngine.HeaderAttribute("\u0418\u0441\u0442\u043e\u0447\u043d\u0438\u043a \u043f\u0440\u043e\u0433\u0440\u0435\u0441\u0441\u0430"),new UnityEngine.SerializeFieldAttribute()],"a":1,"n":"timer","t":4,"rt":GameTimerUI,"sn":"timer"},{"a":2,"n":"OnFailPopupShown","t":2,"ad":{"a":2,"n":"add_OnFailPopupShown","t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"sn":"addOnFailPopupShown","rt":$n[0].Void,"p":[Function]},"r":{"a":2,"n":"remove_OnFailPopupShown","t":8,"pi":[{"n":"value","pt":Function,"ps":0}],"sn":"removeOnFailPopupShown","rt":$n[0].Void,"p":[Function]}}]}; }, $n);
     /*TimerSliderUI end.*/
 
     /*TimerWarningEffects start.*/
