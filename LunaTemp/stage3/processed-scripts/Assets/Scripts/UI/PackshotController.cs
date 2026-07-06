@@ -49,6 +49,13 @@ public class PackshotController : MonoBehaviour
         if (panelRoot != null) panelRoot.SetActive(true);
         if (transitionAnimator != null) transitionAnimator.SetTrigger(transitionTrigger);
 
+        // Отключаем ВСЕ StackDragHandler в сцене (не только исходные три слота лотка, как это уже
+        // частично делает GameFlowController.dragHandlers) — иначе перезаполненные TrayRefillManager-ом
+        // стопки или уже стоящие на поле (их тоже можно таскать заново, см. StackDragHandler)
+        // остались бы перетаскиваемыми поверх пэкшота.
+        foreach (var handler in FindObjectsOfType<StackDragHandler>())
+            handler.enabled = false;
+
         Luna.Unity.LifeCycle.GameEnded();
 
         StartCoroutine(AnimateReveal());

@@ -1,6 +1,6 @@
 if ( TRACE ) { TRACE( JSON.parse( '["BoardCell#init","BoardCell#AutoComputeAxialFromPosition#get","BoardCell#AxialCoord#get","BoardCell#InitialStackColors#get","BoardCell#IsClickable#get","BoardCell#IsEmpty#get","BoardCell#SnapPosition#get","BoardCell#init","BoardCell#SetAxialCoord","BoardCell#Awake","BoardCell#EnsureInitialized","BoardCell#SetHighlightConfig","BoardCell#SetHighlighted","BoardCell#AnimateHighlight","BoardCell#SetTutorialHighlighted","BoardCell#SetLayer","BoardCell#ApplyColor","BoardCell#ApplyScaleAndPosition","BoardManager#init","BoardManager#MarkInReaction","BoardManager#IsChainRunning#get","BoardManager#Cells#get","BoardManager#StackPrefab#get","BoardManager#PiecePrefab#get","BoardManager#Palette#get","BoardManager#init","BoardManager#Awake","BoardManager#ComputeNeighbors","BoardManager#Start","BoardManager#PlaceStack","BoardManager#GetNeighbors","BoardManager#ProcessChainReaction","BoardManager#TryDestroyMonochromeStacks","BoardManager#RunChainReactionBfs","BoardManager#TransferMatchingColor","BoardManager#FlyAndLand","BoardManager#SmoothRotateTo","BoardManager#AnimateAndDestroyAll","BoardManager#SpawnDestroyEffect","BoardManager#MoveHexWithArc","BoardManager#IsBoardFullyCleared","CellHighlightConfig#NormalColor#get","CellHighlightConfig#HighlightColor#get","CellHighlightConfig#HighlightScaleX#get","CellHighlightConfig#HighlightPositionY#get","CellHighlightConfig#TransitionDuration#get","CellHighlightConfig#init","CopyRectSize#OnEnable","FloatingHoverEffect#init","FloatingHoverEffect#Awake","FloatingHoverEffect#LateUpdate","GameFlowController#init","GameFlowController#OnEnable","GameFlowController#OnDisable","GameFlowController#HandleTutorialFinished","GameFlowController#HandleFailPopupShown","GameFlowController#HandleBoardCleared","GameFlowController#GoToPackshot","GameTimerUI#Progress01#get","GameTimerUI#RemainingSeconds#get","GameTimerUI#init","GameTimerUI#StartTimer","GameTimerUI#StopTimer","GameTimerUI#Update","HexColorPalette#GetMaterial","HexColorPalette.Entry#getDefaultValue","HexColorPalette.Entry#ctor","HexColorPalette.Entry#getHashCode","HexColorPalette.Entry#equals","HexColorPalette.Entry#$clone","HexPieceView#init","HexPieceView#init","HexPieceView#SetNeedsAlwaysOnTopMaterial","HexPieceView#SetColor","HexPieceView#SetAlwaysOnTop","HexPieceView#SetGlow","HexStack#Count#get","HexStack#IsEmpty#get","HexStack#TopColor#get","HexStack#IsMonochrome#get","HexStack#init","HexStack#Awake","HexStack#Initialize","HexStack#BuildFromColors","HexStack#SpawnPieceAtTop","HexStack#GetLocalPositionForIndex","HexStack#GetNextSlotWorldPosition","HexStack#GetTopWorldPosition","HexStack#GetTopPieceIndex","HexStack#SetAlwaysOnTop","HexStack#SetGlow","HexStack#SetLayer","HexStack#PopTopPiece","HexStack#AppendPiece","HexStack#UpdateHitCollider","PackshotController#init","PackshotController#Awake","PackshotController#Show","PackshotController#AnimateReveal","PackshotController#GrowMask","PackshotController#PulseIn","PackshotController#GoToStore","ScreenScaler#Start","ScreenScaler#LateUpdate","ScreenScaler#Resize","StackDragHandler#IsInTray#get","StackDragHandler#init","StackDragHandler#Awake","StackDragHandler#SetBoard","StackDragHandler#OnDisable","StackDragHandler#OnMouseDown","StackDragHandler#OnMouseDrag","StackDragHandler#OnMouseUp","StackDragHandler#UpdateHighlightedCell","StackDragHandler#SetHighlightedCell","StackDragHandler#RaycastCellUnderPointer","StackDragHandler#ReturnToOrigin","TimerSliderUI#init","TimerSliderUI#init","TimerSliderUI#Awake","TimerSliderUI#OnEnable","TimerSliderUI#OnDisable","TimerSliderUI#HandleWarningZoneEntered","TimerSliderUI#HandleTimerStopped","TimerSliderUI#PlayAlarmThenShowPopup","TimerSliderUI#ShowPopup","TimerSliderUI#LateUpdate","TimerWarningEffects#init","TimerWarningEffects#init","TimerWarningEffects#Awake","TimerWarningEffects#OnEnable","TimerWarningEffects#OnDisable","TimerWarningEffects#HandleWarningZoneEntered","TimerWarningEffects#HandleTimerStopped","TimerWarningEffects#ResetVisuals","TimerWarningEffects#LateUpdate","TrayRefillManager#init","TrayRefillManager#Awake","TrayRefillManager#OnEnable","TrayRefillManager#OnDisable","TrayRefillManager#CaptureTraySlots","TrayRefillManager#HandleTimerStopped","TrayRefillManager#HandleStackPlaced","TrayRefillManager#AllSlotsUsed","TrayRefillManager#RefillTray","TrayRefillManager#GenerateRandomColors","TrayRefillManager#AnimateSpawn","TutorialHandController#init","TutorialHandController#OnEnable","TutorialHandController#OnDisable","TutorialHandController#Start","TutorialHandController#ShowHand","TutorialHandController#HideHand","TutorialHandController#HandleGrabbed","TutorialHandController#HandleMoved","TutorialHandController#HandleReleased","TutorialHandController#ReshowAfterDelay","TutorialHandController#LoopHandAnimation","TutorialHandController#MoveHand","TutorialHandController#SetFinger","TutorialHandController#ApplySpotlight","TutorialHandController#ClearSpotlight","TutorialHandController#FindAvailableTrayStack","TutorialHandController#FindNearestEmptyCell","TutorialHandController#WorldToCanvasPoint","TutorialSpotlightOverlay#init","TutorialSpotlightOverlay#Awake","TutorialSpotlightOverlay#SetupRevealCamera","TutorialSpotlightOverlay#Show","TutorialSpotlightOverlay#Hide","TutorialSpotlightOverlay#HideImmediate","TutorialSpotlightOverlay#FadeTo","TutorialSpotlightOverlay#DisableOverlay"]' ) ); }
 /**
- * @version 1.0.9683.21797
+ * @version 1.0.9683.22545
  * @copyright anton
  * @compiler Bridge.NET 17.9.42-luna
  */
@@ -2392,11 +2392,28 @@ if ( TRACE ) { TRACE( "PackshotController#Awake", this ); }
             Show: function () {
 if ( TRACE ) { TRACE( "PackshotController#Show", this ); }
 
+                var $t;
                 if (UnityEngine.GameObject.op_Inequality(this.panelRoot, null)) {
                     this.panelRoot.SetActive(true);
                 }
                 if (UnityEngine.Component.op_Inequality(this.transitionAnimator, null)) {
                     this.transitionAnimator.SetTrigger$1(this.transitionTrigger);
+                }
+
+                // Отключаем ВСЕ StackDragHandler в сцене (не только исходные три слота лотка, как это уже
+                // частично делает GameFlowController.dragHandlers) — иначе перезаполненные TrayRefillManager-ом
+                // стопки или уже стоящие на поле (их тоже можно таскать заново, см. StackDragHandler)
+                // остались бы перетаскиваемыми поверх пэкшота.
+                $t = Bridge.getEnumerator(UnityEngine.Object.FindObjectsOfType(StackDragHandler));
+                try {
+                    while ($t.moveNext()) {
+                        var handler = $t.Current;
+                        handler.enabled = false;
+                    }
+                } finally {
+                    if (Bridge.is($t, System.IDisposable)) {
+                        $t.System$IDisposable$Dispose();
+                    }
                 }
 
                 Luna.Unity.LifeCycle.GameEnded();
